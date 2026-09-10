@@ -1,0 +1,20 @@
+
+name: Islamic YouTube Automation
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *"
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare workflow
+        run: |
+          echo "Islamic YouTube Automation started"
+          echo "Next step: generate script, verify references, review, then publish."
