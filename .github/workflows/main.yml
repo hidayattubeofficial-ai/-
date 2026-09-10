@@ -1,4 +1,3 @@
-
 name: Islamic YouTube Automation
 
 on:
@@ -14,7 +13,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare workflow
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Prepare content package
+        run: python scripts/prepare_content.py
+
+      - name: Upload review package
+        uses: actions/upload-artifact@v4
+        with:
+          name: islamic-content-review
+          path: output/
+
+      - name: Review gate
         run: |
-          echo "Islamic YouTube Automation started"
-          echo "Next step: generate script, verify references, review, then publish."
+          echo "Content package is ready for human review."
+          echo "Publishing is intentionally not automatic until references and final content are approved."
