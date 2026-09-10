@@ -21,6 +21,9 @@ jobs:
       - name: Prepare content package
         run: python scripts/prepare_content.py
 
+      - name: Validate content package
+        run: python scripts/validate_content.py
+
       - name: Upload review package
         uses: actions/upload-artifact@v4
         with:
