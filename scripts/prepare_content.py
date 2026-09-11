@@ -25,12 +25,13 @@ VOICE_TEXT = (
     "اگر یہ پیغام مفید لگا تو لائک کریں۔ روزانہ اسلامی یاددہانیوں کے لیے چینل کو سبسکرائب کریں۔ اور یہ پیغام کسی اپنے تک شیئر کریں۔"
 )
 SCRIPT = f"# {TOPIC}\n\n{VOICE_TEXT}\n\nنوٹ: اشاعت سے پہلے قرآن و حدیث کے اصل حوالہ جات مستند ذریعے سے انسانی طور پر verify کیے جائیں۔\n"
-metadata = f"topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoformat()}\nduration_target_seconds: 30\nformat: YouTube Shorts 9:16\nresolution: 1080x1920\nframe_rate: 30\nvoice: Urdu TTS\nvideo_codec: H.264 Baseline\naudio_codec: AAC-LC\nsubscriber_cta: enabled\nlike_cta: enabled\nshare_cta: enabled\nvisual_style: professional dark-gold Islamic card design\nstatus: REVIEW_REQUIRED\n"
+metadata = f"topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoformat()}\nduration_target_seconds: 30\nformat: YouTube Shorts 9:16\nresolution: 1080x1920\nframe_rate: 30\nvoice: Urdu TTS\nvideo_codec: H.264 Baseline\naudio_codec: AAC-LC\nsubscriber_cta: enabled\nlike_cta: enabled\nshare_cta: enabled\nvisual_style: professional dark-gold Islamic card design\nfont: Noto Nastaliq Urdu\nstatus: REVIEW_REQUIRED\n"
 (OUT / "script.md").write_text(SCRIPT, encoding="utf-8")
 (OUT / "metadata.txt").write_text(metadata, encoding="utf-8")
 
-font_path = "/usr/share/fonts/truetype/amiri/Amiri-Regular.ttf"
-bold_path = "/usr/share/fonts/truetype/amiri/Amiri-Bold.ttf"
+# Noto Nastaliq Urdu is the primary Urdu font for a natural Pakistani Nastaliq script.
+font_path = "/usr/share/fonts/truetype/noto/NotoNastaliqUrdu-Regular.ttf"
+bold_path = "/usr/share/fonts/truetype/noto/NotoNastaliqUrdu-Bold.ttf"
 font = ImageFont.truetype(bold_path if Path(bold_path).exists() else font_path, 70)
 small = ImageFont.truetype(font_path, 34)
 
