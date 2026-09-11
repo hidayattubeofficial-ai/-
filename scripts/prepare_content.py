@@ -15,15 +15,17 @@ SCENES = [
     "السلام علیکم ورحمۃ اللہ وبرکاتہ۔\nآج کا مختصر اسلامی پیغام",
     "نیکی کے چھوٹے اعمال کو معمولی نہ سمجھیں۔\nاللہ کی رضا کے لیے کیا گیا نیک عمل بہت قیمتی ہے۔",
     "آج ایک نیکی کا ارادہ کریں،\nاخلاص کے ساتھ عمل کریں اور دوسروں کے لیے آسانی پیدا کریں۔",
+    "ایسی مختصر اسلامی یاددہانیاں روزانہ پانے کے لیے\nچینل کو سبسکرائب کریں اور یہ پیغام کسی اپنے تک پہنچائیں۔",
 ]
 VOICE_TEXT = (
     "السلام علیکم ورحمۃ اللہ وبرکاتہ۔ آج کا مختصر اسلامی پیغام۔ "
     "نیکی کے چھوٹے اعمال کو معمولی نہ سمجھیں۔ اللہ کی رضا کے لیے کیا گیا نیک عمل بہت قیمتی ہے۔ "
-    "آج ایک نیکی کا ارادہ کریں، اخلاص کے ساتھ عمل کریں اور دوسروں کے لیے آسانی پیدا کریں۔"
+    "آج ایک نیکی کا ارادہ کریں، اخلاص کے ساتھ عمل کریں اور دوسروں کے لیے آسانی پیدا کریں۔ "
+    "ایسی مختصر اسلامی یاددہانیاں روزانہ پانے کے لیے چینل کو سبسکرائب کریں اور یہ پیغام کسی اپنے تک پہنچائیں۔"
 )
 
 SCRIPT = f"""# {TOPIC}\n\n{VOICE_TEXT}\n\nنوٹ: اشاعت سے پہلے قرآن و حدیث کے اصل حوالہ جات مستند ذریعے سے انسانی طور پر verify کیے جائیں۔\n"""
-metadata = f"""topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoformat()}\nduration_target_seconds: 30\nvoice: Urdu TTS\nvideo_codec: H.264\naudio_codec: AAC\nstatus: REVIEW_REQUIRED\n"""
+metadata = f"""topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoformat()}\nduration_target_seconds: 30\nvoice: Urdu TTS\nvideo_codec: H.264\naudio_codec: AAC\nsubscriber_cta: enabled\nstatus: REVIEW_REQUIRED\n"""
 (OUT / "script.md").write_text(SCRIPT, encoding="utf-8")
 (OUT / "metadata.txt").write_text(metadata, encoding="utf-8")
 
@@ -42,7 +44,7 @@ def make_scene(text: str, path: Path, number: int) -> None:
     draw.multiline_text((640, 120), rtl(TOPIC), font=font, fill="white", anchor="ma", align="center", spacing=18)
     body = "\n".join(rtl(line) for line in text.splitlines())
     draw.multiline_text((640, 295), body, font=small, fill="white", anchor="ma", align="center", spacing=24)
-    draw.text((640, 625), f"Scene {number} • REVIEW REQUIRED", font=small, fill="white", anchor="mm")
+    draw.text((640, 625), rtl(f"منظر {number} • جائزہ ضروری ہے"), font=small, fill="white", anchor="mm")
     img.save(path, format="PNG")
 
 scenes = []
@@ -53,7 +55,7 @@ for index, text in enumerate(SCENES, start=1):
 
 concat = OUT / "scenes.txt"
 concat.write_text(
-    "".join(f"file '{p.name}'\nduration 10\n" for p in scenes) + f"file '{scenes[-1].name}'\n",
+    "".join(f"file '{p.name}'\nduration 7.5\n" for p in scenes) + f"file '{scenes[-1].name}'\n",
     encoding="utf-8",
 )
 
