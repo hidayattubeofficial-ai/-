@@ -1,0 +1,64 @@
+name: Website Automation
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 2 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'assets/**'
+      - 'scripts/**'
+      - '*.html'
+      - 'website/**'
+      - '.github/workflows/website-automation.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-automation
+  cancel-in-progress: true
+
+jobs:
+  website-check:
+    name: Website health and automation check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Inspect website project
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '## Website Automation Report' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '- Repository: hidayattubeofficial-ai/-' >> "$GITHUB_STEP_SUMMARY"
+          echo '- Mode: automation-ready / human approval required for public release' >> "$GITHUB_STEP_SUMMARY"
+          echo '- YouTube publishing: remains OFF until approved' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '### Project files' >> "$GITHUB_STEP_SUMMARY"
+          find . -maxdepth 2 -type f -not -path './.git/*' | sort | head -200 >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Validate HTML files
+        shell: bash
+        run: |
+          set -euo pipefail
+          html_count=$(find . -maxdepth 3 -type f -name '*.html' -not -path './.git/*' | wc -l)
+          echo "HTML files detected: $html_count"
+          if [ "$html_count" -eq 0 ]; then
+            echo 'No HTML files detected; website deployment is not attempted.'
+          fi
+
+      - name: Security guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'Security guard: no public publishing or YouTube upload is enabled by this workflow.'
+          echo 'API credentials must remain in GitHub Secrets/environment configuration, never frontend source.'
+
+      - name: Final report
+        if: always()
+        run: |
+          echo 'Website automation check completed. See the workflow summary for the report.' >> "$GITHUB_STEP_SUMMARY"
