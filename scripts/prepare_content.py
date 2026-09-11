@@ -10,16 +10,16 @@ from PIL import Image, ImageDraw, ImageFont
 OUT = Path("output")
 OUT.mkdir(exist_ok=True)
 
-TOPIC = "Daily Islamic Reminder"
+TOPIC = "روزانہ اسلامی یاددہانی"
 SCENES = [
     "السلام علیکم ورحمۃ اللہ وبرکاتہ۔\nآج کا مختصر اسلامی پیغام",
-    "نیکی کے چھوٹے کاموں کو معمولی نہ سمجھیں۔\nاخلاص کے ساتھ کیا گیا اچھا عمل برکت کا ذریعہ بن سکتا ہے۔",
-    "اپنے دن میں ایک نیکی کا انتخاب کریں،\nاسے اخلاص کے ساتھ کریں، اور دوسروں کے لیے آسانی پیدا کریں۔",
+    "نیکی کے چھوٹے اعمال کو معمولی نہ سمجھیں۔\nاللہ کی رضا کے لیے کیا گیا نیک عمل بہت قیمتی ہے۔",
+    "آج ایک نیکی کا ارادہ کریں،\nاخلاص کے ساتھ عمل کریں اور دوسروں کے لیے آسانی پیدا کریں۔",
 ]
 VOICE_TEXT = (
     "السلام علیکم ورحمۃ اللہ وبرکاتہ۔ آج کا مختصر اسلامی پیغام۔ "
-    "نیکی کے چھوٹے کاموں کو معمولی نہ سمجھیں۔ اخلاص کے ساتھ کیا گیا اچھا عمل برکت کا ذریعہ بن سکتا ہے۔ "
-    "اپنے دن میں ایک نیکی کا انتخاب کریں، اسے اخلاص کے ساتھ کریں، اور دوسروں کے لیے آسانی پیدا کریں۔"
+    "نیکی کے چھوٹے اعمال کو معمولی نہ سمجھیں۔ اللہ کی رضا کے لیے کیا گیا نیک عمل بہت قیمتی ہے۔ "
+    "آج ایک نیکی کا ارادہ کریں، اخلاص کے ساتھ عمل کریں اور دوسروں کے لیے آسانی پیدا کریں۔"
 )
 
 SCRIPT = f"""# {TOPIC}\n\n{VOICE_TEXT}\n\nنوٹ: اشاعت سے پہلے قرآن و حدیث کے اصل حوالہ جات مستند ذریعے سے انسانی طور پر verify کیے جائیں۔\n"""
@@ -27,9 +27,9 @@ metadata = f"""topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoforma
 (OUT / "script.md").write_text(SCRIPT, encoding="utf-8")
 (OUT / "metadata.txt").write_text(metadata, encoding="utf-8")
 
-font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-font = ImageFont.truetype(font_path, 42)
-small = ImageFont.truetype(font_path, 28)
+font_path = "/usr/share/fonts/truetype/noto/NotoNastaliqUrdu-Regular.ttf"
+font = ImageFont.truetype(font_path, 54)
+small = ImageFont.truetype(font_path, 38)
 
 
 def rtl(text: str) -> str:
@@ -39,10 +39,10 @@ def rtl(text: str) -> str:
 def make_scene(text: str, path: Path, number: int) -> None:
     img = Image.new("RGB", (1280, 720), "black")
     draw = ImageDraw.Draw(img)
-    draw.multiline_text((640, 145), rtl(TOPIC), font=font, fill="white", anchor="ma", align="center", spacing=16)
+    draw.multiline_text((640, 120), rtl(TOPIC), font=font, fill="white", anchor="ma", align="center", spacing=18)
     body = "\n".join(rtl(line) for line in text.splitlines())
-    draw.multiline_text((640, 285), body, font=small, fill="white", anchor="ma", align="center", spacing=18)
-    draw.text((640, 620), f"Scene {number} • REVIEW REQUIRED", font=small, fill="white", anchor="mm")
+    draw.multiline_text((640, 295), body, font=small, fill="white", anchor="ma", align="center", spacing=24)
+    draw.text((640, 625), f"Scene {number} • REVIEW REQUIRED", font=small, fill="white", anchor="mm")
     img.save(path, format="PNG")
 
 scenes = []
@@ -79,7 +79,6 @@ subprocess.run([
     "-ac", "2", "-b:a", "128k", "-movflags", "+faststart", str(video)
 ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
-# Verify the produced file has both a video and an audio stream before upload.
 probe = subprocess.run([
     "ffprobe", "-v", "error", "-show_entries", "format=duration:stream=codec_type,codec_name",
     "-of", "default=noprint_wrappers=1", str(video)
@@ -91,4 +90,4 @@ if "codec_type=video" not in probe.stdout or "codec_type=audio" not in probe.std
 for path in scenes + [concat, silent, voice]:
     path.unlink(missing_ok=True)
 
-print(f"Verified YouTube-compatible review video: {video}")
+print(f"Verified YouTube-compatible Urdu review video: {video}")
