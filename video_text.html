@@ -17,16 +17,15 @@
     }
     html, body { margin: 0; padding: 0; width: 1080px; height: 1920px; overflow: hidden; background: transparent; }
     body { direction: rtl; font-family: "Noto Nastaliq Urdu", serif; text-align: center; }
-    .brand-logo { position: absolute; top: 35px; left: 50%; transform: translateX(-50%); width: 200px; height: 112px; object-fit: contain; object-position: center; z-index: 10; }
-    .brand-name { position: absolute; top: 150px; left: 40px; width: 1000px; color: rgb(245,235,200); font-family: Arial, sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 3px; text-align: center; z-index: 10; text-shadow: 2px 2px 5px rgba(0,0,0,.85); }
-    .title { position: absolute; top: 220px; left: 100px; width: 880px; height: 120px; color: rgb(245,235,200); font-size: 54px; font-weight: 700; line-height: 1.65; display: flex; align-items: center; justify-content: center; white-space: pre-wrap; overflow: hidden; }
-    .body { position: absolute; top: 515px; left: 90px; width: 900px; height: 820px; box-sizing: border-box; padding: 0 28px; color: rgb(250,250,248); font-size: 46px; font-weight: 400; line-height: 1.75; display: flex; align-items: center; justify-content: center; white-space: pre-wrap; overflow: hidden; text-shadow: 2px 2px 4px rgba(0,0,0,.8); }
-    .footer { position: absolute; top: 1490px; left: 160px; width: 760px; height: 90px; color: rgb(225,215,185); font-size: 28px; line-height: 1.7; display: flex; align-items: center; justify-content: center; white-space: pre-wrap; overflow: hidden; }
+    /* Minimal persistent brand mark: keep the artwork and Urdu message dominant. */
+    .brand-logo { position: absolute; top: 30px; left: 50%; transform: translateX(-50%); width: 120px; height: 68px; object-fit: contain; object-position: center; opacity: .88; z-index: 10; }
+    .title { position: absolute; top: 205px; left: 120px; width: 840px; height: 115px; color: rgb(245,235,200); font-size: 46px; font-weight: 700; line-height: 1.55; display: flex; align-items: center; justify-content: center; white-space: pre-wrap; overflow: hidden; text-shadow: 2px 2px 5px rgba(0,0,0,.85); }
+    .body { position: absolute; top: 525px; left: 115px; width: 850px; height: 760px; box-sizing: border-box; padding: 0 24px; color: rgb(250,250,248); font-size: 40px; font-weight: 400; line-height: 1.65; display: flex; align-items: center; justify-content: center; white-space: pre-wrap; overflow: hidden; text-shadow: 2px 2px 4px rgba(0,0,0,.8); }
+    .footer { position: absolute; top: 1505px; left: 190px; width: 700px; height: 75px; color: rgb(225,215,185); font-size: 24px; line-height: 1.6; display: flex; align-items: center; justify-content: center; white-space: pre-wrap; overflow: hidden; text-shadow: 2px 2px 4px rgba(0,0,0,.8); }
   </style>
 </head>
 <body>
   <img class="brand-logo" src="__LOGO__" alt="Hidayat Tube logo">
-  <div class="brand-name">HIDAYAT TUBE</div>
   <div class="title" id="title">__TITLE__</div>
   <div class="body" id="body">__BODY__</div>
   <div class="footer" id="footer">__FOOTER__</div>
