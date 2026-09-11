@@ -21,8 +21,8 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install FFmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Install FFmpeg and Urdu TTS
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg espeak-ng
 
       - name: Install YouTube API dependencies
         run: pip install -r requirements.txt
