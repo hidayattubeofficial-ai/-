@@ -1,6 +1,7 @@
-"""Render a professional vertical Urdu Islamic reminder video for private review."""
+"""Build a cinematic, branded Urdu Islamic YouTube Short for private review."""
 from pathlib import Path
 from datetime import datetime, timezone
+import os
 import subprocess
 
 from PIL import Image, ImageDraw
@@ -11,29 +12,50 @@ OUT.mkdir(exist_ok=True)
 W, H, FPS = 1080, 1920, 30
 SCENE_SECONDS = 7.5
 XFADE_SECONDS = 0.55
-TOPIC = "روزانہ اسلامی یاددہانی"
+DURATION = 30
+TOPIC = "نماز کیوں ضروری ہے؟ | نماز زندگی کا اصل سکون"
 BRANDING_DIR = Path("assets/branding")
-BRANDING_BG = BRANDING_DIR / "bg.png"
+
+# Supplied Hidayat Tube artwork is used as cinematic B-roll. Each still receives
+# a very slow Ken-Burns movement so the Short never feels like a static card.
+BROLL = [
+    BRANDING_DIR / "picture for video.png",
+    BRANDING_DIR / "picture for video2.png",
+    BRANDING_DIR / "video brand post sample.png",
+    BRANDING_DIR / "banner2.png",
+]
+FALLBACK_BG = BRANDING_DIR / "bg.png"
+
 SCENES = [
-    "السلام علیکم ورحمۃ اللہ وبرکاتہ۔\nآج کا مختصر اسلامی پیغام",
-    "نیکی کے چھوٹے اعمال کو معمولی نہ سمجھیں۔\nاللہ کی رضا کے لیے کیا گیا نیک عمل بہت قیمتی ہے۔",
-    "آج ایک نیکی کا ارادہ کریں،\nاخلاص کے ساتھ عمل کریں اور دوسروں کے لیے آسانی پیدا کریں۔",
-    "اگر یہ پیغام مفید لگا تو Like کریں۔\n\nاور یہ پیغام کسی اپنے تک Share کریں۔",
+    "کیا آپ زندگی کی الجھنوں سے پریشان ہیں؟\nنماز… سکونِ قلب کا راستہ ہے۔",
+    "نماز دین کا مضبوط ستون ہے۔\nنماز اللہ سے قربت کا ذریعہ ہے۔\nنماز گناہوں سے بچنے میں مدد دیتی ہے۔",
+    "نماز بے حیائی سے روکتی ہے۔\nنماز سکونِ قلب کا ذریعہ ہے۔\nنماز جنت کی کنجی ہے۔",
+    "آئیے! نماز کو اپنی زندگی کا حصہ بنائیں۔\nاور اصل کامیابی حاصل کریں۔\n\nLike • Share • Subscribe",
 ]
 VOICE_TEXT = (
-    "السلام علیکم ورحمۃ اللہ وبرکاتہ۔ آج کا مختصر اسلامی پیغام۔ "
-    "نیکی کے چھوٹے اعمال کو معمولی نہ سمجھیں۔ اللہ کی رضا کے لیے کیا گیا نیک عمل بہت قیمتی ہے۔ "
-    "آج ایک نیکی کا ارادہ کریں، اخلاص کے ساتھ عمل کریں اور دوسروں کے لیے آسانی پیدا کریں۔ "
-    "اگر یہ پیغام مفید لگا تو لائک کریں۔ روزانہ اسلامی یاددہانیوں کے لیے چینل کو سبسکرائب کریں۔ اور یہ پیغام کسی اپنے تک شیئر کریں۔"
+    "کیا آپ زندگی کی الجھنوں سے پریشان ہیں؟ "
+    "نماز دین کا مضبوط ستون ہے، اور اللہ سے قربت کا ذریعہ ہے۔ "
+    "نماز ہمیں گناہوں اور بے حیائی سے بچانے میں مدد دیتی ہے۔ "
+    "نماز سکونِ قلب کا ذریعہ ہے، اور جنت کی کنجی ہے۔ "
+    "آئیے! نماز کو اپنی زندگی کا حصہ بنائیں اور اصل کامیابی حاصل کریں۔"
 )
-SCRIPT = f"# {TOPIC}\n\n{VOICE_TEXT}\n\nنوٹ: اشاعت سے پہلے قرآن و حدیث کے اصل حوالہ جات مستند ذریعے سے انسانی طور پر verify کیے جائیں۔\n"
-metadata = f"topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoformat()}\nduration_target_seconds: 30\nformat: YouTube Shorts 9:16\nresolution: 1080x1920\nframe_rate: 30\nvoice: Microsoft Edge Neural Urdu ({__import__('os').getenv('TTS_VOICE', 'ur-PK-AsadNeural')})\nvideo_codec: H.264 Baseline\naudio_codec: AAC-LC\nsubscriber_cta: enabled\nlike_cta: enabled\nshare_cta: enabled\nvisual_style: Hidayat Tube full black-and-gold branding background\nfont: Noto Nastaliq Urdu via Chromium Playwright\ntext_renderer: Chromium RTL/complex-text shaping\nstatus: REVIEW_REQUIRED\n"
+SCRIPT = (
+    f"# {TOPIC}\n\n{VOICE_TEXT}\n\n"
+    "نوٹ: قرآن و حدیث کے اصل حوالہ جات اشاعت سے پہلے مستند ذریعے سے انسانی طور پر verify کیے جائیں۔\n"
+)
+metadata = (
+    f"topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoformat()}\n"
+    f"duration_target_seconds: {DURATION}\nformat: YouTube Shorts 9:16\nresolution: {W}x{H}\n"
+    f"frame_rate: {FPS}\nvoice: Microsoft Edge Neural Urdu ({os.getenv('TTS_VOICE', 'ur-PK-AsadNeural')})\n"
+    "video_codec: H.264 Baseline\naudio_codec: AAC-LC\nsubscriber_cta: enabled\n"
+    "like_cta: enabled\nshare_cta: enabled\nvisual_style: Cinematic Hidayat Tube black-and-gold Islamic B-roll\n"
+    "font: Noto Nastaliq Urdu via Chromium Playwright\ntext_renderer: Chromium RTL/complex-text shaping\nstatus: REVIEW_REQUIRED\n"
+)
 (OUT / "script.md").write_text(SCRIPT, encoding="utf-8")
 (OUT / "metadata.txt").write_text(metadata, encoding="utf-8")
 
 
 def _cover_resize(img: Image.Image, size: tuple[int, int]) -> Image.Image:
-    """Resize/crop a supplied branding image to the exact Shorts canvas."""
     img = img.convert("RGB")
     scale = max(size[0] / img.width, size[1] / img.height)
     resized = img.resize((round(img.width * scale), round(img.height * scale)), Image.Resampling.LANCZOS)
@@ -42,36 +64,50 @@ def _cover_resize(img: Image.Image, size: tuple[int, int]) -> Image.Image:
     return resized.crop((left, top, left + size[0], top + size[1]))
 
 
-def make_background(path: Path) -> None:
-    # Use the channel's supplied branding artwork as the actual scene background.
-    # This is intentionally different from the old generic gradient card: the
-    # branded artwork is now visible throughout the video, while the Chromium
-    # layer adds the readable Urdu title/body/footer on top.
-    if not BRANDING_BG.exists():
-        raise FileNotFoundError(f"Required Hidayat Tube branding background is missing: {BRANDING_BG}")
-
-    img = _cover_resize(Image.open(BRANDING_BG), (W, H))
+def make_background(path: Path, source: Path) -> None:
+    if not source.exists():
+        raise FileNotFoundError(f"Required Hidayat Tube branding artwork is missing: {source}")
+    img = _cover_resize(Image.open(source), (W, H))
     draw = ImageDraw.Draw(img, "RGBA")
-
-    # Preserve the supplied artwork but add a restrained translucent reading area
-    # so the Nastaliq message remains legible without replacing the branding.
-    draw.rounded_rectangle((70, 455, W - 70, 1420), radius=58,
-                           fill=(8, 12, 24, 118), outline=(190, 155, 70, 190), width=3)
-    draw.rounded_rectangle((108, 492, W - 108, 535), radius=18,
-                           fill=(190, 155, 70, 215))
+    # Keep the supplied artwork prominent; only add a subtle cinematic veil and
+    # a gold frame so Urdu Nastaliq remains readable without becoming a generic card.
+    draw.rectangle((0, 0, W, H), fill=(0, 0, 0, 34))
+    draw.rectangle((28, 28, W - 28, H - 28), outline=(190, 155, 70, 190), width=4)
+    draw.rectangle((52, 52, W - 52, H - 52), outline=(255, 255, 255, 45), width=1)
+    draw.rounded_rectangle((58, 430, W - 58, 1490), radius=52,
+                           fill=(5, 8, 16, 126), outline=(190, 155, 70, 205), width=3)
+    draw.rounded_rectangle((98, 468, W - 98, 510), radius=18,
+                           fill=(190, 155, 70, 220))
     img.save(path, format="PNG", optimize=True)
 
 
 def run_renderer(title: str, body: str, footer: str, output: Path) -> None:
-    subprocess.run([
-        "python", "scripts/render_text.py", title, body, footer, str(output)
-    ], check=True)
+    subprocess.run(["python", "scripts/render_text.py", title, body, footer, str(output)], check=True)
 
 
 def run_cta_renderer(output: Path) -> None:
+    subprocess.run(["python", "scripts/render_text.py", "--cta", str(output)], check=True)
+
+
+def make_motion_scene(background: Path, output: Path, direction: int) -> None:
+    # Very slow push-in plus a tiny horizontal drift; 7.5 seconds / 30 fps.
+    zoom_expr = "min(zoom+0.00075,1.12)"
+    if direction % 2:
+        x_expr = "iw/2-(iw/zoom/2)+sin(on/70)*18"
+    else:
+        x_expr = "iw/2-(iw/zoom/2)-sin(on/70)*18"
+    y_expr = "ih/2-(ih/zoom/2)"
+    vf = (
+        "scale=1220:2170:force_original_aspect_ratio=increase,"
+        "crop=1220:2170,"
+        f"zoompan=z='{zoom_expr}':x='{x_expr}':y='{y_expr}':d=1:s=1080x1920:fps=30,"
+        "eq=contrast=1.03:saturation=0.92:brightness=-0.02,format=yuv420p"
+    )
     subprocess.run([
-        "python", "scripts/render_text.py", "--cta", str(output)
-    ], check=True)
+        "ffmpeg", "-y", "-loop", "1", "-i", str(background), "-vf", vf,
+        "-t", str(SCENE_SECONDS), "-r", str(FPS), "-an", "-c:v", "libx264",
+        "-profile:v", "baseline", "-level", "4.0", "-pix_fmt", "yuv420p", str(output)
+    ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 
 scene_videos = []
@@ -79,14 +115,20 @@ for i, text in enumerate(SCENES, 1):
     bg = OUT / f"scene_{i}_background.png"
     overlay = OUT / f"scene_{i}_text.png"
     scene_video = OUT / f"scene_{i}.mp4"
-    make_background(bg)
-    run_renderer(TOPIC, text, f"منظر {i} • جائزہ ضروری ہے", overlay)
+    source = BROLL[(i - 1) % len(BROLL)] if BROLL else FALLBACK_BG
+    if not source.exists():
+        source = FALLBACK_BG
+    make_background(bg, source)
+    run_renderer(TOPIC, text, f"HIDAYAT TUBE • منظر {i}", overlay)
+    motion = OUT / f"scene_{i}_motion.mp4"
+    make_motion_scene(bg, motion, i)
     subprocess.run([
-        "ffmpeg", "-y", "-loop", "1", "-i", str(bg), "-loop", "1", "-i", str(overlay),
+        "ffmpeg", "-y", "-i", str(motion), "-loop", "1", "-i", str(overlay),
         "-filter_complex", "[0:v][1:v]overlay=0:0:format=auto,format=yuv420p,setsar=1",
         "-t", str(SCENE_SECONDS), "-r", str(FPS), "-c:v", "libx264", "-profile:v", "baseline",
         "-level", "4.0", "-pix_fmt", "yuv420p", "-an", str(scene_video)
     ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+    motion.unlink(missing_ok=True)
     scene_videos.append(scene_video)
 
 inputs = []
@@ -105,41 +147,31 @@ for i in range(1, len(scene_videos)):
 silent = OUT / "silent.mp4"
 subprocess.run([
     "ffmpeg", "-y", *inputs, "-filter_complex", ";".join(filters),
-    "-map", f"[{current}]", "-t", "30", "-c:v", "libx264", "-profile:v", "baseline",
+    "-map", f"[{current}]", "-t", str(DURATION), "-c:v", "libx264", "-profile:v", "baseline",
     "-level", "4.0", "-pix_fmt", "yuv420p", "-r", str(FPS), "-fps_mode", "cfr",
     "-preset", "medium", "-movflags", "+faststart", str(silent)
 ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
-# Render Subscribe as an independent, fixed-position transparent layer. It is
-# deliberately composited after the scene xfade so the CTA cannot inherit any
-# scene-level movement or interpolation.
 cta_overlay = OUT / "subscribe_cta.png"
 run_cta_renderer(cta_overlay)
 cta_start = (len(SCENES) - 1) * (SCENE_SECONDS - XFADE_SECONDS)
 silent_with_cta = OUT / "silent_with_cta.mp4"
 subprocess.run([
     "ffmpeg", "-y", "-i", str(silent), "-loop", "1", "-i", str(cta_overlay),
-    "-filter_complex", f"[0:v][1:v]overlay=0:0:format=auto:enable='between(t,{cta_start:.2f},30)'[v]",
-    "-map", "[v]", "-t", "30", "-c:v", "libx264", "-profile:v", "baseline",
+    "-filter_complex", f"[0:v][1:v]overlay=0:0:format=auto:enable='between(t,{cta_start:.2f},{DURATION})'[v]",
+    "-map", "[v]", "-t", str(DURATION), "-c:v", "libx264", "-profile:v", "baseline",
     "-level", "4.0", "-pix_fmt", "yuv420p", "-r", str(FPS), "-fps_mode", "cfr",
     "-preset", "medium", "-movflags", "+faststart", str(silent_with_cta)
 ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 voice = OUT / "voice.mp3"
 synthesize(VOICE_TEXT, str(voice))
-
-subprocess.run([
-    "ffmpeg", "-y", "-i", str(voice), "-t", "30", "-vn", "-c:a", "aac",
-    "-ar", "44100", "-ac", "2", "-b:a", "128k", "-af", "apad=pad_dur=30",
-    "-movflags", "+faststart", "-f", "adts", "/tmp/voice_qa.aac"
-], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-
 video = OUT / "video.mp4"
 subprocess.run([
-    "ffmpeg", "-y", "-i", str(silent_with_cta), "-i", str(voice), "-map", "0:v:0", "-map", "1:a:0", "-t", "30",
+    "ffmpeg", "-y", "-i", str(silent_with_cta), "-i", str(voice), "-map", "0:v:0", "-map", "1:a:0", "-t", str(DURATION),
     "-c:v", "libx264", "-profile:v", "baseline", "-level", "4.0", "-pix_fmt", "yuv420p",
     "-r", str(FPS), "-fps_mode", "cfr", "-c:a", "aac", "-profile:a", "aac_low", "-ar", "44100",
-    "-ac", "2", "-b:a", "128k", "-af", "apad=pad_dur=30", "-movflags", "+faststart", str(video)
+    "-ac", "2", "-b:a", "128k", "-af", f"apad=pad_dur={DURATION}", "-movflags", "+faststart", str(video)
 ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 probe = subprocess.run([
@@ -148,9 +180,9 @@ probe = subprocess.run([
     "-of", "default=noprint_wrappers=1", str(video)
 ], check=True, capture_output=True, text=True)
 print(probe.stdout)
-required = ["codec_type=video", "codec_name=h264", "pix_fmt=yuv420p", "codec_type=audio", "codec_name=aac", "width=1080", "height=1920"]
+required = ["codec_type=video", "codec_name=h264", "pix_fmt=yuv420p", "codec_type=audio", "codec_name=aac", f"width={W}", f"height={H}"]
 if any(x not in probe.stdout for x in required):
-    raise SystemExit("Generated professional MP4 failed stream/resolution checks")
+    raise SystemExit("Generated MP4 failed stream/resolution checks")
 if "format_name=mov,mp4,m4a,3gp,3g2,mj2" not in probe.stdout:
     raise SystemExit("Generated file is not a standard MP4 container")
 subprocess.run(["ffmpeg", "-v", "error", "-i", str(video), "-f", "null", "-"], check=True)
@@ -162,4 +194,4 @@ for path in OUT.glob("scene_*_text.png"):
     path.unlink(missing_ok=True)
 for path in [silent, silent_with_cta, cta_overlay]:
     path.unlink(missing_ok=True)
-print(f"Verified professional 1080x1920 H.264/AAC MP4 with full Hidayat Tube branding background: {video}")
+print(f"Verified cinematic 1080x1920 H.264/AAC MP4 with Hidayat Tube branding: {video}")
