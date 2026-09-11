@@ -62,9 +62,10 @@ concat.write_text(
 silent = OUT / "silent.mp4"
 subprocess.run([
     "ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(concat),
-    "-vf", "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2",
-    "-t", "30", "-r", "30", "-pix_fmt", "yuv420p", "-c:v", "libx264",
-    "-profile:v", "high", "-level", "4.0", "-movflags", "+faststart", str(silent)
+    "-vf", "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,format=yuv420p",
+    "-t", "30", "-r", "30", "-fps_mode", "cfr", "-pix_fmt", "yuv420p",
+    "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.1",
+    "-preset", "medium", "-movflags", "+faststart", str(silent)
 ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 voice = OUT / "voice.wav"
@@ -76,20 +77,24 @@ video = OUT / "video.mp4"
 subprocess.run([
     "ffmpeg", "-y", "-i", str(silent), "-i", str(voice),
     "-map", "0:v:0", "-map", "1:a:0", "-t", "30",
-    "-c:v", "libx264", "-profile:v", "high", "-level", "4.0",
-    "-pix_fmt", "yuv420p", "-r", "30", "-c:a", "aac", "-ar", "48000",
+    "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.1",
+    "-pix_fmt", "yuv420p", "-r", "30", "-fps_mode", "cfr",
+    "-c:a", "aac", "-profile:a", "aac_low", "-ar", "44100",
     "-ac", "2", "-b:a", "128k", "-movflags", "+faststart", str(video)
 ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 probe = subprocess.run([
-    "ffprobe", "-v", "error", "-show_entries", "format=duration:stream=codec_type,codec_name",
+    "ffprobe", "-v", "error", "-show_entries", "format=format_name,duration:stream=index,codec_type,codec_name,profile,pix_fmt,r_frame_rate,sample_rate,channels",
     "-of", "default=noprint_wrappers=1", str(video)
 ], check=True, capture_output=True, text=True)
 print(probe.stdout)
-if "codec_type=video" not in probe.stdout or "codec_type=audio" not in probe.stdout:
-    raise SystemExit("Generated MP4 is missing video or audio stream")
+required = ["codec_type=video", "codec_name=h264", "codec_type=audio", "codec_name=aac", "pix_fmt=yuv420p"]
+if any(item not in probe.stdout for item in required):
+    raise SystemExit("Generated MP4 failed compatibility stream checks")
+if "format_name=mov,mp4,m4a,3gp,3g2,mj2" not in probe.stdout:
+    raise SystemExit("Generated file is not a standard MP4 container")
 
 for path in scenes + [concat, silent, voice]:
     path.unlink(missing_ok=True)
 
-print(f"Verified YouTube-compatible Urdu review video: {video}")
+print(f"Verified maximum-compatibility YouTube MP4: {video}")
