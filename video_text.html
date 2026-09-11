@@ -28,9 +28,34 @@
       font-family: "Noto Nastaliq Urdu", serif;
       text-align: center;
     }
+    .brand-logo {
+      position: absolute;
+      top: 35px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 220px;
+      height: 125px;
+      object-fit: contain;
+      object-position: center;
+      z-index: 10;
+    }
+    .brand-name {
+      position: absolute;
+      top: 158px;
+      left: 0;
+      width: 1080px;
+      color: rgb(245,235,200);
+      font-family: Arial, sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-align: center;
+      z-index: 10;
+      text-shadow: 2px 2px 5px rgba(0,0,0,.85);
+    }
     .title {
       position: absolute;
-      top: 130px;
+      top: 220px;
       left: 170px;
       width: 740px;
       height: 130px;
@@ -77,6 +102,8 @@
   </style>
 </head>
 <body>
+  <img class="brand-logo" src="file:///workspace/assets/branding/logo.png" alt="Hidayat Tube logo">
+  <div class="brand-name">HIDAYAT TUBE</div>
   <div class="title" id="title">__TITLE__</div>
   <div class="body" id="body">__BODY__</div>
   <div class="footer" id="footer">__FOOTER__</div>
