@@ -1,0 +1,87 @@
+name: Luna Team Automation
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '45 2 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'assets/**'
+      - 'scripts/**'
+      - '*.html'
+      - 'website/**'
+      - '.github/workflows/**'
+      - 'LUNA_TEAM.md'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: luna-team
+  cancel-in-progress: true
+
+jobs:
+  website-team:
+    name: Website Team
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate website files
+        shell: bash
+        run: |
+          set -euo pipefail
+          html_count=$(find . -maxdepth 3 -type f -name '*.html' -not -path './.git/*' | wc -l)
+          echo "Website HTML files: $html_count"
+          test "$html_count" -gt 0
+
+  security-team:
+    name: Security Team
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan tracked source for obvious credential leaks
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -RInE --exclude-dir=.git --exclude='*.lock' '(sk-[A-Za-z0-9_-]{20,}|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})' .; then
+            echo 'Credential-like token detected. Release path is blocked.'
+            exit 1
+          fi
+          echo 'No obvious credential-like tokens detected in tracked source.'
+
+  content-team:
+    name: Content & YouTube Team
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce human approval gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'Content preparation may run, but public YouTube publishing remains OFF.'
+          echo 'Human approval is required before public release.'
+
+  coordinator:
+    name: Luna Coordinator
+    needs: [website-team, security-team, content-team]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Team report
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '## Luna Team Automation Report' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '- Coordinator: Luna' >> "$GITHUB_STEP_SUMMARY"
+          echo '- Website Team: ${{ needs.website-team.result }}' >> "$GITHUB_STEP_SUMMARY"
+          echo '- Security Team: ${{ needs.security-team.result }}' >> "$GITHUB_STEP_SUMMARY"
+          echo '- Content & YouTube Team: ${{ needs.content-team.result }}' >> "$GITHUB_STEP_SUMMARY"
+          echo '- Public YouTube publishing: OFF' >> "$GITHUB_STEP_SUMMARY"
+          echo '- Public release: human approval required' >> "$GITHUB_STEP_SUMMARY"
+          if [ '${{ needs.website-team.result }}' != 'success' ] || [ '${{ needs.security-team.result }}' != 'success' ] || [ '${{ needs.content-team.result }}' != 'success' ]; then
+            echo '- Overall status: BLOCKED' >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo '- Overall status: READY FOR HUMAN REVIEW' >> "$GITHUB_STEP_SUMMARY"
