@@ -71,7 +71,7 @@ jobs:
       issues: write
       contents: read
     env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_API_KEY: ${{ vars.OPENAI_API_KEY }}
       GH_TOKEN: ${{ github.token }}
     steps:
       - name: Generate and post Messenger reply
@@ -91,7 +91,7 @@ jobs:
           issue = str(event["issue"]["number"])
 
           if not os.environ.get("OPENAI_API_KEY"):
-              reply = "Messenger bridge فعال ہے، لیکن GitHub Secret `OPENAI_API_KEY` ابھی configured نہیں ہے۔ Secret شامل ہونے کے بعد میں خودکار AI جواب دوں گا۔"
+              reply = "Messenger bridge فعال ہے، لیکن GitHub Actions Variable `OPENAI_API_KEY` دستیاب نہیں ہے۔ Variable شامل کرنے کے بعد میں خودکار AI جواب دوں گا۔"
           else:
               payload = {
                   "model": "gpt-5.6-luna",
