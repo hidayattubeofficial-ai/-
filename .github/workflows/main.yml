@@ -48,7 +48,7 @@ jobs:
           path: output/
 
       - name: Upload video to YouTube as private
-        if: ${{ hashFiles('output/video.mp4') != '' }}
+        if: ${{ false }}
         env:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
@@ -58,5 +58,5 @@ jobs:
       - name: Review gate
         run: |
           echo "Content package is ready for human review."
-          echo "If output/video.mp4 exists, it is uploaded to YouTube as PRIVATE for human review."
+          echo "YouTube upload is intentionally disabled until content is finalized."
           echo "Do not make it public until references and final content are approved."
