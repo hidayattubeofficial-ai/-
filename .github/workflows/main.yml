@@ -26,6 +26,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg espeak-ng fonts-noto-core fonts-noto-cjk fonts-hosny-amiri
           fc-cache -f
+          test -f /usr/share/fonts/truetype/noto/NotoNastaliqUrdu-Regular.ttf
+          test -f /usr/share/fonts/truetype/noto/NotoNastaliqUrdu-Bold.ttf
 
       - name: Install YouTube API dependencies
         run: pip install -r requirements.txt
