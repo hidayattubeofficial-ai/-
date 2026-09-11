@@ -21,8 +21,11 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install FFmpeg and Urdu TTS
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg espeak-ng
+      - name: Install FFmpeg, Urdu TTS, and multilingual fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak-ng fonts-noto-core fonts-noto-cjk fonts-hosny-amiri
+          fc-cache -f
 
       - name: Install YouTube API dependencies
         run: pip install -r requirements.txt
