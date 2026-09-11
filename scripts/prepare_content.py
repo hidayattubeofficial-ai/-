@@ -10,12 +10,13 @@ OUT = Path("output")
 OUT.mkdir(exist_ok=True)
 W, H, FPS = 1080, 1920, 30
 SCENE_SECONDS = 7.5
+XFADE_SECONDS = 0.55
 TOPIC = "روزانہ اسلامی یاددہانی"
 SCENES = [
     "السلام علیکم ورحمۃ اللہ وبرکاتہ۔\nآج کا مختصر اسلامی پیغام",
     "نیکی کے چھوٹے اعمال کو معمولی نہ سمجھیں۔\nاللہ کی رضا کے لیے کیا گیا نیک عمل بہت قیمتی ہے۔",
     "آج ایک نیکی کا ارادہ کریں،\nاخلاص کے ساتھ عمل کریں اور دوسروں کے لیے آسانی پیدا کریں۔",
-    "اگر یہ پیغام مفید لگا تو Like کریں۔\nروزانہ اسلامی یاددہانیوں کے لیے Subscribe کریں۔\nاور یہ پیغام کسی اپنے تک Share کریں۔",
+    "اگر یہ پیغام مفید لگا تو Like کریں۔\n\nاور یہ پیغام کسی اپنے تک Share کریں۔",
 ]
 VOICE_TEXT = (
     "السلام علیکم ورحمۃ اللہ وبرکاتہ۔ آج کا مختصر اسلامی پیغام۔ "
@@ -60,6 +61,12 @@ def run_renderer(title: str, body: str, footer: str, output: Path) -> None:
     ], check=True)
 
 
+def run_cta_renderer(output: Path) -> None:
+    subprocess.run([
+        "python", "scripts/render_text.py", "--cta", str(output)
+    ], check=True)
+
+
 scene_videos = []
 for i, text in enumerate(SCENES, 1):
     bg = OUT / f"scene_{i}_background.png"
@@ -83,10 +90,10 @@ current = "v0"
 current_duration = SCENE_SECONDS
 for i in range(1, len(scene_videos)):
     out = f"xf{i}"
-    offset = current_duration - 0.55
-    filters.append(f"[{current}][v{i}]xfade=transition=fade:duration=0.55:offset={offset:.2f}[{out}]")
+    offset = current_duration - XFADE_SECONDS
+    filters.append(f"[{current}][v{i}]xfade=transition=fade:duration={XFADE_SECONDS}:offset={offset:.2f}[{out}]")
     current = out
-    current_duration += SCENE_SECONDS - 0.55
+    current_duration += SCENE_SECONDS - XFADE_SECONDS
 
 silent = OUT / "silent.mp4"
 subprocess.run([
@@ -94,6 +101,21 @@ subprocess.run([
     "-map", f"[{current}]", "-t", "30", "-c:v", "libx264", "-profile:v", "baseline",
     "-level", "4.0", "-pix_fmt", "yuv420p", "-r", str(FPS), "-fps_mode", "cfr",
     "-preset", "medium", "-movflags", "+faststart", str(silent)
+], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+
+# Render Subscribe as an independent, fixed-position transparent layer. It is
+# deliberately composited after the scene xfade so the CTA cannot inherit any
+# scene-level movement or interpolation.
+cta_overlay = OUT / "subscribe_cta.png"
+run_cta_renderer(cta_overlay)
+cta_start = (len(SCENES) - 1) * (SCENE_SECONDS - XFADE_SECONDS)
+silent_with_cta = OUT / "silent_with_cta.mp4"
+subprocess.run([
+    "ffmpeg", "-y", "-i", str(silent), "-loop", "1", "-i", str(cta_overlay),
+    "-filter_complex", f"[0:v][1:v]overlay=0:0:format=auto:enable='between(t,{cta_start:.2f},30)'[v]",
+    "-map", "[v]", "-t", "30", "-c:v", "libx264", "-profile:v", "baseline",
+    "-level", "4.0", "-pix_fmt", "yuv420p", "-r", str(FPS), "-fps_mode", "cfr",
+    "-preset", "medium", "-movflags", "+faststart", str(silent_with_cta)
 ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 voice = OUT / "voice.mp3"
@@ -109,7 +131,7 @@ subprocess.run([
 
 video = OUT / "video.mp4"
 subprocess.run([
-    "ffmpeg", "-y", "-i", str(silent), "-i", str(voice), "-map", "0:v:0", "-map", "1:a:0", "-t", "30",
+    "ffmpeg", "-y", "-i", str(silent_with_cta), "-i", str(voice), "-map", "0:v:0", "-map", "1:a:0", "-t", "30",
     "-c:v", "libx264", "-profile:v", "baseline", "-level", "4.0", "-pix_fmt", "yuv420p",
     "-r", str(FPS), "-fps_mode", "cfr", "-c:a", "aac", "-profile:a", "aac_low", "-ar", "44100",
     "-ac", "2", "-b:a", "128k", "-af", "apad=pad_dur=30", "-movflags", "+faststart", str(video)
@@ -133,5 +155,6 @@ for path in OUT.glob("scene_*_background.png"):
     path.unlink(missing_ok=True)
 for path in OUT.glob("scene_*_text.png"):
     path.unlink(missing_ok=True)
-silent.unlink(missing_ok=True)
+for path in [silent, silent_with_cta, cta_overlay]:
+    path.unlink(missing_ok=True)
 print(f"Verified professional 1080x1920 H.264/AAC MP4 with full decode: {video}")
