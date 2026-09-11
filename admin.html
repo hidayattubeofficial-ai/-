@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hidayat Tube — Admin Control</title>
+<style>
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#0b1020;color:#eef2ff}main{max-width:1100px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:20px}.card{background:#151c31;border:1px solid #293451;border-radius:18px;padding:20px}.ok{color:#63e6a5}.off{color:#ffcf70}.muted{color:#9aa6c2}button{border:0;border-radius:12px;padding:11px 16px;background:#eef2ff;color:#0b1020;font-weight:700}.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#202a45;margin-left:8px}ul{line-height:1.9}
+</style></head><body><main>
+<div class="top"><div><h1>Hidayat Tube Admin</h1><div class="muted">Website + Luna automation control center</div></div><button onclick="location.reload()">Refresh</button></div>
+<div class="grid">
+<section class="card"><h2>Website</h2><p class="ok">● Automation ready</p><p class="muted">Health checks and deployment workflow configured.</p></section>
+<section class="card"><h2>Luna</h2><p class="ok">● Automation owner</p><p class="muted">Website operations and reporting.</p></section>
+<section class="card"><h2>YouTube</h2><p class="off">● Upload OFF <span class="badge">Approval required</span></p><p class="muted">No automatic public publishing.</p></section>
+<section class="card"><h2>Security</h2><p class="ok">● Human approval gate</p><p class="muted">API keys must remain server-side/secrets.</p></section>
+</div>
+<div class="grid"><section class="card"><h2>Workflow</h2><ul><li>Detect changes</li><li>Validate files</li><li>Run health/security checks</li><li>Prepare content</li><li>Require approval</li><li>Report result</li></ul></section>
+<section class="card"><h2>Control policy</h2><ul><li>Draft → Review → Approved → Publish</li><li>Website deployment only when explicitly approved</li><li>YouTube publishing remains disabled</li><li>Keep audit trail in GitHub Actions</li></ul></section></div>
+</main></body></html>
