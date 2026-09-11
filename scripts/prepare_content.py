@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 import subprocess
 
 from PIL import Image, ImageDraw
+from scripts.generate_voice import synthesize
 
 OUT = Path("output")
 OUT.mkdir(exist_ok=True)
@@ -23,7 +24,7 @@ VOICE_TEXT = (
     "اگر یہ پیغام مفید لگا تو لائک کریں۔ روزانہ اسلامی یاددہانیوں کے لیے چینل کو سبسکرائب کریں۔ اور یہ پیغام کسی اپنے تک شیئر کریں۔"
 )
 SCRIPT = f"# {TOPIC}\n\n{VOICE_TEXT}\n\nنوٹ: اشاعت سے پہلے قرآن و حدیث کے اصل حوالہ جات مستند ذریعے سے انسانی طور پر verify کیے جائیں۔\n"
-metadata = f"topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoformat()}\nduration_target_seconds: 30\nformat: YouTube Shorts 9:16\nresolution: 1080x1920\nframe_rate: 30\nvoice: Urdu TTS\nvideo_codec: H.264 Baseline\naudio_codec: AAC-LC\nsubscriber_cta: enabled\nlike_cta: enabled\nshare_cta: enabled\nvisual_style: professional dark-gold Islamic card design\nfont: Noto Nastaliq Urdu via Chromium Playwright\ntext_renderer: Chromium RTL/complex-text shaping\nstatus: REVIEW_REQUIRED\n"
+metadata = f"topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoformat()}\nduration_target_seconds: 30\nformat: YouTube Shorts 9:16\nresolution: 1080x1920\nframe_rate: 30\nvoice: Microsoft Edge Neural Urdu ({__import__('os').getenv('TTS_VOICE', 'ur-PK-AsadNeural')})\nvideo_codec: H.264 Baseline\naudio_codec: AAC-LC\nsubscriber_cta: enabled\nlike_cta: enabled\nshare_cta: enabled\nvisual_style: professional dark-gold Islamic card design\nfont: Noto Nastaliq Urdu via Chromium Playwright\ntext_renderer: Chromium RTL/complex-text shaping\nstatus: REVIEW_REQUIRED\n"
 (OUT / "script.md").write_text(SCRIPT, encoding="utf-8")
 (OUT / "metadata.txt").write_text(metadata, encoding="utf-8")
 
@@ -95,8 +96,16 @@ subprocess.run([
     "-preset", "medium", "-movflags", "+faststart", str(silent)
 ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
-voice = OUT / "voice.wav"
-subprocess.run(["espeak-ng", "-v", "ur", "-s", "145", "-p", "45", "-w", str(voice), VOICE_TEXT], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+voice = OUT / "voice.mp3"
+synthesize(VOICE_TEXT, str(voice))
+
+# Keep the generated MP3 in the review artifact so the human reviewer can listen to
+# the exact neural narration independently of the final MP4.
+subprocess.run([
+    "ffmpeg", "-y", "-i", str(voice), "-t", "30", "-vn", "-c:a", "aac",
+    "-ar", "44100", "-ac", "2", "-b:a", "128k", "-af", "apad=pad_dur=30",
+    "-movflags", "+faststart", "-f", "adts", "/tmp/voice_qa.aac"
+], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 video = OUT / "video.mp4"
 subprocess.run([
@@ -125,5 +134,4 @@ for path in OUT.glob("scene_*_background.png"):
 for path in OUT.glob("scene_*_text.png"):
     path.unlink(missing_ok=True)
 silent.unlink(missing_ok=True)
-voice.unlink(missing_ok=True)
 print(f"Verified professional 1080x1920 H.264/AAC MP4 with full decode: {video}")
