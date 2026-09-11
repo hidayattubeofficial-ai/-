@@ -32,9 +32,16 @@ async def _render_template(template_path: Path, replacements: dict[str, str], ou
         loaded = await page.evaluate("document.fonts.check('52px \\\"Noto Nastaliq Urdu\\\"')")
         if not loaded:
             raise RuntimeError("Noto Nastaliq Urdu did not load in Chromium")
-        logo_loaded = await page.locator(".brand-logo").evaluate("el => el.complete && el.naturalWidth > 0")
-        if not logo_loaded:
-            raise RuntimeError(f"Hidayat Tube branding logo did not load: {LOGO}")
+
+        # The full scene template contains the branding logo, while the CTA-only
+        # overlay intentionally does not. Validate the logo only when that
+        # template actually includes a .brand-logo element.
+        logo_locator = page.locator(".brand-logo")
+        if await logo_locator.count():
+            logo_loaded = await logo_locator.evaluate("el => el.complete && el.naturalWidth > 0")
+            if not logo_loaded:
+                raise RuntimeError(f"Hidayat Tube branding logo did not load: {LOGO}")
+
         await page.screenshot(path=str(out), omit_background=True, full_page=False)
         await browser.close()
 
