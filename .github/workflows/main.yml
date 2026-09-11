@@ -11,20 +11,20 @@ on:
 jobs:
   prepare:
     runs-on: ubuntu-latest
+    env:
+      TTS_VOICE: ur-PK-AsadNeural
+      TTS_RATE: "-10%"
+      TTS_PITCH: "+0Hz"
+      TTS_VOLUME: "+0%"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install FFmpeg, Urdu TTS, fonts, and browser dependencies
+      - name: Install FFmpeg, fonts, and browser dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg espeak-ng fonts-noto-core fonts-noto-cjk fonts-hosny-amiri
+          sudo apt-get install -y ffmpeg fonts-noto-core fonts-noto-cjk fonts-hosny-amiri
           fc-cache -f
           test -f /usr/share/fonts/truetype/noto/NotoNastaliqUrdu-Regular.ttf
           test -f /usr/share/fonts/truetype/noto/NotoNastaliqUrdu-Bold.ttf
@@ -36,10 +36,10 @@ jobs:
         run: python -m playwright install --with-deps chromium
 
       - name: Prepare content package
-        run: python scripts/prepare_content.py
+        run: PYTHONPATH=. python scripts/prepare_content.py
 
       - name: Validate content package
-        run: python scripts/validate_content.py
+        run: PYTHONPATH=. python scripts/validate_content.py
 
       - name: Upload review package
         uses: actions/upload-artifact@v4
