@@ -8,21 +8,25 @@ from playwright.async_api import async_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE = ROOT / "video_text.html"
+CTA_TEMPLATE = ROOT / "cta_only.html"
 
-async def render(title: str, body: str, footer: str, output_png: str) -> None:
-    template = TEMPLATE.read_text(encoding="utf-8")
-    html = template.replace("__TITLE__", escape(title))
-    html = html.replace("__BODY__", escape(body).replace("\n", "<br>"))
-    html = html.replace("__FOOTER__", escape(footer))
+
+async def _render_template(template_path: Path, replacements: dict[str, str], output_png: str) -> None:
+    template = template_path.read_text(encoding="utf-8")
+    for key, value in replacements.items():
+        template = template.replace(key, escape(value))
 
     temp_html = ROOT / "output" / "_video_text_runtime.html"
-    temp_html.write_text(html, encoding="utf-8")
+    temp_html.write_text(template, encoding="utf-8")
     out = Path(output_png)
     out.parent.mkdir(parents=True, exist_ok=True)
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(args=["--font-render-hinting=none"])
-        page = await browser.new_page(viewport={"width": 1080, "height": 1920}, device_scale_factor=1)
+        page = await browser.new_page(
+            viewport={"width": 1080, "height": 1920},
+            device_scale_factor=1,
+        )
         await page.goto(temp_html.as_uri(), wait_until="load")
         await page.evaluate("document.fonts.ready")
         await page.wait_for_timeout(500)
@@ -35,7 +39,26 @@ async def render(title: str, body: str, footer: str, output_png: str) -> None:
     temp_html.unlink(missing_ok=True)
     print(f"Verified Chromium Urdu shaping and saved: {out}")
 
+
+async def render(title: str, body: str, footer: str, output_png: str) -> None:
+    html = {
+        "__TITLE__": title,
+        "__BODY__": body,
+        "__FOOTER__": footer,
+    }
+    await _render_template(TEMPLATE, html, output_png)
+
+
+async def render_cta(output_png: str) -> None:
+    await _render_template(CTA_TEMPLATE, {}, output_png)
+
+
 if __name__ == "__main__":
-    if len(sys.argv) != 5:
-        raise SystemExit("Usage: render_text.py TITLE BODY FOOTER OUTPUT_PNG")
-    asyncio.run(render(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]))
+    if len(sys.argv) == 5:
+        asyncio.run(render(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]))
+    elif len(sys.argv) == 3 and sys.argv[1] == "--cta":
+        asyncio.run(render_cta(sys.argv[2]))
+    else:
+        raise SystemExit(
+            "Usage: render_text.py TITLE BODY FOOTER OUTPUT_PNG | render_text.py --cta OUTPUT_PNG"
+        )
