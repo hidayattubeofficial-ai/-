@@ -29,7 +29,8 @@ metadata = f"""topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoforma
 (OUT / "script.md").write_text(SCRIPT, encoding="utf-8")
 (OUT / "metadata.txt").write_text(metadata, encoding="utf-8")
 
-font_path = "/usr/share/fonts/truetype/noto/NotoNastaliqUrdu-Regular.ttf"
+# Use Amiri for reliable Urdu/Arabic glyph coverage in GitHub's Linux runner.
+font_path = "/usr/share/fonts/truetype/amiri/Amiri-Regular.ttf"
 font = ImageFont.truetype(font_path, 54)
 small = ImageFont.truetype(font_path, 38)
 
@@ -94,7 +95,10 @@ if any(item not in probe.stdout for item in required):
 if "format_name=mov,mp4,m4a,3gp,3g2,mj2" not in probe.stdout:
     raise SystemExit("Generated file is not a standard MP4 container")
 
+# Decode the entire MP4 before uploading; metadata-only checks are not enough.
+subprocess.run(["ffmpeg", "-v", "error", "-i", str(video), "-f", "null", "-"], check=True)
+
 for path in scenes + [concat, silent, voice]:
     path.unlink(missing_ok=True)
 
-print(f"Verified maximum-compatibility YouTube MP4: {video}")
+print(f"Verified maximum-compatibility YouTube MP4 with full decode: {video}")
