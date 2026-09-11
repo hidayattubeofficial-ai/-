@@ -1,4 +1,4 @@
-"""Prepare a playable Urdu Islamic reminder video for private review."""
+"""Prepare a YouTube-compatible Urdu Islamic reminder video for private review."""
 from pathlib import Path
 from datetime import datetime, timezone
 import subprocess
@@ -23,7 +23,7 @@ VOICE_TEXT = (
 )
 
 SCRIPT = f"""# {TOPIC}\n\n{VOICE_TEXT}\n\nنوٹ: اشاعت سے پہلے قرآن و حدیث کے اصل حوالہ جات مستند ذریعے سے انسانی طور پر verify کیے جائیں۔\n"""
-metadata = f"""topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoformat()}\nduration_target_seconds: 30\nvoice: Urdu TTS\nstatus: REVIEW_REQUIRED\n"""
+metadata = f"""topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoformat()}\nduration_target_seconds: 30\nvoice: Urdu TTS\nvideo_codec: H.264\naudio_codec: AAC\nstatus: REVIEW_REQUIRED\n"""
 (OUT / "script.md").write_text(SCRIPT, encoding="utf-8")
 (OUT / "metadata.txt").write_text(metadata, encoding="utf-8")
 
@@ -39,12 +39,11 @@ def rtl(text: str) -> str:
 def make_scene(text: str, path: Path, number: int) -> None:
     img = Image.new("RGB", (1280, 720), "black")
     draw = ImageDraw.Draw(img)
-    title = rtl(TOPIC)
+    draw.multiline_text((640, 145), rtl(TOPIC), font=font, fill="white", anchor="ma", align="center", spacing=16)
     body = "\n".join(rtl(line) for line in text.splitlines())
-    draw.multiline_text((640, 145), title, font=font, fill="white", anchor="ma", align="center", spacing=16)
     draw.multiline_text((640, 285), body, font=small, fill="white", anchor="ma", align="center", spacing=18)
     draw.text((640, 620), f"Scene {number} • REVIEW REQUIRED", font=small, fill="white", anchor="mm")
-    img.save(path)
+    img.save(path, format="PNG")
 
 scenes = []
 for index, text in enumerate(SCENES, start=1):
@@ -61,8 +60,9 @@ concat.write_text(
 silent = OUT / "silent.mp4"
 subprocess.run([
     "ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(concat),
-    "-vf", "scale=1280:720", "-r", "30", "-pix_fmt", "yuv420p",
-    "-c:v", "libx264", "-movflags", "+faststart", str(silent)
+    "-vf", "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2",
+    "-t", "30", "-r", "30", "-pix_fmt", "yuv420p", "-c:v", "libx264",
+    "-profile:v", "high", "-level", "4.0", "-movflags", "+faststart", str(silent)
 ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 voice = OUT / "voice.wav"
@@ -73,11 +73,22 @@ subprocess.run([
 video = OUT / "video.mp4"
 subprocess.run([
     "ffmpeg", "-y", "-i", str(silent), "-i", str(voice),
-    "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac",
-    "-b:a", "128k", "-shortest", "-movflags", "+faststart", str(video)
+    "-map", "0:v:0", "-map", "1:a:0", "-t", "30",
+    "-c:v", "libx264", "-profile:v", "high", "-level", "4.0",
+    "-pix_fmt", "yuv420p", "-r", "30", "-c:a", "aac", "-ar", "48000",
+    "-ac", "2", "-b:a", "128k", "-movflags", "+faststart", str(video)
 ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+
+# Verify the produced file has both a video and an audio stream before upload.
+probe = subprocess.run([
+    "ffprobe", "-v", "error", "-show_entries", "format=duration:stream=codec_type,codec_name",
+    "-of", "default=noprint_wrappers=1", str(video)
+], check=True, capture_output=True, text=True)
+print(probe.stdout)
+if "codec_type=video" not in probe.stdout or "codec_type=audio" not in probe.stdout:
+    raise SystemExit("Generated MP4 is missing video or audio stream")
 
 for path in scenes + [concat, silent, voice]:
     path.unlink(missing_ok=True)
 
-print(f"Playable Islamic review video prepared: {video}")
+print(f"Verified YouTube-compatible review video: {video}")
