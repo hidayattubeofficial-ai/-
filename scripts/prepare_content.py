@@ -12,6 +12,8 @@ W, H, FPS = 1080, 1920, 30
 SCENE_SECONDS = 7.5
 XFADE_SECONDS = 0.55
 TOPIC = "روزانہ اسلامی یاددہانی"
+BRANDING_DIR = Path("assets/branding")
+BRANDING_BG = BRANDING_DIR / "bg.png"
 SCENES = [
     "السلام علیکم ورحمۃ اللہ وبرکاتہ۔\nآج کا مختصر اسلامی پیغام",
     "نیکی کے چھوٹے اعمال کو معمولی نہ سمجھیں۔\nاللہ کی رضا کے لیے کیا گیا نیک عمل بہت قیمتی ہے۔",
@@ -25,33 +27,38 @@ VOICE_TEXT = (
     "اگر یہ پیغام مفید لگا تو لائک کریں۔ روزانہ اسلامی یاددہانیوں کے لیے چینل کو سبسکرائب کریں۔ اور یہ پیغام کسی اپنے تک شیئر کریں۔"
 )
 SCRIPT = f"# {TOPIC}\n\n{VOICE_TEXT}\n\nنوٹ: اشاعت سے پہلے قرآن و حدیث کے اصل حوالہ جات مستند ذریعے سے انسانی طور پر verify کیے جائیں۔\n"
-metadata = f"topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoformat()}\nduration_target_seconds: 30\nformat: YouTube Shorts 9:16\nresolution: 1080x1920\nframe_rate: 30\nvoice: Microsoft Edge Neural Urdu ({__import__('os').getenv('TTS_VOICE', 'ur-PK-AsadNeural')})\nvideo_codec: H.264 Baseline\naudio_codec: AAC-LC\nsubscriber_cta: enabled\nlike_cta: enabled\nshare_cta: enabled\nvisual_style: professional dark-gold Islamic card design\nfont: Noto Nastaliq Urdu via Chromium Playwright\ntext_renderer: Chromium RTL/complex-text shaping\nstatus: REVIEW_REQUIRED\n"
+metadata = f"topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoformat()}\nduration_target_seconds: 30\nformat: YouTube Shorts 9:16\nresolution: 1080x1920\nframe_rate: 30\nvoice: Microsoft Edge Neural Urdu ({__import__('os').getenv('TTS_VOICE', 'ur-PK-AsadNeural')})\nvideo_codec: H.264 Baseline\naudio_codec: AAC-LC\nsubscriber_cta: enabled\nlike_cta: enabled\nshare_cta: enabled\nvisual_style: Hidayat Tube full black-and-gold branding background\nfont: Noto Nastaliq Urdu via Chromium Playwright\ntext_renderer: Chromium RTL/complex-text shaping\nstatus: REVIEW_REQUIRED\n"
 (OUT / "script.md").write_text(SCRIPT, encoding="utf-8")
 (OUT / "metadata.txt").write_text(metadata, encoding="utf-8")
 
 
-def gradient_background() -> Image.Image:
-    img = Image.new("RGB", (W, H))
-    px = img.load()
-    for y in range(H):
-        t = y / (H - 1)
-        base = (8 + int(12*t), 13 + int(10*t), 24 + int(15*t))
-        for x in range(W):
-            glow = int(10 * max(0, 1 - (((x - W*0.5)/(W*0.7))**2)))
-            px[x, y] = (min(35, base[0]+glow), min(38, base[1]+glow), min(55, base[2]+glow))
-    return img
+def _cover_resize(img: Image.Image, size: tuple[int, int]) -> Image.Image:
+    """Resize/crop a supplied branding image to the exact Shorts canvas."""
+    img = img.convert("RGB")
+    scale = max(size[0] / img.width, size[1] / img.height)
+    resized = img.resize((round(img.width * scale), round(img.height * scale)), Image.Resampling.LANCZOS)
+    left = max(0, (resized.width - size[0]) // 2)
+    top = max(0, (resized.height - size[1]) // 2)
+    return resized.crop((left, top, left + size[0], top + size[1]))
 
 
 def make_background(path: Path) -> None:
-    img = gradient_background()
-    draw = ImageDraw.Draw(img)
-    gold = (150, 125, 60)
-    draw.rounded_rectangle((42,42,W-42,H-42), radius=34, outline=gold, width=3)
-    draw.rounded_rectangle((170,130,W-170,260), radius=45, fill=(22,29,45), outline=gold, width=2)
-    draw.rounded_rectangle((90,480,W-90,1375), radius=58, fill=(18,25,40), outline=gold, width=3)
-    draw.rounded_rectangle((125,515,W-125,550), radius=17, fill=gold)
-    draw.rounded_rectangle((210,1500,W-210,1605), radius=38, fill=(24,32,48), outline=gold, width=2)
-    draw.text((W//2,1760), "HIDAYAT TUBE", fill=(170,170,175), anchor="mm")
+    # Use the channel's supplied branding artwork as the actual scene background.
+    # This is intentionally different from the old generic gradient card: the
+    # branded artwork is now visible throughout the video, while the Chromium
+    # layer adds the readable Urdu title/body/footer on top.
+    if not BRANDING_BG.exists():
+        raise FileNotFoundError(f"Required Hidayat Tube branding background is missing: {BRANDING_BG}")
+
+    img = _cover_resize(Image.open(BRANDING_BG), (W, H))
+    draw = ImageDraw.Draw(img, "RGBA")
+
+    # Preserve the supplied artwork but add a restrained translucent reading area
+    # so the Nastaliq message remains legible without replacing the branding.
+    draw.rounded_rectangle((70, 455, W - 70, 1420), radius=58,
+                           fill=(8, 12, 24, 118), outline=(190, 155, 70, 190), width=3)
+    draw.rounded_rectangle((108, 492, W - 108, 535), radius=18,
+                           fill=(190, 155, 70, 215))
     img.save(path, format="PNG", optimize=True)
 
 
@@ -121,8 +128,6 @@ subprocess.run([
 voice = OUT / "voice.mp3"
 synthesize(VOICE_TEXT, str(voice))
 
-# Keep the generated MP3 in the review artifact so the human reviewer can listen to
-# the exact neural narration independently of the final MP4.
 subprocess.run([
     "ffmpeg", "-y", "-i", str(voice), "-t", "30", "-vn", "-c:a", "aac",
     "-ar", "44100", "-ac", "2", "-b:a", "128k", "-af", "apad=pad_dur=30",
@@ -157,4 +162,4 @@ for path in OUT.glob("scene_*_text.png"):
     path.unlink(missing_ok=True)
 for path in [silent, silent_with_cta, cta_overlay]:
     path.unlink(missing_ok=True)
-print(f"Verified professional 1080x1920 H.264/AAC MP4 with full decode: {video}")
+print(f"Verified professional 1080x1920 H.264/AAC MP4 with full Hidayat Tube branding background: {video}")
