@@ -1,0 +1,15 @@
+[build]
+  publish = "."
+
+# Public website is served from the repository root.
+# Admin and backend remain separate paths/services.
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 200
+
+[[redirects]]
+  from = "/messenger"
+  to = "/messenger.html"
+  status = 200
