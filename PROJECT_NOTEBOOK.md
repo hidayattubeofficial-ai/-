@@ -71,19 +71,10 @@
 ## 3. Hosting Plan — Netlify
 
 - **GitHub Pages:** Cancelled / no longer the hosting plan.
-- **Netlify:** Selected hosting target for the website and Messenger frontend.
+- **Netlify:** Previously selected hosting target; this is superseded by the current Cloudflare setting below.
 - GitHub remains the source-code repository and CI/automation system.
-- Netlify deployment will be configured separately; do not depend on GitHub Pages.
 - Messenger backend remains a separate secure server-side deployment and must keep credentials server-side.
-- Do not place API keys or backend secrets in the Netlify frontend.
-
-### Current Netlify milestone
-- [ ] Connect repository/site to Netlify.
-- [ ] Configure build/publish settings.
-- [ ] Verify Messenger frontend deployment.
-- [ ] Configure secure backend endpoint separately.
-- [ ] Verify `/api/chat` routing/proxy without exposing secrets.
-- [ ] Final production health/security check.
+- Do not place API keys or backend secrets in the frontend.
 
 ---
 
@@ -170,7 +161,7 @@ Potential categories:
 - GitHub Issues — error/task tracking.
 - GitHub Discussions — longer project notes if enabled.
 - GitHub Actions artifacts — review packages.
-- Netlify — website hosting/deployment.
+- Cloudflare — current website hosting/deployment target.
 - Generic webhook endpoint — optional notifications, only after a secret-based configuration is chosen.
 
 **Security:** Never commit webhook URLs containing secrets or tokens to this repository.
@@ -211,7 +202,7 @@ Never put the actual URL in this notebook or workflow source.
 | GitHub Artifacts | Review video/package storage | Active |
 | GitHub Issues | Error + remaining-work tracking | Available |
 | Canva | Visual/design workflow | Connected/available when needed |
-| Netlify | Website hosting | Selected / setup pending |
+| Cloudflare | Website hosting | Current / active target |
 | Webhook notifications | Optional run alerts | Not configured yet |
 
 **Rule:** Do not install or connect a service merely because it is free. Add it only if it solves a real project need and does not weaken security.
@@ -236,5 +227,45 @@ Never put the actual URL in this notebook or workflow source.
 | 2026-09-11 | #55 | Refined branded Short layout | Green |
 | 2026-09-11 | #56 | Refined CTA: smaller/lower/less dominant | Green |
 | 2026-09-12 | — | Cancelled GitHub Pages hosting plan; selected Netlify | Recorded |
+| 2026-09-12 | — | Current hosting setting clarified: Cloudflare is the actual website host; Netlify is not the active hosting target | Recorded |
 
 Add every important future change here.
+
+---
+
+## 11. Current Project Settings — IMPORTANT / OVERRIDES OLDER NOTES
+
+### Public website
+- **Actual website hosting target:** Cloudflare.
+- Public homepage is `index.html`.
+- Public site must show the Hidayat Tube Official experience only.
+- Admin controls, GitHub Actions, Project Files, Security panels, backend controls, and internal deployment information must **NOT** appear above or inside the public homepage hero section.
+- Login/Register UI belongs to the public site; authentication/backend connection is a separate concern.
+
+### Admin / backend separation
+- Admin panel is separate from the public homepage.
+- Backend and Messenger are separate from the public homepage.
+- Never mix admin/backend controls into the public hero or normal visitor-facing UI.
+
+### Cloudflare deployment state
+- Cloudflare currently has a Worker with static assets for `hidayattubeofficial`.
+- Current public Worker hostname: `hidayattubeofficial.hidayattubeofficial.workers.dev`.
+- No custom domain is currently configured in the verified Cloudflare dashboard state.
+- The existing repository workflow was restored to its original Cloudflare Pages workflow after an incorrect temporary Worker/Wrangler change.
+- Known deployment failure was **Cloudflare API authentication (HTTP 403)** at the Pages deployment step; the site build/preparation step itself completed successfully.
+- Do not claim that the deployment issue is fixed until a successful Cloudflare deployment is verified.
+
+### Change-control rule
+- **Do not change GitHub workflow files, deployment configuration, or hosting architecture without explicit user approval.**
+- Do not make an unsolicited workflow replacement merely to work around a hosting mismatch.
+- Before any future deployment change, first explain the current state and proposed change, then wait for explicit approval.
+
+### Repository safety
+- Never expose or copy secret/token values into this notebook.
+- GitHub Secrets cannot be read through the available GitHub integration; only configuration references can be documented.
+- Keep public-site files, admin files, and backend files logically separated.
+
+### Current rollback setting
+- The mistaken temporary `worker.js`, `wrangler.toml`, and Wrangler-based workflow change were removed from `main`.
+- The original Cloudflare Pages workflow was restored.
+- **Current instruction:** leave the workflow unchanged unless the user explicitly approves a deployment fix.
