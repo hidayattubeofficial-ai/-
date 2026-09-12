@@ -5,6 +5,8 @@ from time import monotonic
 from flask import Flask, jsonify, request
 from openai import OpenAI
 
+from luna_agent import run_luna
+
 app = Flask(__name__)
 MAX_MESSAGE_LENGTH = 4000
 WINDOW_SECONDS = 60
@@ -37,7 +39,7 @@ def get_client():
 
 @app.get("/health")
 def health():
-    return jsonify({"ok": True, "service": "messenger-backend"})
+    return jsonify({"ok": True, "service": "messenger-backend", "luna": True})
 
 
 @app.post("/api/chat")
@@ -61,6 +63,29 @@ def chat():
         return jsonify({"response": response.output_text})
     except Exception:
         return jsonify({"error": "backend request failed"}), 502
+
+
+@app.post("/api/luna/run")
+def luna_run():
+    """Admin-only server-side Luna agent endpoint."""
+    if not authorized(request):
+        return jsonify({"error": "unauthorized"}), 401
+    client_key = request.headers.get("X-Client-Key", "admin")[:128]
+    if rate_limited(f"luna:{client_key}"):
+        return jsonify({"error": "rate_limited"}), 429
+    body = request.get_json(silent=True) or {}
+    message = body.get("message")
+    context = body.get("context")
+    if not isinstance(message, str) or not message.strip():
+        return jsonify({"error": "message is required"}), 400
+    if len(message) > MAX_MESSAGE_LENGTH:
+        return jsonify({"error": "message is too long"}), 413
+    if context is not None and not isinstance(context, dict):
+        return jsonify({"error": "context must be an object"}), 400
+    try:
+        return jsonify({"response": run_luna(message, context)})
+    except Exception:
+        return jsonify({"error": "luna agent request failed"}), 502
 
 
 if __name__ == "__main__":
