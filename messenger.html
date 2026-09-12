@@ -26,17 +26,18 @@
 <header class="top"><div><div class="title">Hidayat Tube — Luna Messenger</div><div class="sub">Project control • secure frontend • approval gate active</div></div><div class="topright"><span class="badge">● GitHub connected</span><button class="icon" title="Theme" onclick="toggleTheme()">☾</button><button class="icon" title="Sidebar" onclick="toggleSide()">☰</button></div></header>
 <section id="chat" class="chat">
 <div class="welcome"><h1>السلام علیکم 👋</h1><p>Hidayat Tube project کے لیے Luna-style control messenger</p><div class="quick"><button onclick="quick('آج کے Actions چیک کرو')">Actions چیک</button><button onclick="quick('Security status چیک کرو')">Security</button><button onclick="quick('Project files بتاؤ')">Files</button><button onclick="quick('YouTube upload status بتاؤ')">YouTube status</button></div></div>
-<div class="msg bot"><div class="meta">Luna • ابھی</div>میں Hidayat Tube Messenger میں تیار ہوں۔ آپ project، Actions، files اور security کے بارے میں command دے سکتے ہیں۔ YouTube upload approval کے بغیر OFF رہے گا۔</div>
+<div class="msg bot"><div class="meta">Luna • ابھی</div>میں Hidayat Tube Messenger میں تیار ہوں۔ آپ project، Actions، files اور security کے بارے میں command دے سکتے ہیں۔</div>
 <div id="typing" class="typing">Luna سوچ رہا ہے…</div>
 </section>
-<div class="composerWrap"><div class="composer"><label class="attach" title="Attachment">📎<input id="file" type="file" onchange="filePicked(this)"></label><textarea id="input" rows="1" placeholder="Luna کو پیغام لکھیں…" onkeydown="keySend(event)" oninput="resize(this)"></textarea><button class="send" onclick="send()">Send</button></div><div class="hint">Enter = send • Shift+Enter = نئی لائن • API key کو frontend میں نہ رکھیں</div></div>
+<div class="composerWrap"><div class="composer"><label class="attach" title="Attachment">📎<input id="file" type="file" onchange="filePicked(this)"></label><textarea id="input" rows="1" placeholder="Luna کو پیغام لکھیں…" onkeydown="keySend(event)" oninput="resize(this)"></textarea><button class="send" onclick="send()">Send</button></div><div class="hint">Enter = send • Shift+Enter = نئی لائن • secure backend connection</div></div>
 </main></div>
 <script>
 const chat=document.getElementById('chat'),input=document.getElementById('input'),typing=document.getElementById('typing');
-function esc(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+const API_URL='/api/chat';
+const AUTH_TOKEN='';
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function add(cls,text){chat.insertAdjacentHTML('beforeend',`<div class="msg ${cls}"><div class="meta">${cls==='me'?'آپ':'Luna'} • ابھی</div>${esc(text)}</div>`);chat.scrollTop=chat.scrollHeight}
-function send(){const t=input.value.trim();if(!t)return;add('me',t);input.value='';resize(input);typing.classList.add('show');setTimeout(()=>{typing.classList.remove('show');add('bot',reply(t))},450)}
-function reply(t){const x=t.toLowerCase();if(x.includes('action'))return'Actions status: آخری verified run کامیاب ہے۔ YouTube upload step skipped ہے اور approval gate برقرار ہے۔';if(x.includes('security'))return'Security status: CodeQL analysis کامیاب ہے۔ API key کو frontend code میں شامل نہیں کیا گیا۔';if(x.includes('file'))return'Project میں messenger.html، .github/workflows، assets/branding اور scripts موجود ہیں۔';if(x.includes('youtube'))return'YouTube upload ابھی OFF ہے۔ Human approval کے بغیر public publishing نہیں ہوگی۔';return'پیغام موصول ہوا۔ یہ upgraded Messenger UI ہے۔ حقیقی GitHub/API response کے لیے backend یا workflow bridge استعمال ہونا چاہیے؛ secret API key browser میں expose نہیں کرنی۔'}
+async function send(){const t=input.value.trim();if(!t)return;add('me',t);input.value='';resize(input);typing.classList.add('show');try{const headers={'Content-Type':'application/json'};if(AUTH_TOKEN)headers.Authorization='Bearer '+AUTH_TOKEN;const r=await fetch(API_URL,{method:'POST',headers,body:JSON.stringify({message:t})});const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error(data.error||'backend request failed');add('bot',data.response||data.reply||'خالی جواب موصول ہوا۔')}catch(e){add('bot','Backend ابھی live/configured نہیں ہے۔ Messenger UI محفوظ fallback mode میں ہے۔')}finally{typing.classList.remove('show')}}
 function quick(t){input.value=t;send()}
 function systemMsg(t){add('bot',t)}
 function keySend(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}}
