@@ -68,7 +68,26 @@
 
 ---
 
-## 3. Daily Report
+## 3. Hosting Plan — Netlify
+
+- **GitHub Pages:** Cancelled / no longer the hosting plan.
+- **Netlify:** Selected hosting target for the website and Messenger frontend.
+- GitHub remains the source-code repository and CI/automation system.
+- Netlify deployment will be configured separately; do not depend on GitHub Pages.
+- Messenger backend remains a separate secure server-side deployment and must keep credentials server-side.
+- Do not place API keys or backend secrets in the Netlify frontend.
+
+### Current Netlify milestone
+- [ ] Connect repository/site to Netlify.
+- [ ] Configure build/publish settings.
+- [ ] Verify Messenger frontend deployment.
+- [ ] Configure secure backend endpoint separately.
+- [ ] Verify `/api/chat` routing/proxy without exposing secrets.
+- [ ] Final production health/security check.
+
+---
+
+## 4. Daily Report
 
 Use this section once per work session.
 
@@ -101,7 +120,7 @@ Use this section once per work session.
 
 ---
 
-## 4. Error Report
+## 5. Error Report
 
 ### Template
 **Date/time:**  
@@ -124,7 +143,7 @@ Use this section once per work session.
 
 ---
 
-## 5. Remaining Work
+## 6. Remaining Work
 
 ### Priority 1 — Before publishing
 - [ ] Visual inspection of latest artifact.
@@ -151,13 +170,14 @@ Potential categories:
 - GitHub Issues — error/task tracking.
 - GitHub Discussions — longer project notes if enabled.
 - GitHub Actions artifacts — review packages.
+- Netlify — website hosting/deployment.
 - Generic webhook endpoint — optional notifications, only after a secret-based configuration is chosen.
 
 **Security:** Never commit webhook URLs containing secrets or tokens to this repository.
 
 ---
 
-## 6. Webhook / Notification Plan
+## 7. Webhook / Notification Plan
 
 ### Recommended design
 `GitHub Actions → notification webhook → phone/chat notification`
@@ -183,7 +203,7 @@ Never put the actual URL in this notebook or workflow source.
 
 ---
 
-## 7. Free Tools / Applications — Approval List
+## 8. Free Tools / Applications — Approval List
 
 | Tool/category | Purpose | Status |
 |---|---|---|
@@ -191,13 +211,14 @@ Never put the actual URL in this notebook or workflow source.
 | GitHub Artifacts | Review video/package storage | Active |
 | GitHub Issues | Error + remaining-work tracking | Available |
 | Canva | Visual/design workflow | Connected/available when needed |
+| Netlify | Website hosting | Selected / setup pending |
 | Webhook notifications | Optional run alerts | Not configured yet |
 
 **Rule:** Do not install or connect a service merely because it is free. Add it only if it solves a real project need and does not weaken security.
 
 ---
 
-## 8. Current Verified State
+## 9. Current Verified State
 
 - Latest known run: **#56**
 - Run #56: **Success / Green**
@@ -208,11 +229,12 @@ Never put the actual URL in this notebook or workflow source.
 
 ---
 
-## 9. Change Log
+## 10. Change Log
 
 | Date | Run | Change | Result |
 |---|---:|---|---|
 | 2026-09-11 | #55 | Refined branded Short layout | Green |
 | 2026-09-11 | #56 | Refined CTA: smaller/lower/less dominant | Green |
+| 2026-09-12 | — | Cancelled GitHub Pages hosting plan; selected Netlify | Recorded |
 
 Add every important future change here.
