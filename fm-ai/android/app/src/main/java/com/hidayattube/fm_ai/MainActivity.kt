@@ -99,7 +99,7 @@ fun FmHomeAdminScreen(context: Context) {
 
                     OutlinedButton(enabled = !discovering, onClick = {
                         if (android.os.Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(context, Manifest.permission.NEARBY_WIFI_DEVICES) != PackageManager.PERMISSION_GRANTED) {
-                            context.requestPermissions(arrayOf(Manifest.permission.NEARBY_WIFI_DEVICES), 7001)
+                            (context as? ComponentActivity)?.requestPermissions(arrayOf(Manifest.permission.NEARBY_WIFI_DEVICES), 7001)
                             status = "Nearby Wi-Fi permission required; allow it, then tap Auto Discover again."
                             return@OutlinedButton
                         }
