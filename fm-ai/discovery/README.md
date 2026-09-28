@@ -14,6 +14,8 @@ The existing FM Computer API remains unchanged at `127.0.0.1:8080`.
 - `start-discovery.sh` — Linux/macOS launcher.
 - `run-discovery.ps1` / `run-discovery.sh` — direct runners.
 - `requirements.txt` — isolated discovery dependency.
+- `setup-and-start.ps1` / `setup-and-start.sh` — creates an isolated Python environment, installs zeroconf, runs preflight, then starts discovery.
+- `stop-discovery.ps1` / `stop-discovery.sh` — stops the local discovery process using its PID file.
 
 ## Safety
 
