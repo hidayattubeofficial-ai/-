@@ -21,19 +21,23 @@ workflows:
           test -f fm-ai/android/app/src/main/java/com/hidayattube/fm_ai/MainActivity.kt
           test -f fm-ai/android/app/src/main/AndroidManifest.xml
           test -f fm-ai/discovery/advertise.py
+          test -f fm-ai/discovery/preflight.py
           test -f fm-ai/discovery/requirements.txt
           test -f fm-ai/discovery/start-discovery.ps1
           test -f fm-ai/discovery/start-discovery.sh
+          test -f fm-ai/discovery/run-discovery.ps1
+          test -f fm-ai/discovery/run-discovery.sh
           test -f fm-ai/discovery/discovery-status.ps1
           test -f fm-ai/discovery/install-discovery.ps1
           test -f fm-ai/discovery/README.md
           grep -q 'YOUTUBE_AUTO_PUBLISH=false' fm-ai/config/fm-ai.env.example
           grep -q 'FM_COMPUTER_API=http://127.0.0.1:8080' fm-ai/config/fm-ai.env.example
           grep -q '_fmcomputer._tcp' fm-ai/discovery/advertise.py
+          grep -q '_fmcomputer._tcp' fm-ai/discovery/preflight.py
           grep -q 'zeroconf' fm-ai/discovery/requirements.txt
           echo "FM AI configuration: OK"
           echo "Android project structure: OK"
-          echo "LAN discovery source: OK"
+          echo "LAN discovery source and preflight: OK"
           echo "CodeMagic role: build/validation helper only"
           echo "FM Computer runtime remains local"
           echo "YouTube auto-publish remains OFF"
