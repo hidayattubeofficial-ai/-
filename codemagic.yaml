@@ -29,6 +29,10 @@ workflows:
           test -f fm-ai/discovery/run-discovery.sh
           test -f fm-ai/discovery/discovery-status.ps1
           test -f fm-ai/discovery/install-discovery.ps1
+          test -f fm-ai/discovery/setup-and-start.ps1
+          test -f fm-ai/discovery/stop-discovery.ps1
+          test -f fm-ai/discovery/setup-and-start.sh
+          test -f fm-ai/discovery/stop-discovery.sh
           test -f fm-ai/discovery/README.md
           grep -q 'YOUTUBE_AUTO_PUBLISH=false' fm-ai/config/fm-ai.env.example
           grep -q 'FM_COMPUTER_API=http://127.0.0.1:8080' fm-ai/config/fm-ai.env.example
