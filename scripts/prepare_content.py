@@ -26,6 +26,7 @@ BROLL = [
     BRANDING_DIR / "video brand post sample.png",
     BRANDING_DIR / "banner2.png",
 ]
+NATURE_BROLL = sorted([p for p in NATURE_DIR.iterdir() if p.suffix.lower() in {".mp4", ".webm", ".ogv", ".mov"}]) if NATURE_DIR.exists() else []
 FALLBACK_BG = BRANDING_DIR / "bg.png"
 
 SCENES = [
@@ -48,7 +49,7 @@ SCRIPT = (
 metadata = (
     f"topic: {TOPIC}\ncreated_utc: {datetime.now(timezone.utc).isoformat()}\n"
     f"duration_target_seconds: {DURATION}\nformat: YouTube Shorts 9:16\nresolution: {W}x{H}\n"
-    f"frame_rate: {FPS}\nvoice: Microsoft Edge Neural Urdu ({os.getenv('TTS_VOICE', 'ur-PK-AsadNeural')})\n"
+    f"category: {CATEGORY}\nframe_rate: {FPS}\nvoice: Microsoft Edge Neural Urdu ({os.getenv('TTS_VOICE', 'ur-PK-AsadNeural')})\n"
     "video_codec: H.264 Baseline\naudio_codec: AAC-LC\nsubscriber_cta: enabled\n"
     "like_cta: enabled\nshare_cta: enabled\nvisual_style: Cinematic Hidayat Tube black-and-gold Islamic B-roll\n"
     "font: Noto Nastaliq Urdu via Chromium Playwright\ntext_renderer: Chromium RTL/complex-text shaping\nstatus: REVIEW_REQUIRED\n"
@@ -118,6 +119,11 @@ for i, text in enumerate(SCENES, 1):
     overlay = OUT / f"scene_{i}_text.png"
     scene_video = OUT / f"scene_{i}.mp4"
     source = BROLL[(i - 1) % len(BROLL)] if BROLL else FALLBACK_BG
+    if NATURE_BROLL:
+        nature_source = NATURE_BROLL[(i - 1) % len(NATURE_BROLL)]
+        nature_frame = OUT / f"nature_{i}.jpg"
+        subprocess.run(["ffmpeg", "-y", "-ss", "2", "-i", str(nature_source), "-frames:v", "1", "-q:v", "2", str(nature_frame)], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+        source = nature_frame
     if not source.exists():
         source = FALLBACK_BG
     make_background(bg, source)
@@ -195,5 +201,7 @@ for path in OUT.glob("scene_*_background.png"):
 for path in OUT.glob("scene_*_text.png"):
     path.unlink(missing_ok=True)
 for path in [silent, silent_with_cta, cta_overlay]:
+    path.unlink(missing_ok=True)
+for path in OUT.glob("nature_*.jpg"):
     path.unlink(missing_ok=True)
 print(f"Verified cinematic 1080x1920 H.264/AAC MP4 with Hidayat Tube branding: {video}")
