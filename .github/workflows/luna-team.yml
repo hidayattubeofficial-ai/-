@@ -26,7 +26,7 @@ jobs:
     name: Website Team
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Validate website files
         shell: bash
         run: |
@@ -39,7 +39,7 @@ jobs:
     name: Security Team
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Scan tracked source for obvious credential leaks
         shell: bash
         run: |
@@ -54,7 +54,7 @@ jobs:
     name: Content & YouTube Team
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Enforce human approval gate
         shell: bash
         run: |
