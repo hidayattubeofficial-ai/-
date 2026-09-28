@@ -1,0 +1,40 @@
+workflows:
+  fm_ai_validation:
+    name: FM AI - Local Survival Computer validation
+    max_build_duration: 30
+    environment:
+      vars:
+        FM_COMPUTER_API: http://127.0.0.1:8080
+        OLLAMA_BASE_URL: http://127.0.0.1:11434
+        FM_HOME_APPROVAL_REQUIRED: "true"
+        YOUTUBE_AUTO_PUBLISH: "false"
+    scripts:
+      - name: Validate FM AI configuration
+        script: |
+          set -e
+          test -f fm-ai/README.md
+          test -f fm-ai/config/fm-ai.env.example
+          test -f fm-ai/scripts/health-check.ps1
+          test -f fm-ai/scripts/health-check.sh
+          grep -q 'YOUTUBE_AUTO_PUBLISH=false' fm-ai/config/fm-ai.env.example
+          grep -q 'FM_COMPUTER_API=http://127.0.0.1:8080' fm-ai/config/fm-ai.env.example
+          echo "FM AI configuration: OK"
+          echo "CodeMagic role: build/validation helper only"
+          echo "FM Computer runtime remains local"
+          echo "YouTube auto-publish remains OFF"
+      - name: Optional Android build
+        script: |
+          set -e
+          if [ -d android ]; then
+            if [ -x android/gradlew ]; then
+              cd android
+              ./gradlew assembleDebug
+            else
+              echo "android/ exists but gradlew is missing; skipping Android build."
+            fi
+          else
+            echo "No Android project yet; local runtime validation completed."
+          fi
+    artifacts:
+      - fm-ai/data/health/latest.txt
+      - android/app/build/outputs/**/*.apk
