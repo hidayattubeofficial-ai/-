@@ -2,6 +2,7 @@
 
 import importlib.util
 import socket
+import sys
 import urllib.request
 
 PORT = 8080
@@ -52,7 +53,8 @@ def main():
         print("Preflight FAILED: install zeroconf.")
         return 1
     print("Preflight PASSED: LAN API is reachable and ready for DNS-SD.")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
