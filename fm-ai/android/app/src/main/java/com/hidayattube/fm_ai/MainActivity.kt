@@ -40,6 +40,7 @@ fun FmHomeAdminScreen(context: Context) {
     var discovering by remember { mutableStateOf(false) }
     var discoveryState by remember { mutableStateOf("Not checked") }
     var discoveredHost by remember { mutableStateOf<String?>(null) }
+    var discoveryMessage by remember { mutableStateOf("Ready to search") }
     var selected by remember { mutableStateOf("Dashboard") }
     val scope = rememberCoroutineScope()
 
@@ -97,17 +98,20 @@ fun FmHomeAdminScreen(context: Context) {
                         discovering = true
                         status = "Searching local network…"
                         discoveryState = "Searching…"
+                        discoveryMessage = "Looking for FM Computer on the local network"
                         discoverFmComputer(context) { discovered ->
                             discovering = false
                             if (discovered != null) {
                                 discoveredHost = discovered
                                 discoveryState = "Ready"
+                                discoveryMessage = "FM Computer found via local discovery"
                                 baseUrl = discovered
                                 prefs.edit().putString("fm_computer_url", discovered).apply()
                                 status = "FM Computer found: $discovered"
                             } else {
                                 discoveredHost = null
                                 discoveryState = "Not found"
+                                discoveryMessage = "No FM Computer advertisement found"
                                 status = "FM Computer not found; enter its current LAN URL."
                             }
                         }
@@ -124,6 +128,7 @@ fun FmHomeAdminScreen(context: Context) {
                         Text("LAN Discovery", style = MaterialTheme.typography.titleMedium)
                         Text("Service: _fmcomputer._tcp.")
                         Text("Discovery: $discoveryState")
+                        Text(discoveryMessage, style = MaterialTheme.typography.bodySmall)
                         Text("FM Computer: ${discoveredHost ?: "Not discovered"}")
                         Text("API: $baseUrl")
                         Text("Runtime: local only")
@@ -226,4 +231,5 @@ private fun discoverFmComputer(context: Context, callback: (String?) -> Unit) {
         android.net.nsd.NsdManager.PROTOCOL_DNS_SD,
         listener
     )
+    android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({ finish(null) }, 8000)
 }
