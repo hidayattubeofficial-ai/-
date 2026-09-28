@@ -1,17 +1,17 @@
-# FM AI Approval Record
+# FM AI Approval
 
 Status: APPROVED
 
 Approved scope:
-- FM AI Android admin/control center
-- FM Computer LAN discovery using `_fmcomputer._tcp.`
-- Local discovery launcher and status checks
-- Existing FM Computer API at `127.0.0.1:8080` remains unchanged
-- FM Home approval/governance remains required
+- FM AI Android control center
+- Android Nearby Wi-Fi permission flow for LAN discovery
+- FM Computer LAN discovery via _fmcomputer._tcp.
+- Existing FM Computer API remains unchanged
+- FM Home remains the approval/governance layer
 - YouTube automatic publishing remains OFF
+- Human approval remains required for protected actions
 
-Deployment rule:
-- This approval authorizes the prepared implementation.
-- It does not claim that software has been installed or executed on FM Computer.
-- Local installation/runtime execution must occur on the FM Computer itself.
-- No GitHub Actions runtime is required for FM AI.
+Approval does not claim that FM Computer software has been installed or executed. Local installation, runtime execution, and real-device testing must be performed on FM Computer / Android device.
+
+GitHub Actions is not required as the FM AI runtime.
+CodeMagic is a build/package validation helper only.
