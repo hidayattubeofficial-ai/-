@@ -8,6 +8,8 @@ import socket
 import signal
 import sys
 import time
+import urllib.error
+import urllib.request
 
 from zeroconf import ServiceInfo, Zeroconf
 
@@ -31,19 +33,29 @@ def get_lan_addresses():
     return addresses
 
 
+def lan_health(address, port):
+    try:
+        with urllib.request.urlopen(f"http://{address}:{port}/health", timeout=2) as response:
+            return 200 <= response.status < 300
+    except (OSError, urllib.error.URLError):
+        return False
+
+
 def main():
     port = int(os.getenv("FM_COMPUTER_PORT", str(DEFAULT_PORT)))
     addresses = get_lan_addresses()
+    reachable = [address for address in addresses if lan_health(address, port)]
 
-    if not addresses:
-        print("No LAN IPv4 address found; discovery advertisement not started.")
+    if not reachable:
+        print("FM Computer LAN API is not reachable on any LAN IPv4 address.")
+        print("Required: bind the FM Computer API to 0.0.0.0:8080 and allow LAN TCP/8080.")
         return 1
 
     zeroconf = Zeroconf()
     info = ServiceInfo(
         SERVICE_TYPE,
         SERVICE_NAME,
-        addresses=[socket.inet_aton(address) for address in addresses],
+        addresses=[socket.inet_aton(address) for address in reachable],
         port=port,
         properties={
             b"name": b"FM Computer",
@@ -54,7 +66,7 @@ def main():
 
     zeroconf.register_service(info)
     print(f"FM Computer discovery active: {SERVICE_NAME} port={port}")
-    print("LAN addresses:", ", ".join(addresses))
+    print("Advertised LAN addresses:", ", ".join(reachable))
 
     stopping = False
 
