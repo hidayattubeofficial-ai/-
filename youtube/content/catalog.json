@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "policy": "Channel theme only: Quran, Hadith, Namaz, Neki, Naat. No fiqh/fatwa content.",
+  "items": [
+    {
+      "category": "quran",
+      "content_id": "quran-001",
+      "topic_en": "Allah ki rehmat aur umeed",
+      "topic_ur": "رحمتِ الٰہی اور امید"
+    },
+    {
+      "category": "quran",
+      "content_id": "quran-002",
+      "topic_en": "Sabr aur Allah ki madad",
+      "topic_ur": "صبر اور اللہ کی مدد"
+    },
+    {
+      "category": "quran",
+      "content_id": "quran-003",
+      "topic_en": "Shukr aur Allah ki نعمتیں",
+      "topic_ur": "شکر اور اللہ کی نعمتیں"
+    },
+    {
+      "category": "quran",
+      "content_id": "quran-004",
+      "topic_en": "Dil ko Allah ki yaad se sukoon",
+      "topic_ur": "دل کو اللہ کی یاد سے سکون"
+    },
+    {
+      "category": "hadith",
+      "content_id": "hadith-001",
+      "topic_en": "Achhi baat kehna aur khamoshi",
+      "topic_ur": "اچھی بات کہنا اور خاموشی"
+    },
+    {
+      "category": "hadith",
+      "content_id": "hadith-002",
+      "topic_en": "Muskurahat aur sadaqah",
+      "topic_ur": "مسکراہٹ اور صدقہ"
+    },
+    {
+      "category": "hadith",
+      "content_id": "hadith-003",
+      "topic_en": "Narmi aur husn-e-akhlaq",
+      "topic_ur": "نرمی اور حسنِ اخلاق"
+    },
+    {
+      "category": "hadith",
+      "content_id": "hadith-004",
+      "topic_en": "Padosi ke huqooq",
+      "topic_ur": "پڑوسی کے حقوق"
+    },
+    {
+      "category": "namaz",
+      "content_id": "namaz-001",
+      "topic_en": "Namaz aur dil ka sukoon",
+      "topic_ur": "نماز اور دل کا سکون"
+    },
+    {
+      "category": "namaz",
+      "content_id": "namaz-002",
+      "topic_en": "Fajr ki barkat",
+      "topic_ur": "فجر کی برکت"
+    },
+    {
+      "category": "namaz",
+      "content_id": "namaz-003",
+      "topic_en": "Namaz mein tawajjoh",
+      "topic_ur": "نماز میں توجہ"
+    },
+    {
+      "category": "namaz",
+      "content_id": "namaz-004",
+      "topic_en": "Namaz ki pabandi",
+      "topic_ur": "نماز کی پابندی"
+    },
+    {
+      "category": "neki",
+      "content_id": "neki-001",
+      "topic_en": "Walidain ke saath husn-e-sulook",
+      "topic_ur": "والدین کے ساتھ حسنِ سلوک"
+    },
+    {
+      "category": "neki",
+      "content_id": "neki-002",
+      "topic_en": "Kisi ki mushkil asaan karna",
+      "topic_ur": "کسی کی مشکل آسان کرنا"
+    },
+    {
+      "category": "neki",
+      "content_id": "neki-003",
+      "topic_en": "Sadaqah aur chhoti neki",
+      "topic_ur": "صدقہ اور چھوٹی نیکی"
+    },
+    {
+      "category": "neki",
+      "content_id": "neki-004",
+      "topic_en": "Padosi ke saath achha rawayya",
+      "topic_ur": "پڑوسی کے ساتھ اچھا رویہ"
+    },
+    {
+      "category": "naat",
+      "content_id": "naat-001",
+      "topic_en": "Muhabbat-e-Rasool ﷺ",
+      "topic_ur": "محبتِ رسول ﷺ"
+    },
+    {
+      "category": "naat",
+      "content_id": "naat-002",
+      "topic_en": "Darood o salam ki yaad",
+      "topic_ur": "درود و سلام کی یاد"
+    },
+    {
+      "category": "naat",
+      "content_id": "naat-003",
+      "topic_en": "Seerat se muhabbat",
+      "topic_ur": "سیرت سے محبت"
+    },
+    {
+      "category": "naat",
+      "content_id": "naat-004",
+      "topic_en": "Madina ki yaad",
+      "topic_ur": "مدینہ کی یاد"
+    }
+  ]
+}
