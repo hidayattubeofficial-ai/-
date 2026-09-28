@@ -55,22 +55,20 @@ jobs:
           mkdir -p output
           python scripts/prepare_content.py
       - name: Save permanent story and manifest
-        env:
-          CATEGORY: ${{ inputs.category }}
         run: |
           stamp=$(date -u +%Y%m%dT%H%M%SZ)
+          CATEGORY="$VIDEO_CATEGORY"
           mkdir -p "youtube/stories/$CATEGORY" "youtube/manifests/$CATEGORY"
           cp output/script.md "youtube/stories/$CATEGORY/$stamp.md"
-          cp output/metadata.txt "youtube/manifests/$CATEGORY/$stamp.txt"
+          { echo "content_id: $CONTENT_ID"; cat output/metadata.txt; } > "youtube/manifests/$CATEGORY/$stamp.txt"
           git config user.name "hidayattubeofficial-ai"
           git config user.email "hidayattubeofficial@gmail.com"
           git add youtube/stories youtube/manifests
           git diff --cached --quiet || git commit -m "Save YouTube story and manifest [$CATEGORY]"
           git push
       - name: Collect review package
-        env:
-          CATEGORY: ${{ inputs.category }}
         run: |
+          CATEGORY="$VIDEO_CATEGORY"
           mkdir -p "review/$CATEGORY"
           cp output/video.mp4 "review/$CATEGORY/HidayatTube-$CATEGORY.mp4"
           cp output/voice.mp3 "review/$CATEGORY/voice.mp3"
