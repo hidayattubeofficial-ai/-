@@ -38,6 +38,8 @@ fun FmHomeAdminScreen(context: Context) {
     var status by remember { mutableStateOf("Not checked") }
     var checking by remember { mutableStateOf(false) }
     var discovering by remember { mutableStateOf(false) }
+    var discoveryState by remember { mutableStateOf("Not checked") }
+    var discoveredHost by remember { mutableStateOf<String?>(null) }
     var selected by remember { mutableStateOf("Dashboard") }
     val scope = rememberCoroutineScope()
 
@@ -94,13 +96,18 @@ fun FmHomeAdminScreen(context: Context) {
                     OutlinedButton(enabled = !discovering, onClick = {
                         discovering = true
                         status = "Searching local network…"
+                        discoveryState = "Searching…"
                         discoverFmComputer(context) { discovered ->
                             discovering = false
                             if (discovered != null) {
+                                discoveredHost = discovered
+                                discoveryState = "Ready"
                                 baseUrl = discovered
                                 prefs.edit().putString("fm_computer_url", discovered).apply()
                                 status = "FM Computer found: $discovered"
                             } else {
+                                discoveredHost = null
+                                discoveryState = "Not found"
                                 status = "FM Computer not found; enter its current LAN URL."
                             }
                         }
@@ -108,6 +115,21 @@ fun FmHomeAdminScreen(context: Context) {
                 }
             }
             item { Text(status) }
+            item {
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Column(
+                        Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Text("LAN Discovery", style = MaterialTheme.typography.titleMedium)
+                        Text("Service: _fmcomputer._tcp.")
+                        Text("Discovery: $discoveryState")
+                        Text("FM Computer: ${discoveredHost ?: "Not discovered"}")
+                        Text("API: $baseUrl")
+                        Text("Runtime: local only")
+                    }
+                }
+            }
         }
 
         if (selected != "Dashboard" && selected != "FM Computer") {
@@ -146,6 +168,7 @@ fun FmHomeAdminScreen(context: Context) {
         }
 
         item {
+            Text("Discovery status is informational; no remote start/stop is exposed.")
             Text("Mobile IP can change; the saved URL and local discovery are used instead.")
             Text("Discovery service: _fmcomputer._tcp.")
             Text("YouTube publishing: OFF")
