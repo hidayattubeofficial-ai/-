@@ -16,25 +16,24 @@ workflows:
           test -f fm-ai/config/fm-ai.env.example
           test -f fm-ai/scripts/health-check.ps1
           test -f fm-ai/scripts/health-check.sh
+          test -f fm-ai/android/settings.gradle.kts
+          test -f fm-ai/android/app/build.gradle.kts
+          test -f fm-ai/android/app/src/main/java/com/hidayattube/fm_ai/MainActivity.kt
           grep -q 'YOUTUBE_AUTO_PUBLISH=false' fm-ai/config/fm-ai.env.example
           grep -q 'FM_COMPUTER_API=http://127.0.0.1:8080' fm-ai/config/fm-ai.env.example
           echo "FM AI configuration: OK"
+          echo "Android project structure: OK"
           echo "CodeMagic role: build/validation helper only"
           echo "FM Computer runtime remains local"
           echo "YouTube auto-publish remains OFF"
-      - name: Optional Android build
+      - name: Android debug build
         script: |
           set -e
-          if [ -d android ]; then
-            if [ -x android/gradlew ]; then
-              cd android
-              ./gradlew assembleDebug
-            else
-              echo "android/ exists but gradlew is missing; skipping Android build."
-            fi
+          cd fm-ai/android
+          if [ -x gradlew ]; then
+            ./gradlew assembleDebug
           else
-            echo "No Android project yet; local runtime validation completed."
+            echo "gradlew is not committed yet; Android source validation completed."
           fi
     artifacts:
-      - fm-ai/data/health/latest.txt
-      - android/app/build/outputs/**/*.apk
+      - fm-ai/android/app/build/outputs/**/*.apk
