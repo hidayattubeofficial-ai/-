@@ -140,6 +140,7 @@ fun FmHomeAdminScreen(context: Context) {
                                 status = "FM Computer not found; enter its current LAN URL."
                             }
                         }
+                        }
                     }) { Text(if (discovering) "Searching…" else "Auto Discover") }
                 }
             }
