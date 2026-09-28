@@ -46,13 +46,14 @@ jobs:
         run: |
           python scripts/select_daily_content.py
           cat output/selection.env
-      - name: Build branded video
-        env:
-          VIDEO_CATEGORY: ${{ inputs.category }}
-          VIDEO_TOPIC: ${{ inputs.topic }}
+      - name: Apply selected content
         run: |
-          rm -rf output
-          mkdir -p output
+          source output/selection.env
+          echo "VIDEO_CATEGORY=$SELECTED_CATEGORY" >> "$GITHUB_ENV"
+          echo "VIDEO_TOPIC=$SELECTED_TOPIC_UR" >> "$GITHUB_ENV"
+          echo "CONTENT_ID=$SELECTED_CONTENT_ID" >> "$GITHUB_ENV"
+      - name: Build branded video
+        run: |
           python scripts/prepare_content.py
       - name: Save permanent story and manifest
         run: |
