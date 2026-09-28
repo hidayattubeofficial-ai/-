@@ -3,30 +3,21 @@
 FM AI mobile discovery uses DNS-SD service type `_fmcomputer._tcp.`.
 
 The existing FM Computer API remains unchanged at `127.0.0.1:8080`.
-This discovery helper is isolated from the existing website/backend.
 
-## Behavior
+## Files
 
-- Advertises the FM Computer API port on the local LAN.
-- Does not publish YouTube content.
-- Does not expose API keys.
-- Does not replace the existing local API.
-- Intended for the same trusted LAN as the FM AI APK.
+- `advertise.py` — publishes the local DNS-SD service.
+- `preflight.py` — checks API, Python, zeroconf and LAN address.
+- `discovery-status.ps1` — Windows status check.
+- `install-discovery.ps1` — Windows dependency setup.
+- `start-discovery.ps1` — Windows launcher.
+- `start-discovery.sh` — Linux/macOS launcher.
+- `run-discovery.ps1` / `run-discovery.sh` — direct runners.
+- `requirements.txt` — isolated discovery dependency.
 
-## Runtime dependency
+## Safety
 
-The Python helper uses the `zeroconf` package. Install it only in the FM AI local environment:
+The discovery helper is LAN-only by design and does not replace the existing API.
+It does not contain API keys and does not publish to YouTube.
 
-```text
-pip install zeroconf
-```
-
-Run:
-
-```text
-python advertise.py
-```
-
-Stop the process to remove the advertisement.
-
-This file is a source/configuration component only; it does not claim that software has been installed on FM Computer.
+Actual installation and execution must be performed on the FM Computer; repository changes alone do not install software on that machine.
