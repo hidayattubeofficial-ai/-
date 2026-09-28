@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.Manifest
 import android.content.pm.PackageManager
 import androidx.activity.ComponentActivity
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.compose.setContent
 import androidx.core.content.ContextCompat
 import androidx.compose.foundation.layout.*
@@ -22,6 +23,24 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class MainActivity : ComponentActivity() {
+    private var discoverAfterPermission: (() -> Unit)? = null
+    private val nearbyPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            val action = discoverAfterPermission
+            discoverAfterPermission = null
+            if (granted) action?.invoke()
+        }
+
+    fun requestNearbyAndDiscover(action: () -> Unit) {
+        if (android.os.Build.VERSION.SDK_INT < 33 ||
+            ContextCompat.checkSelfPermission(this, Manifest.permission.NEARBY_WIFI_DEVICES) == PackageManager.PERMISSION_GRANTED
+        ) action()
+        else {
+            discoverAfterPermission = action
+            nearbyPermissionLauncher.launch(Manifest.permission.NEARBY_WIFI_DEVICES)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent { FmHomeAdminScreen(this) }
@@ -99,12 +118,9 @@ fun FmHomeAdminScreen(context: Context) {
                     }) { Text("Check") }
 
                     Button(modifier = Modifier.weight(1f), enabled = !discovering, onClick = {
-                        if (android.os.Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(context, Manifest.permission.NEARBY_WIFI_DEVICES) != PackageManager.PERMISSION_GRANTED) {
-                            (context as? ComponentActivity)?.requestPermissions(arrayOf(Manifest.permission.NEARBY_WIFI_DEVICES), 7001)
-                            status = "Nearby Wi-Fi permission required; allow it, then tap Auto Discover again."
-                            return@Button
-                        }
-                        discovering = true
+                        val activity = context as? MainActivity
+                        activity?.requestNearbyAndDiscover {
+                            discovering = true
                         status = "Searching local network…"
                         discoveryState = "Searching…"
                         discoveryMessage = "Looking for FM Computer on the local network"
@@ -167,15 +183,13 @@ fun FmHomeAdminScreen(context: Context) {
         item { Text("Admin Options", style = MaterialTheme.typography.titleLarge) }
 
         items(options) { option ->
-            Surface(
-                modifier = Modifier.fillMaxWidth().clickable { selected = option.title },
-                shape = MaterialTheme.shapes.medium,
-                tonalElevation = 2.dp
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { selected = option.title; status = "Opened " + option.title }
             ) {
-                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                Column(Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
                     Text(option.title, style = MaterialTheme.typography.titleMedium)
                     Text(option.detail, style = MaterialTheme.typography.bodySmall)
-                    Text("Tap to open", style = MaterialTheme.typography.labelSmall)
                 }
             }
         }
