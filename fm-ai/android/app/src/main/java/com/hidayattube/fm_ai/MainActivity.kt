@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.content.ContextCompat
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
@@ -34,16 +35,15 @@ fun FmHomeAdminScreen(context: Context) {
     val prefs = remember { context.getSharedPreferences("fm_ai_connection", Context.MODE_PRIVATE) }
     var baseUrl by remember {
         mutableStateOf(
-            prefs.getString("fm_computer_url", "http://127.0.0.1:8080")
-                ?: "http://127.0.0.1:8080"
+            prefs.getString("fm_computer_url", "") ?: ""
         )
     }
-    var status by remember { mutableStateOf("Not checked") }
+    var status by remember { mutableStateOf("Ready") }
     var checking by remember { mutableStateOf(false) }
     var discovering by remember { mutableStateOf(false) }
-    var discoveryState by remember { mutableStateOf("Not checked") }
+    var discoveryState by remember { mutableStateOf("Ready") }
     var discoveredHost by remember { mutableStateOf<String?>(null) }
-    var discoveryMessage by remember { mutableStateOf("Ready to search") }
+    var discoveryMessage by remember { mutableStateOf("Tap Auto Discover to find FM Computer") }
     var selected by remember { mutableStateOf("Dashboard") }
     val scope = rememberCoroutineScope()
 
@@ -80,14 +80,15 @@ fun FmHomeAdminScreen(context: Context) {
                 OutlinedTextField(
                     value = baseUrl,
                     onValueChange = { baseUrl = it.trimEnd('/') },
-                    label = { Text("FM Computer URL") },
+                    label = { Text("FM Computer LAN URL") },
+                    placeholder = { Text("http://192.168.x.x:8080") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
             }
             item {
-                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                    Button(enabled = !checking, onClick = {
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Button(modifier = Modifier.weight(1f), enabled = !checking, onClick = {
                         prefs.edit().putString("fm_computer_url", baseUrl).apply()
                         checking = true
                         status = "Checking…"
@@ -97,7 +98,7 @@ fun FmHomeAdminScreen(context: Context) {
                         }
                     }) { Text("Check") }
 
-                    OutlinedButton(enabled = !discovering, onClick = {
+                    Button(modifier = Modifier.weight(1f), enabled = !discovering, onClick = {
                         if (android.os.Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(context, Manifest.permission.NEARBY_WIFI_DEVICES) != PackageManager.PERMISSION_GRANTED) {
                             (context as? ComponentActivity)?.requestPermissions(arrayOf(Manifest.permission.NEARBY_WIFI_DEVICES), 7001)
                             status = "Nearby Wi-Fi permission required; allow it, then tap Auto Discover again."
@@ -166,16 +167,15 @@ fun FmHomeAdminScreen(context: Context) {
         item { Text("Admin Options", style = MaterialTheme.typography.titleLarge) }
 
         items(options) { option ->
-            OutlinedButton(
-                onClick = { selected = option.title },
-                modifier = Modifier.fillMaxWidth()
+            Surface(
+                modifier = Modifier.fillMaxWidth().clickable { selected = option.title },
+                shape = MaterialTheme.shapes.medium,
+                tonalElevation = 2.dp
             ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    Text(option.title)
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                    Text(option.title, style = MaterialTheme.typography.titleMedium)
                     Text(option.detail, style = MaterialTheme.typography.bodySmall)
+                    Text("Tap to open", style = MaterialTheme.typography.labelSmall)
                 }
             }
         }
