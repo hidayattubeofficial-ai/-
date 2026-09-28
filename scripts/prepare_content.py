@@ -13,7 +13,9 @@ W, H, FPS = 1080, 1920, 30
 SCENE_SECONDS = 7.5
 XFADE_SECONDS = 0.55
 DURATION = 30
-TOPIC = "نماز کیوں ضروری ہے؟ | نماز زندگی کا اصل سکون"
+TOPIC = os.getenv("VIDEO_TOPIC", "نماز کیوں ضروری ہے؟ | نماز زندگی کا اصل سکون")
+CATEGORY = os.getenv("VIDEO_CATEGORY", "namaz")
+NATURE_DIR = Path("youtube/backgrounds/nature")
 BRANDING_DIR = Path("assets/branding")
 
 # Supplied Hidayat Tube artwork is used as cinematic B-roll. Each still receives
