@@ -1,17 +1,20 @@
 name: Build Hidayat Tube YouTube Video
 
 on:
+  schedule:
+    - cron: "0 3 * * *"
+    - cron: "0 15 * * *"
   workflow_dispatch:
     inputs:
       category:
         description: "Category"
         required: true
         type: choice
-        options: [neki, namaz, quran, hadith]
+        options: [auto, neki, namaz, quran, hadith, naat]
       topic:
         description: "Video topic"
         required: true
-        default: "نماز اور دل کا سکون"
+        default: "AUTO"
 
 permissions:
   contents: write
@@ -36,6 +39,13 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Download nature background assets
         run: python scripts/collect_nature_assets.py youtube/backgrounds/nature
+      - name: Select next non-duplicate content
+        env:
+          REQUESTED_CATEGORY: ${{ inputs.category || 'auto' }}
+          REQUESTED_TOPIC: ${{ inputs.topic || 'AUTO' }}
+        run: |
+          python scripts/select_daily_content.py
+          cat output/selection.env
       - name: Build branded video
         env:
           VIDEO_CATEGORY: ${{ inputs.category }}
