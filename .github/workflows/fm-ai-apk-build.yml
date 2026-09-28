@@ -21,16 +21,9 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
       - name: Build debug APK
-        run: |
-          if [ -x ./gradlew ]; then
-            ./gradlew assembleDebug --no-daemon
-          elif command -v gradle >/dev/null 2>&1; then
-            gradle assembleDebug --no-daemon
-          else
-            echo "No Gradle executable available."
-            exit 1
-          fi
+        run: gradle assembleDebug --no-daemon
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
