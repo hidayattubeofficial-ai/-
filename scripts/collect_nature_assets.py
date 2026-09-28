@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
-"""Collect small, license-recorded nature video assets from Wikimedia Commons."""
+"""Collect small, license-recorded nature video assets from Wikimedia Commons.
+
+This is the no-key provider. Other free sources are documented in youtube/NATURE_SOURCES.md;
+we do not scrape those sites blindly or bypass their access controls."""
 import json, sys
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -38,6 +42,7 @@ for query in QUERIES:
         req = Request(url, headers={"User-Agent":"HidayatTubeAssetCollector/1.0"})
         with urlopen(req, timeout=120) as r, target.open("wb") as f: f.write(r.read())
         meta = {"source":"Wikimedia Commons","source_url":url,"page_title":page.get("title"),
+                "downloaded_at":datetime.now(timezone.utc).isoformat(),
                 "mime":mime,"size_bytes":size,
                 "license_metadata":(info.get("extmetadata") or {}).get("LicenseShortName",{}).get("value"),
                 "artist_metadata":(info.get("extmetadata") or {}).get("Artist",{}).get("value")}
@@ -46,6 +51,12 @@ for query in QUERIES:
         if saved >= 3: break
     if saved >= 3: break
 
+index = OUT / "INDEX.md"
+lines = ["# Nature Asset Index", "", "Downloaded assets are accompanied by per-file JSON provenance records.", ""]
+for p in sorted(OUT.iterdir()):
+    if p.suffix.lower() in {".mp4",".webm",".ogv",".mov"}:
+        lines.append(f"- `{p.name}` — see `{p.name}.json` for source and license metadata.")
+index.write_text("\n".join(lines) + "\n", encoding="utf-8")
 print(f"Nature assets collected: {saved}")
 if saved == 0:
     raise SystemExit("No suitable small video asset found; build stopped rather than using an unverified source.")
