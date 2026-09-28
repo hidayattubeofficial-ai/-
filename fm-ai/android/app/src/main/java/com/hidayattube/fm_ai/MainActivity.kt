@@ -2,8 +2,11 @@ package com.hidayattube.fm_ai
 
 import android.content.Context
 import android.os.Bundle
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.core.content.ContextCompat
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -95,6 +98,11 @@ fun FmHomeAdminScreen(context: Context) {
                     }) { Text("Check") }
 
                     OutlinedButton(enabled = !discovering, onClick = {
+                        if (android.os.Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(context, Manifest.permission.NEARBY_WIFI_DEVICES) != PackageManager.PERMISSION_GRANTED) {
+                            context.requestPermissions(arrayOf(Manifest.permission.NEARBY_WIFI_DEVICES), 7001)
+                            status = "Nearby Wi-Fi permission required; allow it, then tap Auto Discover again."
+                            return@OutlinedButton
+                        }
                         discovering = true
                         status = "Searching local network…"
                         discoveryState = "Searching…"
