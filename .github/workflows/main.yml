@@ -1,136 +1,19 @@
 name: Islamic YouTube Automation
 
+# TEMPORARILY DISABLED: automatic/manual publishing workflow is paused.
+# Keep this file for rollback; only manual dispatch remains available when intentionally re-enabled.
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-  schedule:
-    - cron: "0 6 * * *"
-  issue_comment:
-    types: [created]
 
 jobs:
   prepare:
-    if: ${{ github.event_name != 'issue_comment' }}
+    if: ${{ false }}
     runs-on: ubuntu-latest
-    env:
-      TTS_VOICE: ur-PK-AsadNeural
-      TTS_RATE: "-10%"
-      TTS_PITCH: "+0Hz"
-      TTS_VOLUME: "+0%"
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install FFmpeg, fonts, and browser dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-noto-core fonts-noto-cjk fonts-hosny-amiri
-          fc-cache -f
-          test -f /usr/share/fonts/truetype/noto/NotoNastaliqUrdu-Regular.ttf
-          test -f /usr/share/fonts/truetype/noto/NotoNastaliqUrdu-Bold.ttf
-
-      - name: Install Python dependencies
-        run: python -m pip install --upgrade pip && pip install -r requirements.txt
-
-      - name: Install Playwright Chromium with system dependencies
-        run: python -m playwright install --with-deps chromium
-
-      - name: Prepare content package
-        run: PYTHONPATH=. python scripts/prepare_content.py
-
-      - name: Validate content package
-        run: PYTHONPATH=. python scripts/validate_content.py
-
-      - name: Upload review package
-        uses: actions/upload-artifact@v4
-        with:
-          name: islamic-content-review
-          path: output/
-
-      - name: Upload video to YouTube as private
-        if: ${{ false }}
-        env:
-          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
-          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
-          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
-        run: python scripts/upload_private_youtube.py
-
-      - name: Review gate
-        run: |
-          echo "Content package is ready for human review."
-          echo "YouTube upload is intentionally disabled until content is finalized."
-          echo "Do not make it public until references and final content are approved."
+      - run: echo "Islamic YouTube Automation is currently disabled."
 
   messenger:
-    if: ${{ github.event_name == 'issue_comment' && github.event.issue.number == 2 && github.event.comment.user.type != 'Bot' }}
+    if: ${{ false }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
-      actions: write
-    env:
-      OPENAI_API_KEY: ${{ vars.OPENAI_API_KEY }}
-      GH_TOKEN: ${{ github.token }}
     steps:
-      - name: Generate and post Messenger reply
-        shell: python
-        run: |
-          import json
-          import os
-          import subprocess
-          import urllib.request
-
-          issue_number = os.environ["GITHUB_EVENT_PATH"]
-          with open(issue_number, "r", encoding="utf-8") as f:
-              event = json.load(f)
-
-          comment = event["comment"]["body"].strip()
-          repo = event["repository"]["full_name"]
-          issue = str(event["issue"]["number"])
-
-          if not os.environ.get("OPENAI_API_KEY"):
-              reply = "Messenger bridge فعال ہے، لیکن GitHub Actions Variable `OPENAI_API_KEY` دستیاب نہیں ہے۔ Variable شامل کرنے کے بعد میں خودکار AI جواب دوں گا۔"
-          else:
-              payload = {
-                  "model": "gpt-5.6-luna",
-                  "input": (
-                      "You are the Hidayat Tube Official GitHub Messenger assistant. "
-                      "Reply in concise Urdu. Help with GitHub Actions, project files, reports, "
-                      "Islamic Shorts planning, errors and remaining work. You have a powerful "
-                      "repository-scoped GitHub Actions token available to the workflow for approved "
-                      "repository operations. Never expose secrets or tokens. Never enable YouTube "
-                      "publishing or public release automatically; final publishing requires human approval. "
-                      "User message:\n\n" + comment
-                  )
-              }
-              req = urllib.request.Request(
-                  "https://api.openai.com/v1/responses",
-                  data=json.dumps(payload).encode("utf-8"),
-                  headers={
-                      "Authorization": "Bearer " + os.environ["OPENAI_API_KEY"],
-                      "Content-Type": "application/json",
-                  },
-                  method="POST",
-              )
-              with urllib.request.urlopen(req, timeout=90) as response:
-                  data = json.load(response)
-
-              reply = ""
-              for item in data.get("output", []):
-                  for content in item.get("content", []):
-                      if content.get("type") == "output_text":
-                          reply += content.get("text", "")
-              reply = reply.strip() or "جواب تیار نہیں ہو سکا۔"
-
-          subprocess.run(
-              [
-                  "gh", "api", "--method", "POST",
-                  f"repos/{repo}/issues/{issue}/comments",
-                  "-f", "body=" + reply,
-              ],
-              check=True,
-          )
+      - run: echo "Islamic YouTube Automation messenger is currently disabled."
