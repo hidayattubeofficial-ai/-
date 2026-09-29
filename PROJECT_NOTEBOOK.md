@@ -269,3 +269,29 @@ Add every important future change here.
 - The mistaken temporary `worker.js`, `wrangler.toml`, and Wrangler-based workflow change were removed from `main`.
 - The original Cloudflare Pages workflow was restored.
 - **Current instruction:** leave the workflow unchanged unless the user explicitly approves a deployment fix.
+
+
+---
+
+## 12. Prompt Code Master Dictionary — DEDUPLICATED
+
+- Master dictionary file: `PROMPT_CODE_MASTER.md`
+- Status: **Saved / deduplicated / active reference**
+- Purpose: reusable prompt shorthand for FM AI, development, research, content, business, publishing, QA, security and operations.
+- Duplicate/near-duplicate labels are consolidated; combinations are treated as workflows, not separate official commands.
+- These are custom/community prompt labels, **not official hidden ChatGPT commands**.
+- FM AI should use this file as its prompt/workflow vocabulary reference.
+- Safety rule: FM AI must preserve the existing human-approval gate and must not bypass security or approval controls.
+
+### Core FM AI vocabulary
+`SOURCE-OF-TRUTH-LOCK` • `CURRENT-STATE` • `READ-ONLY` • `MINIMAL-CHANGE` • `DRY-RUN` • `HUMAN-APPROVAL` • `REGRESSION-GUARD` • `HEALTH-CHECK` • `AUDIT-TRAIL` • `ROLLBACK`
+
+### Master workflows
+- Safe technical: READ-ONLY → CURRENT-STATE → BACKUP-FIRST → DEPENDENCY-CHECK → BLAST-RADIUS → ROOT-CAUSE → MINIMAL-CHANGE → DRY-RUN → HUMAN-APPROVAL → IMPLEMENT → TEST → REGRESSION-GUARD → VERIFY → CHANGE-REPORT → ROLLBACK
+- FM AI: FM-AUDIT → SOURCE-OF-TRUTH-LOCK → CURRENT-STATE → FM-ROOT-CAUSE → MINIMAL-CHANGE → DRY-RUN → FM-APPROVAL → FM-IMPLEMENT → FM-TEST → SECURITY-CHECK → FM-HEALTH → REGRESSION-GUARD → AUDIT-TRAIL → FM-REPORT
+- Agent: MISSION → SCOPE → NON-GOALS → INPUTS → SOURCES → TOOLS → PERMISSIONS → CONSTRAINTS → SUCCESS-CONDITION → STOP-CONDITION → PLAN → HUMAN-IN-LOOP → EXECUTE → VERIFY → AUDIT-TRAIL → REPORT
+
+### Integration status
+- `PROMPT_CODE_MASTER.md` has been added to the repository.
+- The dictionary is now the canonical project reference for FM AI prompt shorthand.
+- Do not create another duplicate master dictionary unless explicitly requested; update this canonical file instead.
