@@ -307,3 +307,15 @@ Add every important future change here.
 - GitHub workflow/deployment files remain protected by the existing explicit-approval change-control rule.
 - Canonical specification: `LOCAL_VERIFICATION_ENGINE.md`.
 - **Current status:** Architecture integrated; local machine execution is not claimed from GitHub. The local runner should be executed from the user's checked-out repository.
+
+
+## 14. Local Verification PR — Current State
+
+- PR: #4 — **Add portable local verification gate**
+- Branch: `local-verification-engine`
+- Status: **OPEN / DRAFT / NOT MERGED**
+- Scope: adds only `scripts/local_verify.py`; existing GitHub workflows and deployment configuration are unchanged.
+- Safety: the verifier performs no git push, YouTube upload, or Cloudflare deploy.
+- Cloudflare observation: Cloudflare's Git integration attempted a deployment for PR commit `a173087` and reported failure. This is separate from the local verifier and does **not** establish that local verification failed.
+- Current action: keep PR #4 isolated and do not merge until local execution is performed on the user's checked-out repository and the deployment behavior is separately understood.
+- **Do not modify `.github/workflows/cloudflare-deploy.yml` or hosting architecture without explicit approval.**
