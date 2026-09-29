@@ -109,7 +109,7 @@ fun FmHomeAdminScreen(context: Context) {
             item {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     Button(modifier = Modifier.weight(1f), enabled = !checking, onClick = {
-                        const validation = validateBaseUrl(baseUrl)
+                        val validation = validateBaseUrl(baseUrl)
                         if (validation != null) {
                             status = validation
                             return@Button
