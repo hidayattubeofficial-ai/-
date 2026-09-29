@@ -1,0 +1,41 @@
+name: AI-Native Safety Gates
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  policy:
+    name: Policy and safety checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify AI-native standard exists
+        run: test -f AI-NATIVE-PROJECT-STANDARD.md
+
+      - name: Verify approval/security terms exist
+        run: |
+          grep -q "Human Approval" AI-NATIVE-PROJECT-STANDARD.md
+          grep -q "High-impact actions" AI-NATIVE-PROJECT-STANDARD.md
+          grep -q "Rollback" AI-NATIVE-PROJECT-STANDARD.md
+
+      - name: Verify YouTube publishing remains gated
+        run: |
+          test -f .github/workflows/main.yml
+          grep -q "if: \${{ false }}" .github/workflows/main.yml
+
+      - name: Basic secret-pattern scan
+        run: |
+          if grep -RInE --exclude-dir=.git --exclude='*.md' '(sk-[A-Za-z0-9_-]{20,}|AIza[A-Za-z0-9_-]{20,}|ghp_[A-Za-z0-9]{20,}|-----BEGIN (RSA|OPENSSH|EC|PRIVATE) KEY-----)' .; then
+            echo "Potential hard-coded secret detected."
+            exit 1
+          fi
+
+      - name: Policy result
+        run: echo "AI-native safety gates passed; production/publishing gates remain human-controlled."
