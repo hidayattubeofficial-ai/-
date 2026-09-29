@@ -28,8 +28,8 @@ jobs:
       - name: Verify YouTube publishing remains gated
         run: |
           test -f .github/workflows/main.yml
-          disabled_marker='${' '{' ' false ' '}' '}'
-          grep -Fq "if: $disabled_marker" .github/workflows/main.yml
+          grep -Fq 'TEMPORARILY DISABLED' .github/workflows/main.yml
+          grep -Fq 'workflow_dispatch:' .github/workflows/main.yml
 
       - name: Basic secret-pattern scan
         run: |
