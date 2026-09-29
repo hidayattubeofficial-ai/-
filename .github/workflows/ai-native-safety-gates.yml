@@ -28,7 +28,7 @@ jobs:
       - name: Verify YouTube publishing remains gated
         run: |
           test -f .github/workflows/main.yml
-          grep -q "if: \${{ false }}" .github/workflows/main.yml
+          grep -Fq 'if: ${{ false }}' .github/workflows/main.yml
 
       - name: Basic secret-pattern scan
         run: |
