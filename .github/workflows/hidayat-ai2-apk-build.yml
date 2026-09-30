@@ -1,0 +1,32 @@
+name: Hidayat AI 2 Android APK Build
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hidayat-ai2/android
+    env:
+      YOUTUBE_AUTO_PUBLISH: "false"
+      FM_HOME_APPROVAL_REQUIRED: "true"
+      OLLAMA_BASE_URL: "http://127.0.0.1:11434"
+      FM_COMPUTER_API: "http://127.0.0.1:8080"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build debug APK
+        run: gradle assembleDebug --no-daemon
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: hidayat-ai2-apk
+          path: hidayat-ai2/android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
