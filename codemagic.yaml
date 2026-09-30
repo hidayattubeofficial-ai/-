@@ -13,7 +13,7 @@ workflows:
         script: |
           set -e
           test -f hidayat-ai2/README.md
-          test -f hidayat-ai2/config/fm-ai.env.example
+          test -f hidayat-ai2/config/hidayat-ai2.env.example
           test -f hidayat-ai2/scripts/health-check.ps1
           test -f hidayat-ai2/scripts/health-check.sh
           test -f hidayat-ai2/android/settings.gradle.kts
@@ -35,8 +35,8 @@ workflows:
           test -f hidayat-ai2/discovery/setup-and-start.sh
           test -f hidayat-ai2/discovery/stop-discovery.sh
           test -f hidayat-ai2/discovery/README.md
-          grep -q 'YOUTUBE_AUTO_PUBLISH=false' hidayat-ai2/config/fm-ai.env.example
-          grep -q 'FM_COMPUTER_API=http://127.0.0.1:8080' hidayat-ai2/config/fm-ai.env.example
+          grep -q 'YOUTUBE_AUTO_PUBLISH=false' hidayat-ai2/config/hidayat-ai2.env.example
+          grep -q 'FM_COMPUTER_API=http://127.0.0.1:8080' hidayat-ai2/config/hidayat-ai2.env.example
           grep -q '_fmcomputer._tcp' hidayat-ai2/discovery/advertise.py
           grep -q '_fmcomputer._tcp' hidayat-ai2/discovery/preflight.py
           grep -q 'zeroconf' hidayat-ai2/discovery/requirements.txt
