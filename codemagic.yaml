@@ -1,6 +1,6 @@
 workflows:
-  fm_ai_validation:
-    name: FM AI - Local Survival Computer validation
+  hidayat_ai2_validation:
+    name: Hidayat AI 2 - Local Survival Computer validation
     max_build_duration: 30
     environment:
       vars:
@@ -12,44 +12,44 @@ workflows:
       - name: Validate FM AI configuration and discovery
         script: |
           set -e
-          test -f fm-ai/README.md
-          test -f fm-ai/config/fm-ai.env.example
-          test -f fm-ai/scripts/health-check.ps1
-          test -f fm-ai/scripts/health-check.sh
-          test -f fm-ai/android/settings.gradle.kts
-          test -f fm-ai/android/build.gradle.kts
-          test -f fm-ai/android/app/build.gradle.kts
-          test -f fm-ai/android/app/src/main/java/com/hidayattube/fm_ai/MainActivity.kt
-          test -f fm-ai/android/app/src/main/AndroidManifest.xml
-          test -f fm-ai/discovery/advertise.py
-          test -f fm-ai/discovery/preflight.py
-          test -f fm-ai/discovery/requirements.txt
-          test -f fm-ai/discovery/start-discovery.ps1
-          test -f fm-ai/discovery/start-discovery.sh
-          test -f fm-ai/discovery/run-discovery.ps1
-          test -f fm-ai/discovery/run-discovery.sh
-          test -f fm-ai/discovery/discovery-status.ps1
-          test -f fm-ai/discovery/install-discovery.ps1
-          test -f fm-ai/discovery/setup-and-start.ps1
-          test -f fm-ai/discovery/stop-discovery.ps1
-          test -f fm-ai/discovery/setup-and-start.sh
-          test -f fm-ai/discovery/stop-discovery.sh
-          test -f fm-ai/discovery/README.md
-          grep -q 'YOUTUBE_AUTO_PUBLISH=false' fm-ai/config/fm-ai.env.example
-          grep -q 'FM_COMPUTER_API=http://127.0.0.1:8080' fm-ai/config/fm-ai.env.example
-          grep -q '_fmcomputer._tcp' fm-ai/discovery/advertise.py
-          grep -q '_fmcomputer._tcp' fm-ai/discovery/preflight.py
-          grep -q 'zeroconf' fm-ai/discovery/requirements.txt
-          echo "FM AI configuration: OK"
+          test -f hidayat-ai2/README.md
+          test -f hidayat-ai2/config/fm-ai.env.example
+          test -f hidayat-ai2/scripts/health-check.ps1
+          test -f hidayat-ai2/scripts/health-check.sh
+          test -f hidayat-ai2/android/settings.gradle.kts
+          test -f hidayat-ai2/android/build.gradle.kts
+          test -f hidayat-ai2/android/app/build.gradle.kts
+          test -f hidayat-ai2/android/app/src/main/java/com/hidayattube/fm_ai/MainActivity.kt
+          test -f hidayat-ai2/android/app/src/main/AndroidManifest.xml
+          test -f hidayat-ai2/discovery/advertise.py
+          test -f hidayat-ai2/discovery/preflight.py
+          test -f hidayat-ai2/discovery/requirements.txt
+          test -f hidayat-ai2/discovery/start-discovery.ps1
+          test -f hidayat-ai2/discovery/start-discovery.sh
+          test -f hidayat-ai2/discovery/run-discovery.ps1
+          test -f hidayat-ai2/discovery/run-discovery.sh
+          test -f hidayat-ai2/discovery/discovery-status.ps1
+          test -f hidayat-ai2/discovery/install-discovery.ps1
+          test -f hidayat-ai2/discovery/setup-and-start.ps1
+          test -f hidayat-ai2/discovery/stop-discovery.ps1
+          test -f hidayat-ai2/discovery/setup-and-start.sh
+          test -f hidayat-ai2/discovery/stop-discovery.sh
+          test -f hidayat-ai2/discovery/README.md
+          grep -q 'YOUTUBE_AUTO_PUBLISH=false' hidayat-ai2/config/fm-ai.env.example
+          grep -q 'FM_COMPUTER_API=http://127.0.0.1:8080' hidayat-ai2/config/fm-ai.env.example
+          grep -q '_fmcomputer._tcp' hidayat-ai2/discovery/advertise.py
+          grep -q '_fmcomputer._tcp' hidayat-ai2/discovery/preflight.py
+          grep -q 'zeroconf' hidayat-ai2/discovery/requirements.txt
+          echo "Hidayat AI 2 configuration: OK"
           echo "Android project structure: OK"
           echo "LAN discovery source and preflight: OK"
-          echo "CodeMagic role: build/package validation helper only"
+          echo "Codemagic role: build/package validation helper only"
           echo "FM Computer runtime remains local"
           echo "YouTube auto-publish remains OFF"
       - name: Android debug build
         script: |
           set -e
-          cd fm-ai/android
+          cd hidayat-ai2/android
           if [ -x gradlew ]; then
             ./gradlew assembleDebug
           elif command -v gradle >/dev/null 2>&1; then
@@ -58,4 +58,4 @@ workflows:
             echo "No Gradle executable available; source/config validation remains complete."
           fi
     artifacts:
-      - fm-ai/android/app/build/outputs/**/*.apk
+      - hidayat-ai2/android/app/build/outputs/**/*.apk
