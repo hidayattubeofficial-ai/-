@@ -1,0 +1,913 @@
+{
+  "library": "Hidayat Video Command Library",
+  "version": "final-aggregate-1.0",
+  "status": "LOCKED_AGGREGATE_MANIFEST",
+  "unique_command_count": 221,
+  "accounting": {
+    "v1_verified": 98,
+    "v2_listed": 75,
+    "v3_expansion": 49,
+    "cross_layer_duplicate_resolved": 1,
+    "union_unique": 221
+  },
+  "schema": "Command → Purpose → Prompt → Camera → Motion → Lighting → Avoid → Format",
+  "rules": {
+    "standard_shot_duration": "8 seconds",
+    "transition_duration": "1–4 seconds",
+    "goldenhour_canonical_source": "v1",
+    "youtube_publish": false,
+    "human_approval_required": true
+  },
+  "source_of_truth": {
+    "v1": "verified example batches; historical canonical definitions unavailable in current repository history",
+    "v2": "locked example batches",
+    "v3": "validated canonical-expansion candidate JSON"
+  },
+  "commands": [
+    {
+      "command": "/supercar",
+      "source": "v1"
+    },
+    {
+      "command": "/luxurycar",
+      "source": "v1"
+    },
+    {
+      "command": "/sportscar",
+      "source": "v1"
+    },
+    {
+      "command": "/bikeride",
+      "source": "v1"
+    },
+    {
+      "command": "/offroad",
+      "source": "v1"
+    },
+    {
+      "command": "/streetracing",
+      "source": "v1"
+    },
+    {
+      "command": "/drifting",
+      "source": "v1"
+    },
+    {
+      "command": "/carcinematic",
+      "source": "v1"
+    },
+    {
+      "command": "/motocross",
+      "source": "v1"
+    },
+    {
+      "command": "/rallyracing",
+      "source": "v1"
+    },
+    {
+      "command": "/boxing",
+      "source": "v1"
+    },
+    {
+      "command": "/mma",
+      "source": "v1"
+    },
+    {
+      "command": "/football",
+      "source": "v1"
+    },
+    {
+      "command": "/basketball",
+      "source": "v1"
+    },
+    {
+      "command": "/cricket",
+      "source": "v1"
+    },
+    {
+      "command": "/skateboarding",
+      "source": "v1"
+    },
+    {
+      "command": "/parkour",
+      "source": "v1"
+    },
+    {
+      "command": "/running",
+      "source": "v1"
+    },
+    {
+      "command": "/workout",
+      "source": "v1"
+    },
+    {
+      "command": "/bodybuilding",
+      "source": "v1"
+    },
+    {
+      "command": "/streetstyle",
+      "source": "v1"
+    },
+    {
+      "command": "/fashionwalk",
+      "source": "v1"
+    },
+    {
+      "command": "/modelshoot",
+      "source": "v1"
+    },
+    {
+      "command": "/photoshoot",
+      "source": "v1"
+    },
+    {
+      "command": "/musicvideo",
+      "source": "v1"
+    },
+    {
+      "command": "/concert",
+      "source": "v1"
+    },
+    {
+      "command": "/actionmovie",
+      "source": "v1"
+    },
+    {
+      "command": "/horror",
+      "source": "v1"
+    },
+    {
+      "command": "/thriller",
+      "source": "v1"
+    },
+    {
+      "command": "/scenetransformation",
+      "source": "v1"
+    },
+    {
+      "command": "/herotransformation",
+      "source": "v1"
+    },
+    {
+      "command": "/villain",
+      "source": "v1"
+    },
+    {
+      "command": "/superhero",
+      "source": "v1"
+    },
+    {
+      "command": "/spy",
+      "source": "v1"
+    },
+    {
+      "command": "/secretagent",
+      "source": "v1"
+    },
+    {
+      "command": "/gangster",
+      "source": "v1"
+    },
+    {
+      "command": "/royal",
+      "source": "v1"
+    },
+    {
+      "command": "/businessman",
+      "source": "v1"
+    },
+    {
+      "command": "/luxurylifestyle",
+      "source": "v1"
+    },
+    {
+      "command": "/privatejet",
+      "source": "v1"
+    },
+    {
+      "command": "/yacht",
+      "source": "v1"
+    },
+    {
+      "command": "/helicopter",
+      "source": "v1"
+    },
+    {
+      "command": "/droneview",
+      "source": "v1"
+    },
+    {
+      "command": "/nightdrive",
+      "source": "v1"
+    },
+    {
+      "command": "/sunsetdrive",
+      "source": "v1"
+    },
+    {
+      "command": "/rainycinematic",
+      "source": "v1"
+    },
+    {
+      "command": "/neoncity",
+      "source": "v1"
+    },
+    {
+      "command": "/futuristic",
+      "source": "v1"
+    },
+    {
+      "command": "/cinematictrailer",
+      "source": "v1"
+    },
+    {
+      "command": "/hollywoodscene",
+      "source": "v1"
+    },
+    {
+      "command": "/addgirl",
+      "source": "v1"
+    },
+    {
+      "command": "/addboy",
+      "source": "v1"
+    },
+    {
+      "command": "/multicamshot",
+      "source": "v1"
+    },
+    {
+      "command": "/epicshot",
+      "source": "v1"
+    },
+    {
+      "command": "/droneshot",
+      "source": "v1"
+    },
+    {
+      "command": "/orbit",
+      "source": "v1"
+    },
+    {
+      "command": "/pushin",
+      "source": "v1"
+    },
+    {
+      "command": "/pullout",
+      "source": "v1"
+    },
+    {
+      "command": "/zoomshot",
+      "source": "v1"
+    },
+    {
+      "command": "/closeup",
+      "source": "v1"
+    },
+    {
+      "command": "/wideangle",
+      "source": "v1"
+    },
+    {
+      "command": "/lowangle",
+      "source": "v1"
+    },
+    {
+      "command": "/highangle",
+      "source": "v1"
+    },
+    {
+      "command": "/overhead",
+      "source": "v1"
+    },
+    {
+      "command": "/tracking",
+      "source": "v1"
+    },
+    {
+      "command": "/followcam",
+      "source": "v1"
+    },
+    {
+      "command": "/sidecam",
+      "source": "v1"
+    },
+    {
+      "command": "/frontcam",
+      "source": "v1"
+    },
+    {
+      "command": "/360spin",
+      "source": "v1"
+    },
+    {
+      "command": "/handheld",
+      "source": "v1"
+    },
+    {
+      "command": "/steadicam",
+      "source": "v1"
+    },
+    {
+      "command": "/slowmo",
+      "source": "v1"
+    },
+    {
+      "command": "/timelapse",
+      "source": "v1"
+    },
+    {
+      "command": "/hyperlapse",
+      "source": "v1"
+    },
+    {
+      "command": "/parallax",
+      "source": "v1"
+    },
+    {
+      "command": "/whip",
+      "source": "v1"
+    },
+    {
+      "command": "/reveal",
+      "source": "v1"
+    },
+    {
+      "command": "/dramaticreveal",
+      "source": "v1"
+    },
+    {
+      "command": "/walkin",
+      "source": "v1"
+    },
+    {
+      "command": "/walkaway",
+      "source": "v1"
+    },
+    {
+      "command": "/hairmotion",
+      "source": "v1"
+    },
+    {
+      "command": "/wind",
+      "source": "v1"
+    },
+    {
+      "command": "/rain",
+      "source": "v1"
+    },
+    {
+      "command": "/snow",
+      "source": "v1"
+    },
+    {
+      "command": "/fog",
+      "source": "v1"
+    },
+    {
+      "command": "/smoke",
+      "source": "v1"
+    },
+    {
+      "command": "/fire",
+      "source": "v1"
+    },
+    {
+      "command": "/lightning",
+      "source": "v1"
+    },
+    {
+      "command": "/sunset",
+      "source": "v1"
+    },
+    {
+      "command": "/night",
+      "source": "v1"
+    },
+    {
+      "command": "/goldenhour",
+      "source": "v1",
+      "canonical_deduplication": "v1"
+    },
+    {
+      "command": "/neon",
+      "source": "v1"
+    },
+    {
+      "command": "/actionshot",
+      "source": "v1"
+    },
+    {
+      "command": "/carshot",
+      "source": "v1"
+    },
+    {
+      "command": "/productshot",
+      "source": "v1"
+    },
+    {
+      "command": "/movieintro",
+      "source": "v1"
+    },
+    {
+      "command": "/cinematic",
+      "source": "v1"
+    },
+    {
+      "command": "/viralshot",
+      "source": "v1"
+    },
+    {
+      "command": "/matchcut",
+      "source": "v2"
+    },
+    {
+      "command": "/whiptransition",
+      "source": "v2"
+    },
+    {
+      "command": "/zoomtransition",
+      "source": "v2"
+    },
+    {
+      "command": "/spintransition",
+      "source": "v2"
+    },
+    {
+      "command": "/objectwipe",
+      "source": "v2"
+    },
+    {
+      "command": "/lightflash",
+      "source": "v2"
+    },
+    {
+      "command": "/blurtransition",
+      "source": "v2"
+    },
+    {
+      "command": "/seamlesstransition",
+      "source": "v2"
+    },
+    {
+      "command": "/vehicletracking",
+      "source": "v2"
+    },
+    {
+      "command": "/vehicleorbit",
+      "source": "v2"
+    },
+    {
+      "command": "/vehicleinterior",
+      "source": "v2"
+    },
+    {
+      "command": "/vehiclelowangle",
+      "source": "v2"
+    },
+    {
+      "command": "/vehicleaerial",
+      "source": "v2"
+    },
+    {
+      "command": "/vehiclecloseup",
+      "source": "v2"
+    },
+    {
+      "command": "/vehiclespeedramp",
+      "source": "v2"
+    },
+    {
+      "command": "/vehiclecornering",
+      "source": "v2"
+    },
+    {
+      "command": "/vehiclesunset",
+      "source": "v2"
+    },
+    {
+      "command": "/vehiclewetroad",
+      "source": "v2"
+    },
+    {
+      "command": "/dollyzoom",
+      "source": "v2"
+    },
+    {
+      "command": "/rackfocus",
+      "source": "v2"
+    },
+    {
+      "command": "/anamorphic",
+      "source": "v2"
+    },
+    {
+      "command": "/parallaxpush",
+      "source": "v2"
+    },
+    {
+      "command": "/craneup",
+      "source": "v2"
+    },
+    {
+      "command": "/cranedown",
+      "source": "v2"
+    },
+    {
+      "command": "/arcshot",
+      "source": "v2"
+    },
+    {
+      "command": "/dronedive",
+      "source": "v2"
+    },
+    {
+      "command": "/dronerise",
+      "source": "v2"
+    },
+    {
+      "command": "/lensflare",
+      "source": "v2"
+    },
+    {
+      "command": "/shallowdof",
+      "source": "v2"
+    },
+    {
+      "command": "/steadicamreveal",
+      "source": "v2"
+    },
+    {
+      "command": "/stormfront",
+      "source": "v2"
+    },
+    {
+      "command": "/heavyrain",
+      "source": "v2"
+    },
+    {
+      "command": "/blizzard",
+      "source": "v2"
+    },
+    {
+      "command": "/sandstorm",
+      "source": "v2"
+    },
+    {
+      "command": "/hailstorm",
+      "source": "v2"
+    },
+    {
+      "command": "/rainbowafterstorm",
+      "source": "v2"
+    },
+    {
+      "command": "/bluehour",
+      "source": "v2"
+    },
+    {
+      "command": "/midnight",
+      "source": "v2"
+    },
+    {
+      "command": "/dawn",
+      "source": "v2"
+    },
+    {
+      "command": "/overcast",
+      "source": "v2"
+    },
+    {
+      "command": "/mistymorning",
+      "source": "v2"
+    },
+    {
+      "command": "/moonlight",
+      "source": "v2"
+    },
+    {
+      "command": "/forestcinematic",
+      "source": "v2"
+    },
+    {
+      "command": "/waterfall",
+      "source": "v2"
+    },
+    {
+      "command": "/oceanwave",
+      "source": "v2"
+    },
+    {
+      "command": "/desertlandscape",
+      "source": "v2"
+    },
+    {
+      "command": "/mountainreveal",
+      "source": "v2"
+    },
+    {
+      "command": "/riverflow",
+      "source": "v2"
+    },
+    {
+      "command": "/flowerfield",
+      "source": "v2"
+    },
+    {
+      "command": "/junglecanopy",
+      "source": "v2"
+    },
+    {
+      "command": "/cliffview",
+      "source": "v2"
+    },
+    {
+      "command": "/naturetimelapse",
+      "source": "v2"
+    },
+    {
+      "command": "/walkcycle",
+      "source": "v2"
+    },
+    {
+      "command": "/runningaction",
+      "source": "v2"
+    },
+    {
+      "command": "/turnandreveal",
+      "source": "v2"
+    },
+    {
+      "command": "/hairandclothmotion",
+      "source": "v2"
+    },
+    {
+      "command": "/gesturefocus",
+      "source": "v2"
+    },
+    {
+      "command": "/crowdwalk",
+      "source": "v2"
+    },
+    {
+      "command": "/sitandstand",
+      "source": "v2"
+    },
+    {
+      "command": "/characterinteraction",
+      "source": "v2"
+    },
+    {
+      "command": "/heroentrance",
+      "source": "v2"
+    },
+    {
+      "command": "/producthero",
+      "source": "v2"
+    },
+    {
+      "command": "/product360",
+      "source": "v2"
+    },
+    {
+      "command": "/productmacro",
+      "source": "v2"
+    },
+    {
+      "command": "/productfloating",
+      "source": "v2"
+    },
+    {
+      "command": "/productlifestyle",
+      "source": "v2"
+    },
+    {
+      "command": "/productreveal",
+      "source": "v2"
+    },
+    {
+      "command": "/shorts",
+      "source": "v2"
+    },
+    {
+      "command": "/reels",
+      "source": "v2"
+    },
+    {
+      "command": "/tiktok",
+      "source": "v2"
+    },
+    {
+      "command": "/loop",
+      "source": "v2"
+    },
+    {
+      "command": "/satisfying",
+      "source": "v2"
+    },
+    {
+      "command": "/trendstyle",
+      "source": "v2"
+    },
+    {
+      "command": "/thumbnailshot",
+      "source": "v2"
+    },
+    {
+      "command": "/adcinematic",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/beach",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/beforeafter",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/citydrive",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/cityscape",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/cloudscape",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/cockpit",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/convoy",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/countryside",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/dance",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/daytonight",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/dollyin",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/dollyout",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/duststorm",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/enginecloseup",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/exhaustshot",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/expressionchange",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/firstperson",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/flashtransition",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/focuspull",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/hairflip",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/headturn",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/highwaydrive",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/jibshot",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/lookback",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/luxurycommercial",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/morphtransition",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/mountaindrive",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/nighttoday",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/packshot",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/pedestaldown",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/pedestalup",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/portaltransition",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/posechange",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/puddles",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/raindrops",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/seasonchange",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/showcase",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/starlight",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/sunrise",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/thunderstorm",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/timewarp",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/truckleft",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/truckright",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/unboxing",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/underwater",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/vehiclelaunch",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/wheelshot",
+      "source": "v3-canonical-expansion"
+    },
+    {
+      "command": "/windstorm",
+      "source": "v3-canonical-expansion"
+    }
+  ]
+}
