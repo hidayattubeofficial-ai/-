@@ -1,913 +1,1484 @@
 {
+  "schema_version": "1.0",
   "library": "Hidayat Video Command Library",
-  "version": "final-aggregate-1.0",
-  "status": "LOCKED_AGGREGATE_MANIFEST",
-  "unique_command_count": 221,
-  "accounting": {
+  "status": "FINAL_AGGREGATE_MANIFEST",
+  "generated_at": "2026-10-01",
+  "counts": {
     "v1_verified": 98,
     "v2_listed": 75,
-    "v3_expansion": 49,
-    "cross_layer_duplicate_resolved": 1,
-    "union_unique": 221
+    "v3_candidates": 49,
+    "cross_layer_duplicate_count": 1,
+    "unique_commands": 221
   },
-  "schema": "Command → Purpose → Prompt → Camera → Motion → Lighting → Avoid → Format",
-  "rules": {
-    "standard_shot_duration": "8 seconds",
-    "transition_duration": "1–4 seconds",
-    "goldenhour_canonical_source": "v1",
-    "youtube_publish": false,
+  "canonical_resolution": {
+    "/goldenhour": "v1 canonical; v2 duplicate source entry is not emitted twice"
+  },
+  "runtime_policy": {
+    "do_not_invent_missing_v1_definitions": true,
+    "do_not_auto_publish_youtube": true,
     "human_approval_required": true
   },
-  "source_of_truth": {
-    "v1": "verified example batches; historical canonical definitions unavailable in current repository history",
-    "v2": "locked example batches",
-    "v3": "validated canonical-expansion candidate JSON"
-  },
+  "field_schema": [
+    "command",
+    "purpose",
+    "prompt",
+    "camera",
+    "motion",
+    "lighting",
+    "avoid",
+    "format"
+  ],
   "commands": [
     {
       "command": "/supercar",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/luxurycar",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/sportscar",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/bikeride",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/offroad",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/streetracing",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/drifting",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/carcinematic",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/motocross",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/rallyracing",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/boxing",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/mma",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/football",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/basketball",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/cricket",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/skateboarding",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/parkour",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/running",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/workout",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/bodybuilding",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/streetstyle",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/fashionwalk",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/modelshoot",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/photoshoot",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/musicvideo",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/concert",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/actionmovie",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/horror",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/thriller",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/scenetransformation",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/herotransformation",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/villain",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/superhero",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/spy",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/secretagent",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/gangster",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/royal",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/businessman",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/luxurylifestyle",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/privatejet",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/yacht",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/helicopter",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/droneview",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/nightdrive",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/sunsetdrive",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/rainycinematic",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/neoncity",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/futuristic",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/cinematictrailer",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/hollywoodscene",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/addgirl",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/addboy",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/multicamshot",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/epicshot",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/droneshot",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/orbit",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/pushin",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/pullout",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/zoomshot",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/closeup",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/wideangle",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/lowangle",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/highangle",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/overhead",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/tracking",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/followcam",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/sidecam",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/frontcam",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/360spin",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/handheld",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/steadicam",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/slowmo",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/timelapse",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/hyperlapse",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/parallax",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/whip",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/reveal",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/dramaticreveal",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/walkin",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/walkaway",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/hairmotion",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/wind",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/rain",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/snow",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/fog",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/smoke",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/fire",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/lightning",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/sunset",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/night",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/goldenhour",
-      "source": "v1",
-      "canonical_deduplication": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source",
+      "duplicate_sources": [
+        "v2"
+      ]
     },
     {
       "command": "/neon",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/actionshot",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/carshot",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/productshot",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/movieintro",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/cinematic",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/viralshot",
-      "source": "v1"
+      "source_layer": "v1",
+      "canonical_status": "verified_example_source"
     },
     {
       "command": "/matchcut",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/whiptransition",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/zoomtransition",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/spintransition",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/objectwipe",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/lightflash",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/blurtransition",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/seamlesstransition",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/vehicletracking",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/vehicleorbit",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/vehicleinterior",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/vehiclelowangle",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/vehicleaerial",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/vehiclecloseup",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/vehiclespeedramp",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/vehiclecornering",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/vehiclesunset",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/vehiclewetroad",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/dollyzoom",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/rackfocus",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/anamorphic",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/parallaxpush",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/craneup",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/cranedown",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/arcshot",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/dronedive",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/dronerise",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/lensflare",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/shallowdof",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/steadicamreveal",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/stormfront",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/heavyrain",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/blizzard",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/sandstorm",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/hailstorm",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/rainbowafterstorm",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/bluehour",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/midnight",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/dawn",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/overcast",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/mistymorning",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/moonlight",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/forestcinematic",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/waterfall",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/oceanwave",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/desertlandscape",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/mountainreveal",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/riverflow",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/flowerfield",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/junglecanopy",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/cliffview",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/naturetimelapse",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/walkcycle",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/runningaction",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/turnandreveal",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/hairandclothmotion",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/gesturefocus",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/crowdwalk",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/sitandstand",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/characterinteraction",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/heroentrance",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/producthero",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/product360",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/productmacro",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/productfloating",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/productlifestyle",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/productreveal",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/shorts",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/reels",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/tiktok",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/loop",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/satisfying",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/trendstyle",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/thumbnailshot",
-      "source": "v2"
+      "source_layer": "v2",
+      "canonical_status": "locked_example_source"
     },
     {
       "command": "/adcinematic",
-      "source": "v3-canonical-expansion"
+      "purpose": "advertisement-style polished cinematic product shot بنانا.",
+      "prompt": "Create an 8-second cinematic advertisement shot of [SUBJECT] in [SCENE], using clear product hierarchy, polished composition, and concise visual storytelling suitable for commercial presentation.",
+      "camera": "Stabilized commercial camera with deliberate framing.",
+      "motion": "Controlled product or camera movement.",
+      "lighting": "Clean commercial lighting with strong subject separation.",
+      "avoid": "No invented claims, fake text, logos, or product deformation.",
+      "format": "8 seconds, 16:9 or 9:16 as requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/beach",
-      "source": "v3-canonical-expansion"
+      "purpose": "cinematic beach environment اور shoreline motion دکھانا.",
+      "prompt": "Create an 8-second cinematic beach shot of [SCENE], featuring realistic shoreline, sand texture, atmospheric depth, and gentle water movement.",
+      "camera": "Stabilized wide camera near shoreline.",
+      "motion": "Slow lateral track or gentle push.",
+      "lighting": "Natural daylight with soft reflected fill.",
+      "avoid": "No repeated wave patterns, floating sand, or warped horizon.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/beforeafter",
-      "source": "v3-canonical-expansion"
+      "purpose": "same subject/product کی before-after visual comparison دکھانا.",
+      "prompt": "Create an 8-second before-and-after presentation of [SUBJECT] in [SCENE], maintaining matched framing and clearly separating the two states without changing identity or inventing results.",
+      "camera": "Matched locked or stabilized framing.",
+      "motion": "Controlled visual state transition or side-by-side reveal.",
+      "lighting": "Consistent lighting and exposure between states.",
+      "avoid": "No deceptive transformation claims, identity manipulation, fake text, or geometry inconsistency.",
+      "format": "8 seconds, 16:9 by default; 1:1 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/citydrive",
-      "source": "v3-canonical-expansion"
+      "purpose": "urban road پر cinematic vehicle movement دکھانا.",
+      "prompt": "Create an 8-second cinematic city-drive shot of [SUBJECT] moving through [SCENE], with realistic lanes, traffic spacing, reflections, and urban scale.",
+      "camera": "Stabilized front or side tracking camera.",
+      "motion": "Smooth matched-speed urban travel.",
+      "lighting": "Motivated street and practical lighting.",
+      "avoid": "No duplicated traffic, impossible lane changes, or invented vehicle badges.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/cityscape",
-      "source": "v3-canonical-expansion"
+      "purpose": "urban skyline کا cinematic establishing view بنانا.",
+      "prompt": "Create an 8-second cinematic cityscape shot of [SCENE], emphasizing layered architecture, believable scale, atmospheric depth, and controlled urban motion.",
+      "camera": "Stabilized elevated wide camera.",
+      "motion": "Slow pan, lateral reveal, or push.",
+      "lighting": "Natural or motivated city lighting.",
+      "avoid": "No duplicated buildings, impossible roads, or flickering architecture.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/cloudscape",
-      "source": "v3-canonical-expansion"
+      "purpose": "dramatic sky اور cloud layers کا cinematic view بنانا.",
+      "prompt": "Create an 8-second cinematic cloudscape of [SCENE], emphasizing layered cloud depth, atmospheric scale, and natural evolving sky motion.",
+      "camera": "Wide stabilized upward-facing camera.",
+      "motion": "Slow pan or subtle time-based cloud movement.",
+      "lighting": "Natural sunlight filtered through cloud layers.",
+      "avoid": "No duplicated cloud patterns, impossible light direction, or abrupt sky replacement.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/cockpit",
-      "source": "v3-canonical-expansion"
+      "purpose": "driver cockpit perspective میں cinematic vehicle shot بنانا.",
+      "prompt": "Create an 8-second cinematic cockpit perspective of [SUBJECT] in [SCENE], showing a believable driver viewpoint, controls, windshield perspective, and road movement.",
+      "camera": "Driver-eye stabilized camera.",
+      "motion": "Natural forward vehicle motion with subtle cabin vibration.",
+      "lighting": "Realistic dashboard and exterior light interaction.",
+      "avoid": "No duplicated controls, impossible road perspective, or invented labels.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/convoy",
-      "source": "v3-canonical-expansion"
+      "purpose": "multiple vehicles کی coordinated cinematic movement دکھانا.",
+      "prompt": "Create an 8-second cinematic convoy shot of [SUBJECT] traveling with multiple vehicles through [SCENE], maintaining varied but coherent spacing, trajectories, and road contact.",
+      "camera": "Elevated or tracking wide camera.",
+      "motion": "Coordinated convoy movement with natural spacing.",
+      "lighting": "Consistent environmental reflections and exposure.",
+      "avoid": "No cloned vehicles, collisions, floating tires, or invented badges/logos.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/countryside",
-      "source": "v3-canonical-expansion"
+      "purpose": "rural landscape کا peaceful cinematic establishing shot بنانا.",
+      "prompt": "Create an 8-second cinematic countryside shot of [SCENE], showing natural fields, roads, vegetation, and distant terrain with coherent spatial depth.",
+      "camera": "Stabilized wide camera.",
+      "motion": "Gentle forward travel or lateral reveal.",
+      "lighting": "Natural daylight with soft atmospheric fill.",
+      "avoid": "No repeated structures, artificial vegetation, or warped horizon.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/dance",
-      "source": "v3-canonical-expansion"
+      "purpose": "natural choreographed dance movement دکھانا.",
+      "prompt": "Create an 8-second cinematic dance shot of [SUBJECT] in [SCENE], using coherent full-body choreography, balanced footwork, and continuous body mechanics.",
+      "camera": "Stabilized medium-to-full-body camera.",
+      "motion": "Rhythmic coordinated dance movement.",
+      "lighting": "Lighting remains synchronized with the environment.",
+      "avoid": "No extra limbs, broken joints, sliding feet, or anatomy distortion.",
+      "format": "8 seconds, 9:16 by default; 16:9 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/daytonight",
-      "source": "v3-canonical-expansion"
+      "purpose": "day scene کو gradual night atmosphere میں منتقل کرنا.",
+      "prompt": "Create an 8-second cinematic day-to-night transition in [SCENE], gradually shifting daylight into believable twilight and night while preserving scene geometry.",
+      "camera": "Locked or stabilized matched composition.",
+      "motion": "Continuous temporal lighting transition.",
+      "lighting": "Physically plausible decreasing daylight and emerging practical lights.",
+      "avoid": "No geometry changes, hard exposure jump, or object teleportation.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/dollyin",
-      "source": "v3-canonical-expansion"
+      "purpose": "smooth forward camera travel سے subject کی cinematic emphasis بڑھانا.",
+      "prompt": "Create an 8-second cinematic dolly-in toward [SUBJECT] in [SCENE], gradually increasing visual emphasis while preserving natural perspective and depth.",
+      "camera": "Stabilized forward dolly.",
+      "motion": "Smooth constant-speed or gently accelerating push-in.",
+      "lighting": "Consistent exposure and natural depth lighting.",
+      "avoid": "No digital zoom artifacts, subject deformation, or background warping.",
+      "format": "8 seconds, 9:16 by default; 16:9 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/dollyout",
-      "source": "v3-canonical-expansion"
+      "purpose": "smooth backward camera travel سے environment reveal کرنا.",
+      "prompt": "Create an 8-second cinematic dolly-out from [SUBJECT] in [SCENE], gradually revealing surrounding space with coherent perspective and scale.",
+      "camera": "Stabilized backward dolly.",
+      "motion": "Smooth pullback with controlled reveal.",
+      "lighting": "Maintain believable light direction and exposure.",
+      "avoid": "No teleporting camera, sudden scale changes, or warped environment.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/duststorm",
-      "source": "v3-canonical-expansion"
+      "purpose": "cinematic dust movement اور reduced visibility دکھانا.",
+      "prompt": "Create an 8-second cinematic duststorm in [SCENE], with physically plausible airborne dust, reduced visibility, and wind-driven environmental motion.",
+      "camera": "Stabilized low-to-medium environmental camera.",
+      "motion": "Wind-driven dust flow with gradual visibility changes.",
+      "lighting": "Warm diffused light filtered through dust.",
+      "avoid": "No opaque frame fill without cause, duplicated particles, or geometry distortion.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/enginecloseup",
-      "source": "v3-canonical-expansion"
+      "purpose": "engine/mechanical detail کا cinematic close-up بنانا.",
+      "prompt": "Create an 8-second cinematic engine-detail close-up of [SUBJECT] in [SCENE], revealing mechanical components and material detail with realistic depth and controlled movement.",
+      "camera": "Macro-capable stabilized close camera.",
+      "motion": "Slow slider or micro push-in.",
+      "lighting": "Controlled highlights revealing metal and mechanical surfaces.",
+      "avoid": "No duplicated components, invented labels, or melted geometry.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/exhaustshot",
-      "source": "v3-canonical-expansion"
+      "purpose": "vehicle exhaust کو cinematic detail کے ساتھ دکھانا.",
+      "prompt": "Create an 8-second cinematic exhaust detail shot of [SUBJECT] in [SCENE], showing realistic exhaust hardware, heat shimmer, and subtle vapor or emissions only when physically appropriate.",
+      "camera": "Low rear close-up camera.",
+      "motion": "Slow tracking or static detail framing.",
+      "lighting": "Directional highlights with realistic heat response.",
+      "avoid": "No excessive smoke, distorted exhaust geometry, or invented logos.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/expressionchange",
-      "source": "v3-canonical-expansion"
+      "purpose": "facial expression میں gradual natural change دکھانا.",
+      "prompt": "Create an 8-second cinematic expression-change shot of [SUBJECT] in [SCENE], gradually shifting between natural facial expressions while preserving identity and facial structure.",
+      "camera": "Stable close-up portrait camera.",
+      "motion": "Subtle facial muscle and eye movement.",
+      "lighting": "Soft consistent facial lighting.",
+      "avoid": "No face morphing, identity change, or exaggerated deformation.",
+      "format": "8 seconds, 9:16 by default; 16:9 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/firstperson",
-      "source": "v3-canonical-expansion"
+      "purpose": "subjective first-person perspective میں cinematic movement دکھانا.",
+      "prompt": "Create an 8-second cinematic first-person shot moving through [SCENE], presenting the environment from a believable human eye-level perspective with coherent motion.",
+      "camera": "Eye-level stabilized subjective camera.",
+      "motion": "Natural head-level movement with restrained sway.",
+      "lighting": "Lighting follows the environment consistently.",
+      "avoid": "No floating viewpoint, impossible body perspective, or excessive shake.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/flashtransition",
-      "source": "v3-canonical-expansion"
+      "purpose": "brief controlled flash سے scene change کرنا.",
+      "prompt": "Create an 1-second controlled flash transition from [SCENE_A] to [SCENE_B], using a motivated burst of light to bridge the scenes.",
+      "camera": "Stable matched framing.",
+      "motion": "Minimal movement; flash drives the transition.",
+      "lighting": "Brief controlled illumination with smooth falloff.",
+      "avoid": "No harsh clipping, strobe, visible hard cut, or random exposure jump.",
+      "format": "1 second, 9:16 by default; 16:9 or 1:1 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/focuspull",
-      "source": "v3-canonical-expansion"
+      "purpose": "controlled focus shift سے visual attention منتقل کرنا.",
+      "prompt": "Create an 8-second cinematic focus-pull shot in [SCENE], smoothly shifting sharp focus from [SUBJECT] to a secondary visual element while preserving realistic depth of field.",
+      "camera": "Locked or gently stabilized lens.",
+      "motion": "Primary motion is a controlled focus shift.",
+      "lighting": "Soft natural highlights with realistic lens response.",
+      "avoid": "No focus pulsing, artificial halos, or duplicated details.",
+      "format": "8 seconds, 9:16 by default; 16:9 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/hairflip",
-      "source": "v3-canonical-expansion"
+      "purpose": "controlled natural hair movement کو cinematic بنانا.",
+      "prompt": "Create an 8-second cinematic hair-movement shot of [SUBJECT] in [SCENE], using a controlled natural hair flip driven by believable head motion and airflow.",
+      "camera": "Portrait camera with gentle tracking.",
+      "motion": "Single coherent hair movement synchronized with head motion.",
+      "lighting": "Soft directional highlights on hair.",
+      "avoid": "No extreme hair growth, strand fusion, face distortion, or identity change.",
+      "format": "8 seconds, 9:16 by default; 16:9 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/headturn",
-      "source": "v3-canonical-expansion"
+      "purpose": "natural head turn سے attention shift دکھانا.",
+      "prompt": "Create an 8-second cinematic head-turn shot of [SUBJECT] in [SCENE], with a natural gradual head movement toward a visual point of attention.",
+      "camera": "Stable portrait or medium framing.",
+      "motion": "Subtle controlled head rotation with natural neck mechanics.",
+      "lighting": "Soft motivated portrait lighting.",
+      "avoid": "No neck deformation, face morphing, or unnatural eye direction.",
+      "format": "8 seconds, 9:16 by default; 16:9 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/highwaydrive",
-      "source": "v3-canonical-expansion"
+      "purpose": "highway پر cinematic driving sequence دکھانا.",
+      "prompt": "Create an 8-second cinematic highway-driving shot of [SUBJECT] traveling through [SCENE], maintaining realistic lane position, speed, road perspective, and vehicle contact.",
+      "camera": "Low or side stabilized tracking camera.",
+      "motion": "Matched-speed highway tracking.",
+      "lighting": "Natural daylight or night road lighting.",
+      "avoid": "No lane teleportation, floating vehicle, impossible traffic behavior, or invented badges.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/jibshot",
-      "source": "v3-canonical-expansion"
+      "purpose": "پروفیشنل jib-style vertical camera movement سے cinematic reveal بنانا.",
+      "prompt": "Create an 8-second cinematic jib shot of [SUBJECT] in [SCENE], using a smooth articulated camera move that rises or lowers while preserving spatial scale.",
+      "camera": "Jib-mounted stabilized camera with controlled vertical arc.",
+      "motion": "Smooth combined lift/drop with gentle framing correction.",
+      "lighting": "Motivated scene lighting with stable exposure.",
+      "avoid": "No sudden altitude jumps, warped perspective, or subject scale changes.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/lookback",
-      "source": "v3-canonical-expansion"
+      "purpose": "walking/moving subject کا پیچھے دیکھنا دکھانا.",
+      "prompt": "Create an 8-second cinematic look-back shot of [SUBJECT] moving through [SCENE], naturally turning the head and upper body to look behind while maintaining gait and identity.",
+      "camera": "Tracking three-quarter camera.",
+      "motion": "Continuous movement with controlled backward glance.",
+      "lighting": "Consistent environmental lighting.",
+      "avoid": "No twisted spine, eye-line errors, or identity changes.",
+      "format": "8 seconds, 9:16 by default; 16:9 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/luxurycommercial",
-      "source": "v3-canonical-expansion"
+      "purpose": "premium luxury advertising aesthetic بنانا.",
+      "prompt": "Create an 8-second luxury commercial shot of [SUBJECT] in [SCENE], using refined composition, controlled camera movement, premium materials, and elegant cinematic lighting.",
+      "camera": "Stabilized slow dolly or three-quarter product camera.",
+      "motion": "Minimal precise movement emphasizing premium presentation.",
+      "lighting": "Soft directional key, controlled highlights, subtle rim.",
+      "avoid": "No fake branding, text invention, material distortion, or excessive effects.",
+      "format": "8 seconds, 16:9 or 9:16 as requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/morphtransition",
-      "source": "v3-canonical-expansion"
+      "purpose": "non-human scene/object elements کو controlled visual morph کے ذریعے جوڑنا.",
+      "prompt": "Create a 4-second controlled visual morph transition from [SCENE_A] to [SCENE_B], morphing compatible non-human visual forms while preserving scene continuity.",
+      "camera": "Stable or matched framing.",
+      "motion": "Smooth shape transformation between compatible visual elements.",
+      "lighting": "Consistent exposure through the transformation.",
+      "avoid": "No human identity morphing, anatomy changes, hard cuts, flicker, or geometry corruption.",
+      "format": "4 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/mountaindrive",
-      "source": "v3-canonical-expansion"
+      "purpose": "mountain road پر cinematic driving دکھانا.",
+      "prompt": "Create an 8-second cinematic mountain-drive shot of [SUBJECT] navigating [SCENE], emphasizing winding road geometry, elevation, realistic steering, and environmental scale.",
+      "camera": "Front three-quarter stabilized tracking camera.",
+      "motion": "Smooth road-following motion through bends.",
+      "lighting": "Natural mountain light and atmospheric depth.",
+      "avoid": "No road clipping, impossible turns, floating vehicle, or invented badges.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/nighttoday",
-      "source": "v3-canonical-expansion"
+      "purpose": "night scene کو gradual daylight میں منتقل کرنا.",
+      "prompt": "Create an 8-second cinematic night-to-day transition in [SCENE], gradually introducing dawn light while preserving the original environment and spatial continuity.",
+      "camera": "Locked or stabilized matched composition.",
+      "motion": "Continuous temporal lighting transition.",
+      "lighting": "Gradual dawn illumination and natural shadow emergence.",
+      "avoid": "No sudden sun placement, geometry changes, or exposure jump.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/packshot",
-      "source": "v3-canonical-expansion"
+      "purpose": "commercial end-frame کے لیے صاف product presentation بنانا.",
+      "prompt": "Create an 8-second packshot sequence of [SUBJECT] in [SCENE], resolving into a clean centered commercial product frame with precise silhouette and controlled negative space.",
+      "camera": "Locked or gently stabilized hero camera.",
+      "motion": "Minimal movement resolving to a stable final frame.",
+      "lighting": "Clean studio-style lighting with controlled reflections.",
+      "avoid": "No fake text, invented logos, clutter, or altered product geometry.",
+      "format": "8 seconds, 16:9 or 9:16 as requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/pedestaldown",
-      "source": "v3-canonical-expansion"
+      "purpose": "camera کو vertical axis پر نیچے لانا.",
+      "prompt": "Create an 8-second cinematic pedestal-down shot of [SUBJECT] in [SCENE], lowering the camera vertically while maintaining consistent framing and scale.",
+      "camera": "Stabilized vertical camera rig.",
+      "motion": "Smooth straight downward translation.",
+      "lighting": "Stable motivated lighting.",
+      "avoid": "No sudden drops, geometry warping, or scale distortion.",
+      "format": "8 seconds, 9:16 by default; 16:9 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/pedestalup",
-      "source": "v3-canonical-expansion"
+      "purpose": "camera کو vertical axis پر اوپر اٹھانا.",
+      "prompt": "Create an 8-second cinematic pedestal-up shot of [SUBJECT] in [SCENE], raising the camera vertically while keeping the composition coherent.",
+      "camera": "Stabilized vertical camera rig.",
+      "motion": "Smooth straight upward translation.",
+      "lighting": "Stable exposure and natural shadow behavior.",
+      "avoid": "No crane-like wide reveal unless requested, no perspective teleportation.",
+      "format": "8 seconds, 9:16 by default; 16:9 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/portaltransition",
-      "source": "v3-canonical-expansion"
+      "purpose": "portal-like visual passage سے scenes connect کرنا.",
+      "prompt": "Create a 4-second cinematic portal transition from [SCENE_A] to [SCENE_B], using a motivated portal-like opening that carries the camera naturally into the destination scene.",
+      "camera": "Forward-moving stabilized camera.",
+      "motion": "Continuous approach and passage through the portal.",
+      "lighting": "Portal illumination remains physically motivated and exposure controlled.",
+      "avoid": "No random portals, exposure flash, hard cut, or subject morphing.",
+      "format": "4 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/posechange",
-      "source": "v3-canonical-expansion"
+      "purpose": "ایک pose سے دوسرے pose میں smooth transition.",
+      "prompt": "Create an 8-second cinematic pose-change shot of [SUBJECT] in [SCENE], transitioning smoothly between two natural poses while preserving identity, clothing, and body proportions.",
+      "camera": "Stable medium or full-body framing.",
+      "motion": "Continuous controlled pose transition.",
+      "lighting": "Consistent portrait or scene lighting.",
+      "avoid": "No teleporting limbs, clothing morphing, or anatomy distortion.",
+      "format": "8 seconds, 9:16 by default; 16:9 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/puddles",
-      "source": "v3-canonical-expansion"
+      "purpose": "rain puddles میں realistic reflections اور interaction دکھانا.",
+      "prompt": "Create an 8-second cinematic puddle shot in [SCENE], showing realistic raindrop impacts, ripples, reflections, and subtle environmental interaction.",
+      "camera": "Low stabilized camera near ground level.",
+      "motion": "Controlled ripple and reflection movement.",
+      "lighting": "Soft overcast or night lighting reflected naturally.",
+      "avoid": "No mirror-like water without cause, impossible ripples, or floating surfaces.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/raindrops",
-      "source": "v3-canonical-expansion"
+      "purpose": "rain droplets کی detailed cinematic texture دکھانا.",
+      "prompt": "Create an 8-second cinematic rain-droplet shot of [SUBJECT] in [SCENE], emphasizing individual droplets, surface interaction, and realistic depth.",
+      "camera": "Macro or close stabilized camera.",
+      "motion": "Natural falling droplets with coherent surface impacts.",
+      "lighting": "Soft overcast or motivated rain lighting.",
+      "avoid": "No oversized droplets, frozen rain, or artificial streaks.",
+      "format": "8 seconds, 9:16 by default; 16:9 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/seasonchange",
-      "source": "v3-canonical-expansion"
+      "purpose": "ایک ہی environment میں seasonal transformation دکھانا.",
+      "prompt": "Create an 8-second cinematic seasonal-change sequence in [SCENE], transforming environmental cues such as foliage, snow, or light while preserving the underlying location and composition.",
+      "camera": "Locked or highly stabilized composition.",
+      "motion": "Gradual environmental transformation.",
+      "lighting": "Season-appropriate lighting changes with continuous exposure.",
+      "avoid": "No building/terrain morphing, random object replacement, or identity changes.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/showcase",
-      "source": "v3-canonical-expansion"
+      "purpose": "product کو concise premium showcase میں نمایاں کرنا.",
+      "prompt": "Create an 8-second cinematic product showcase of [SUBJECT] in [SCENE], combining a clear hero composition, controlled movement, and detailed material presentation.",
+      "camera": "Stabilized three-quarter product camera.",
+      "motion": "Slow reveal, orbit, or push as appropriate.",
+      "lighting": "Clean commercial lighting with realistic reflections.",
+      "avoid": "No invented branding, fake text, geometry changes, or visual clutter.",
+      "format": "8 seconds, 16:9 or 9:16 as requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/starlight",
-      "source": "v3-canonical-expansion"
+      "purpose": "star-filled night environment کو cinematic depth دینا.",
+      "prompt": "Create an 8-second cinematic starlight scene in [SCENE], featuring a clear star-filled sky and restrained low-light environmental detail.",
+      "camera": "Stable wide camera.",
+      "motion": "Minimal camera movement with subtle environmental motion.",
+      "lighting": "Natural low-light illumination with restrained sky glow.",
+      "avoid": "No excessive stars, artificial constellations, or daytime exposure.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/sunrise",
-      "source": "v3-canonical-expansion"
+      "purpose": "sunrise کے natural warm transition کو cinematic بنانا.",
+      "prompt": "Create an 8-second cinematic sunrise scene in [SCENE], with gradually warming light, long natural shadows, and a believable horizon glow.",
+      "camera": "Stable wide or medium camera.",
+      "motion": "Slow environmental reveal with subtle light progression.",
+      "lighting": "Natural sunrise illumination.",
+      "avoid": "No instant sun jumps, clipped highlights, or impossible shadow direction.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/thunderstorm",
-      "source": "v3-canonical-expansion"
+      "purpose": "thunder اور rain کے ساتھ dramatic storm environment بنانا.",
+      "prompt": "Create an 8-second cinematic thunderstorm scene in [SCENE], combining realistic rainfall, distant thunder-light flashes, wind response, and coherent atmospheric depth.",
+      "camera": "Stabilized environmental camera.",
+      "motion": "Natural rain and wind movement with restrained camera motion.",
+      "lighting": "Dark storm lighting with motivated lightning flashes.",
+      "avoid": "No random strobe, excessive lightning, exposure clipping, or impossible weather geometry.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/timewarp",
-      "source": "v3-canonical-expansion"
+      "purpose": "time progression کو accelerated cinematic effect میں دکھانا.",
+      "prompt": "Create an 8-second cinematic time-warp sequence of [SCENE], accelerating a coherent environmental progression such as clouds, traffic, shadows, or changing light while preserving spatial continuity.",
+      "camera": "Locked or stabilized time-lapse composition.",
+      "motion": "Accelerated temporal motion with coherent trajectories.",
+      "lighting": "Gradual physically plausible light progression.",
+      "avoid": "No teleporting objects, discontinuous shadows, or scene redesign.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/truckleft",
-      "source": "v3-canonical-expansion"
+      "purpose": "camera کو subject کے نسبت بائیں جانب smoothly move کرنا.",
+      "prompt": "Create an 8-second cinematic truck-left shot of [SUBJECT] in [SCENE], maintaining consistent subject framing while the camera travels laterally left.",
+      "camera": "Stabilized lateral tracking camera.",
+      "motion": "Smooth leftward camera translation.",
+      "lighting": "Consistent environmental lighting and parallax.",
+      "avoid": "No orbiting unless requested, no lateral distortion, no subject duplication.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/truckright",
-      "source": "v3-canonical-expansion"
+      "purpose": "camera کو subject کے نسبت دائیں جانب smoothly move کرنا.",
+      "prompt": "Create an 8-second cinematic truck-right shot of [SUBJECT] in [SCENE], maintaining consistent subject framing while the camera travels laterally right.",
+      "camera": "Stabilized lateral tracking camera.",
+      "motion": "Smooth rightward camera translation.",
+      "lighting": "Consistent environmental lighting and parallax.",
+      "avoid": "No unintended orbit, geometry warping, or framing jumps.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/unboxing",
-      "source": "v3-canonical-expansion"
+      "purpose": "cinematic product unboxing sequence بنانا.",
+      "prompt": "Create an 8-second cinematic unboxing shot of [SUBJECT] in [SCENE], showing a clear sequence from package opening to product reveal with realistic hand and object interaction.",
+      "camera": "Stable tabletop or over-the-shoulder camera.",
+      "motion": "Controlled opening, handling, and reveal motion.",
+      "lighting": "Soft commercial lighting with natural material highlights.",
+      "avoid": "No extra fingers, duplicated objects, fake labels, or product morphing.",
+      "format": "8 seconds, 16:9 or 9:16 as requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/underwater",
-      "source": "v3-canonical-expansion"
+      "purpose": "underwater environment کو realistic cinematic perspective میں دکھانا.",
+      "prompt": "Create an 8-second cinematic underwater shot of [SCENE] featuring [SUBJECT], with realistic buoyancy, light attenuation, particles, and underwater depth.",
+      "camera": "Stabilized underwater camera.",
+      "motion": "Slow controlled drift or tracking.",
+      "lighting": "Filtered volumetric underwater light.",
+      "avoid": "No impossible buoyancy, dry-surface lighting, or duplicated subjects.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/vehiclelaunch",
-      "source": "v3-canonical-expansion"
+      "purpose": "vehicle reveal یا dramatic launch کو cinematic بنانا.",
+      "prompt": "Create an 8-second cinematic vehicle launch shot of [SUBJECT] in [SCENE], beginning with a controlled reveal and building into realistic forward acceleration while preserving vehicle geometry and road contact.",
+      "camera": "Low front three-quarter stabilized camera.",
+      "motion": "Controlled reveal followed by believable acceleration.",
+      "lighting": "Directional highlights and stable exposure.",
+      "avoid": "No teleporting, impossible acceleration, wheel deformation, or invented badges.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/wheelshot",
-      "source": "v3-canonical-expansion"
+      "purpose": "vehicle wheel کی close-up cinematic detail دکھانا.",
+      "prompt": "Create an 8-second cinematic wheel detail shot of [SUBJECT] in [SCENE], emphasizing realistic wheel rotation, tire contact, surface detail, and road interaction.",
+      "camera": "Low close tracking camera.",
+      "motion": "Matched-speed wheel tracking or slow detail reveal.",
+      "lighting": "Directional highlights with realistic surface reflections.",
+      "avoid": "No wheel deformation, floating tire, or invented branding.",
+      "format": "8 seconds, 9:16 by default; 16:9 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     },
     {
       "command": "/windstorm",
-      "source": "v3-canonical-expansion"
+      "purpose": "strong environmental wind کو cinematic مگر realistic بنانا.",
+      "prompt": "Create an 8-second cinematic windstorm in [SCENE], showing strong but physically coherent wind affecting vegetation, loose materials, and atmospheric particles.",
+      "camera": "Stabilized environmental camera.",
+      "motion": "Directional wind response across scene elements.",
+      "lighting": "Overcast or storm-motivated lighting.",
+      "avoid": "No objects flying without physical cause, vegetation deformation, or random debris.",
+      "format": "8 seconds, 16:9 by default; 9:16 when requested.",
+      "source_layer": "v3",
+      "canonical_status": "canonical_expansion_candidate"
     }
   ]
 }
