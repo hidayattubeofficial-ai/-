@@ -8,21 +8,21 @@ Command → Purpose → Prompt → Camera → Motion → Lighting → Avoid → 
 
 ## 1. /morphtransition
 **Purpose:** non-human scene/object elements کو controlled visual morph کے ذریعے جوڑنا.
-**Prompt:** Create an 8-second controlled visual morph transition from [SCENE_A] to [SCENE_B], morphing compatible non-human visual forms while preserving scene continuity.
+**Prompt:** Create a 4-second controlled visual morph transition from [SCENE_A] to [SCENE_B], morphing compatible non-human visual forms while preserving scene continuity.
 **Camera:** Stable or matched framing.
 **Motion:** Smooth shape transformation between compatible visual elements.
 **Lighting:** Consistent exposure through the transformation.
 **Avoid:** No human identity morphing, anatomy changes, hard cuts, flicker, or geometry corruption.
-**Format:** 8 seconds, 16:9 by default; 9:16 when requested.
+**Format:** 4 seconds, 16:9 by default; 9:16 when requested.
 
 ## 2. /portaltransition
 **Purpose:** portal-like visual passage سے scenes connect کرنا.
-**Prompt:** Create an 8-second cinematic portal transition from [SCENE_A] to [SCENE_B], using a motivated portal-like opening that carries the camera naturally into the destination scene.
+**Prompt:** Create a 4-second cinematic portal transition from [SCENE_A] to [SCENE_B], using a motivated portal-like opening that carries the camera naturally into the destination scene.
 **Camera:** Forward-moving stabilized camera.
 **Motion:** Continuous approach and passage through the portal.
 **Lighting:** Portal illumination remains physically motivated and exposure controlled.
 **Avoid:** No random portals, exposure flash, hard cut, or subject morphing.
-**Format:** 8 seconds, 16:9 by default; 9:16 when requested.
+**Format:** 4 seconds, 16:9 by default; 9:16 when requested.
 
 ## 3. /flashtransition
 **Purpose:** brief controlled flash سے scene change کرنا.
