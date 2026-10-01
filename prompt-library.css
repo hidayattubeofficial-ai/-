@@ -1,0 +1,17 @@
+:root{--pl-green:#0B5E3B;--pl-green2:#4CAF6B;--pl-gold:#D4AF37;--pl-cream:#fbfaf5;--pl-ink:#13231c;--pl-muted:#63736b;--pl-line:#dce7e1}
+.master-reference{margin:0 0 36px;padding:22px;background:linear-gradient(145deg,#fff,#f3f8f4);border:1px solid var(--pl-line);border-radius:28px;box-shadow:0 12px 35px #073b2a0c}
+.master-reference h2{margin:0 0 8px;color:var(--pl-green);font-size:clamp(26px,4vw,38px)}
+.master-reference .intro{margin:0 0 20px;color:var(--pl-muted)}
+.reference-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:22px;align-items:start}
+.reference-image{overflow:hidden;border-radius:20px;border:1px solid var(--pl-line);background:#fff}
+.reference-image img{display:block;width:100%;height:auto}
+.reference-content{display:grid;gap:14px}
+.color-row{display:flex;flex-wrap:wrap;gap:9px}
+.color-chip{padding:8px 11px;border-radius:999px;font-size:12px;font-weight:900}
+.color-chip.green{background:#0B5E3B;color:#fff}.color-chip.green2{background:#4CAF6B;color:#073b2a}.color-chip.gold{background:#D4AF37;color:#172116}
+.reference-card{background:#fff;border:1px solid var(--pl-line);border-radius:16px;padding:14px 16px}
+.reference-card h3{margin:0 0 5px;color:var(--pl-green2);font-size:16px}.reference-card p{margin:0;color:var(--pl-muted);font-size:13px}
+.reference-steps{display:grid;gap:8px}.reference-step{display:flex;gap:11px;align-items:flex-start;background:#f5f8f6;border-radius:12px;padding:10px 12px}
+.reference-step b{color:var(--pl-green);min-width:24px}.reference-step strong{display:block}.reference-step span{color:var(--pl-muted);font-size:12px}
+.topics{margin-top:22px}.topics h3{color:var(--pl-green);margin:0 0 10px}.topic-list{display:grid;grid-template-columns:repeat(4,1fr);gap:7px 10px;padding:0;margin:0;list-style:none}.topic-list li{padding:8px 10px;background:#f5f8f6;border-radius:9px;font-size:12px}
+@media(max-width:850px){.reference-grid{grid-template-columns:1fr}.topic-list{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.master-reference{padding:14px;border-radius:20px}.topic-list{grid-template-columns:1fr}}
