@@ -1,4 +1,8 @@
-"""Upload output/video.mp4 to the authenticated YouTube channel as PRIVATE."""
+"""Upload output/video.mp4 to YouTube only when the explicit human-review gate is enabled.
+
+Publishing remains OFF by default. This script will not contact YouTube unless
+ENABLE_PRIVATE_UPLOAD is exactly "true" in the environment.
+"""
 import os
 from pathlib import Path
 
@@ -11,6 +15,10 @@ SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 
 
 def main() -> None:
+    if os.environ.get("ENABLE_PRIVATE_UPLOAD", "").lower() != "true":
+        print("YouTube upload is OFF. Explicit human approval gate not enabled; upload skipped.")
+        return
+
     if not VIDEO.is_file():
         print("No output/video.mp4 found; private upload skipped.")
         return
