@@ -1,0 +1,508 @@
+{
+  "library": "Hidayat Video Command Library",
+  "version": "v3",
+  "status": "canonical-expansion-candidate",
+  "count": 49,
+  "schema": [
+    "command",
+    "purpose",
+    "prompt",
+    "camera",
+    "motion",
+    "lighting",
+    "avoid",
+    "format"
+  ],
+  "commands": [
+    {
+      "command": "/adcinematic",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/beach",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/beforeafter",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/citydrive",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/cityscape",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/cloudscape",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/cockpit",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/convoy",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/countryside",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/dance",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/daytonight",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/dollyin",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/dollyout",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/duststorm",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/enginecloseup",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/exhaustshot",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/expressionchange",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/firstperson",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/flashtransition",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/focuspull",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/hairflip",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/headturn",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/highwaydrive",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/jibshot",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/lookback",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/luxurycommercial",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/morphtransition",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/mountaindrive",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/nighttoday",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/packshot",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/pedestaldown",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/pedestalup",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/portaltransition",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/posechange",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/puddles",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/raindrops",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/seasonchange",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/showcase",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/starlight",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/sunrise",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/thunderstorm",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/timewarp",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/truckleft",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/truckright",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/unboxing",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/underwater",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/vehiclelaunch",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/wheelshot",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    },
+    {
+      "command": "/windstorm",
+      "purpose": "",
+      "prompt": "",
+      "camera": "",
+      "motion": "",
+      "lighting": "",
+      "avoid": "",
+      "format": ""
+    }
+  ]
+}
