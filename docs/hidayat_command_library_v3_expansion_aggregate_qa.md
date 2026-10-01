@@ -50,3 +50,11 @@ The remaining drafted commands are eligible for a final cross-library QA pass, s
 These v3 files are candidate source material only. Do not treat them as canonical until the final aggregate lock is explicitly produced and validated.
 
 YouTube publishing remains OFF and human approval remains required.
+
+
+## Final QA implementation status
+- 60/60 drafted candidates verified as unique by command heading.
+- 49/60 provisional candidates retained after the 11-command semantic hold list.
+- Transition duration correction implemented: `/morphtransition` and `/portaltransition` set to 4 seconds; `/flashtransition` remains 1 second.
+- `/speedramp` remains held because its scope overlaps the existing vehicle-specific speed-ramp command.
+- The 49 provisional commands are not yet promoted into the canonical registry; promotion requires field-level validation and explicit aggregate lock.
