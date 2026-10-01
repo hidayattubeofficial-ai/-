@@ -1,0 +1,13 @@
+{
+  "name": "Hidayat AI 2 Terminal",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {},
+  "postCreateCommand": "python3 --version && git --version",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  }
+}
