@@ -1,12 +1,21 @@
 {
-  "name": "Hidayat AI 2 Terminal",
+  "name": "Hidayat Computer — Hidayat AI 2",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-  "features": {},
-  "postCreateCommand": "python3 --version && git --version",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17",
+      "installGradle": true,
+      "gradleVersion": "8.7"
+    },
+    "ghcr.io/nordcominc/devcontainer-features/android-sdk:1": {}
+  },
+  "postCreateCommand": "java -version && python3 --version && git --version && gradle --version && (sdkmanager --version || true)",
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-python.python"
+        "ms-python.python",
+        "fwcd.kotlin",
+        "vscjava.vscode-gradle"
       ]
     }
   }
