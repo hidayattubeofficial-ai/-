@@ -33,5 +33,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --name hidayattubeofficial --assets _site --compatibility-date=2026-10-01 --yes
+          command: deploy --config wrangler.jsonc --yes
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
