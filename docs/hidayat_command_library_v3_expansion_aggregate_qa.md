@@ -1,14 +1,14 @@
 # Hidayat Video Command Library v3 — Expansion Aggregate QA
 
 ## Status
-PRE-LOCK — 59 drafted candidates reviewed; no changes to the locked 173-command registry.
+PRE-LOCK — 60 drafted candidates reviewed; no changes to the locked 173-command registry.
 
 ## Drafted
 - Candidate batches created: 6
-- Drafted commands: 59
-- Complete schema coverage: 59/59
+- Drafted commands: 60
+- Complete schema coverage: 60/60
 - Commands held for semantic merge/alias review: 11
-- Provisional eligible expansion after holdout: 48
+- Provisional eligible expansion after holdout: 49
 
 ## Holdout commands
 - /speedramp
