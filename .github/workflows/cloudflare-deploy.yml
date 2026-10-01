@@ -28,10 +28,10 @@ jobs:
           cp prompt-library.html _site/prompt-library.html
           cp -R assets _site/assets
 
-      - name: Deploy public site to Cloudflare Pages
+      - name: Deploy public site to Cloudflare Worker
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy _site --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT }}
+          command: deploy --name hidayattubeofficial --assets _site --compatibility-date=2026-10-01 --yes
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
