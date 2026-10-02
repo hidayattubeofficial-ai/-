@@ -13,17 +13,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Install FFmpeg
+      - name: Install system tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg
+          sudo apt-get install -y ffmpeg fonts-noto-core fonts-noto-cjk
+
+      - name: Install Python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
 
       - name: Build official-source Hadith 001 review video
+        env:
+          TTS_VOICE: ur-PK-AsadNeural
+          TTS_RATE: -10%
         run: python scripts/build_hadith_long_form.py
 
       - name: Validate MP4
         run: |
-          ffprobe -v error -show_entries format=format_name,duration             -show_entries stream=codec_type,codec_name,width,height,pix_fmt,r_frame_rate             -of default=noprint_wrappers=1 output/hadith-001-review.mp4
+          ffprobe -v error             -show_entries format=format_name,duration             -show_entries stream=codec_type,codec_name,width,height,pix_fmt,r_frame_rate             -of default=noprint_wrappers=1 output/hadith-001-review.mp4
 
       - name: Upload review artifact
         uses: actions/upload-artifact@v4
@@ -32,7 +41,7 @@ jobs:
           path: |
             output/hadith-001-review.mp4
             output/hadith-001-source.txt
-            output/hadith-001-source-card.html
+            output/hadith-001-voice.mp3
           retention-days: 90
 
       - name: Publish guard
