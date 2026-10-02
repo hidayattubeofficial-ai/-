@@ -1,13 +1,15 @@
-"""Build Hadith #001 long-form review video from the official Dawat-e-Islami source.
-
-The official page is fetched at build time. Arabic and Urdu translation are
-extracted from that page only; no secondary Hadith source is used.
-"""
+"""Build Hadith #001 long-form review video from the official Dawat-e-Islami source."""
 from pathlib import Path
 import asyncio
 import re
 import subprocess
+import sys
 from html import escape
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 from playwright.async_api import async_playwright
 from scripts.generate_voice import synthesize
 
@@ -39,16 +41,13 @@ def section(text: str, start: str, end: str) -> str:
 
 arabic_block = section(plain, "حدیث مبارکہ", "حدیث ترجمہ")
 translation = section(plain, "حدیث ترجمہ", "شرح حدیث")
-
-# Remove the source navigation/header noise while preserving the actual text.
 arabic_block = re.sub(r"^.*?حدیث مبارکہ\s*", "", arabic_block, flags=re.S).strip()
 translation = translation.strip()
 if len(arabic_block) < 80 or len(translation) < 80:
     raise SystemExit("Official Hadith text extraction was unexpectedly short.")
 
-voice_text = translation
 voice = OUT / "hadith-001-voice.mp3"
-synthesize(voice_text, str(voice))
+synthesize(translation, str(voice))
 
 metadata = f"""source: {SOURCE}
 source_policy: Dawat-e-Islami official website only
@@ -100,7 +99,6 @@ async def render_slides():
 
 asyncio.run(render_slides())
 
-# Convert the four branded stills into a 90-second sequence with gentle fades.
 durations = [6, 22, 55, 7]
 inputs = []
 for i, (name, *_rest) in enumerate(slides):
