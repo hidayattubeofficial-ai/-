@@ -3,6 +3,8 @@ name: Hidayat AI 2 Android APK Build
 on:
   push:
     branches: [main]
+    paths:
+      - "hidayat-ai2/**"
 
 jobs:
   build-apk:
