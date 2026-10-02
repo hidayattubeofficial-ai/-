@@ -1,14 +1,15 @@
 """Build Hadith #001 long-form review video from the official Dawat-e-Islami source.
 
-The source URL is the only allowed Hadith source. The script fetches the page at
-build time and extracts the first Hadith Arabic/Urdu sections, so the repository
-does not become a second Hadith database. Publishing is never performed.
+The official page is fetched at build time. Arabic and Urdu translation are
+extracted from that page only; no secondary Hadith source is used.
 """
 from pathlib import Path
-from html import unescape
+import asyncio
 import re
 import subprocess
-import urllib.request
+from html import escape
+from playwright.async_api import async_playwright
+from scripts.generate_voice import synthesize
 
 SOURCE = "https://www.dawateislami.net/hadees/ur/books/muntakhab-hadeesen/hadees-1"
 OUT = Path("output")
@@ -16,27 +17,39 @@ OUT.mkdir(exist_ok=True)
 W, H, FPS = 1920, 1080, 30
 DURATION = 90
 
-def fetch_source() -> str:
-    req = urllib.request.Request(SOURCE, headers={"User-Agent": "HidayatTubeReviewBuilder/1.0"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return r.read().decode("utf-8", errors="ignore")
+async def fetch_page_text() -> str:
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page(viewport={"width": 1920, "height": 1080})
+        await page.goto(SOURCE, wait_until="domcontentloaded", timeout=60000)
+        await page.wait_for_timeout(1200)
+        text = await page.locator("body").inner_text()
+        await browser.close()
+        return text
 
-def clean(s: str) -> str:
-    s = unescape(re.sub(r"<[^>]+>", " ", s))
-    return re.sub(r"\\s+", " ", s).strip()
-
-html = fetch_source()
-plain = clean(html)
+plain = asyncio.run(fetch_page_text())
 if "منتخب حدیثیں" not in plain or "حدیث نمبر: 1" not in plain:
     raise SystemExit("Official Dawat-e-Islami Hadith #1 source could not be verified.")
 
-# Keep source provenance explicit. Text extraction is intentionally conservative:
-# the final video must be reviewed by a human before publication.
-title = "حدیثِ مبارک"
-reference = "حدیث نمبر: 1\\nبک ریفرنس: منتخب حدیثیں، جلد 1"
+def section(text: str, start: str, end: str) -> str:
+    if start not in text or end not in text:
+        raise SystemExit(f"Official source section missing: {start}")
+    value = text.split(start, 1)[1].split(end, 1)[0]
+    return re.sub(r"\n{2,}", "\n", value).strip()
 
-# The official page is rendered as the source of truth. We do not invent or
-# substitute Hadith wording when the page structure changes.
+arabic_block = section(plain, "حدیث مبارکہ", "حدیث ترجمہ")
+translation = section(plain, "حدیث ترجمہ", "شرح حدیث")
+
+# Remove the source navigation/header noise while preserving the actual text.
+arabic_block = re.sub(r"^.*?حدیث مبارکہ\s*", "", arabic_block, flags=re.S).strip()
+translation = translation.strip()
+if len(arabic_block) < 80 or len(translation) < 80:
+    raise SystemExit("Official Hadith text extraction was unexpectedly short.")
+
+voice_text = translation
+voice = OUT / "hadith-001-voice.mp3"
+synthesize(voice_text, str(voice))
+
 metadata = f"""source: {SOURCE}
 source_policy: Dawat-e-Islami official website only
 hadith_number: 1
@@ -50,28 +63,82 @@ human_approval: REQUIRED
 """
 (OUT / "hadith-001-source.txt").write_text(metadata, encoding="utf-8")
 
-# Create a simple, review-safe visual timeline. The exact Hadith text is loaded
-# from the verified official page in the companion HTML source card rather than
-# being guessed or duplicated into the catalog.
-html_card = OUT / "hadith-001-source-card.html"
-html_card.write_text(f"""<!doctype html><meta charset="utf-8"><title>{title}</title>
+def make_slide(name: str, heading: str, body: str, footer: str) -> Path:
+    safe_heading, safe_body, safe_footer = map(escape, (heading, body, footer))
+    html = f"""<!doctype html><meta charset="utf-8">
 <style>
-html,body{{margin:0;width:1920px;height:1080px;background:#07140d;color:white;font-family:serif}}
-main{{height:100%;display:grid;place-items:center;text-align:center}}
-.gold{{color:#d4af37}} h1{{font-size:76px}} p{{font-size:40px;line-height:1.8}}
-</style><main><section><h1 class="gold">{title}</h1>
-<p>حدیث نمبر: 1</p><p>بک ریفرنس: منتخب حدیثیں، جلد 1</p>
-<p>Official source verified at build time</p></section></main>""", encoding="utf-8")
+@font-face{{font-family:Nastaliq;src:local("Noto Nastaliq Urdu")}}
+html,body{{margin:0;width:1920px;height:1080px;background:#07140d;color:#fff}}
+body{{font-family:Nastaliq,serif}}
+main{{height:100%;box-sizing:border-box;padding:90px 150px;display:flex;flex-direction:column;justify-content:center;text-align:center}}
+h1{{font-size:70px;color:#d4af37;margin:0 0 35px}}
+p{{font-size:46px;line-height:2;margin:0 auto;max-width:1550px;white-space:pre-wrap}}
+footer{{font-family:Arial,sans-serif;font-size:24px;margin-top:45px;opacity:.85}}
+</style><main><h1>{safe_heading}</h1><p>{safe_body}</p><footer>{safe_footer}</footer></main>"""
+    path = OUT / f"{name}.html"
+    path.write_text(html, encoding="utf-8")
+    return path
 
-# Use FFmpeg to make a standards-compliant 90-second H.264/AAC review video.
-bg = OUT / "hadith-001-bg.png"
-subprocess.run(["ffmpeg","-y","-f","lavfi","-i",
-                "color=c=0x07140d:s=1920x1080:d=1",
-                "-frames:v","1",str(bg)], check=True,
-               stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+slides = [
+    ("slide01", "حدیثِ مبارک", "نیت کی اہمیت", "Hidayat Tube Official"),
+    ("slide02", "حدیثِ مبارک", arabic_block, "Official Dawat-e-Islami source"),
+    ("slide03", "حدیثِ مبارک", translation, "Official Urdu translation"),
+    ("slide04", "حوالہ", "حدیث نمبر: 1\nبک ریفرنس: منتخب حدیثیں، جلد 1", "Hidayat Tube Official"),
+]
+
+async def render_slides():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page(viewport={"width": W, "height": H}, device_scale_factor=1)
+        for name, heading, body, footer in slides:
+            path = make_slide(name, heading, body, footer)
+            await page.goto(path.resolve().as_uri(), wait_until="load")
+            await page.evaluate("document.fonts.ready")
+            await page.wait_for_timeout(300)
+            await page.screenshot(path=str(OUT / f"{name}.png"))
+        await browser.close()
+
+asyncio.run(render_slides())
+
+# Convert the four branded stills into a 90-second sequence with gentle fades.
+durations = [6, 22, 55, 7]
+inputs = []
+for i, (name, *_rest) in enumerate(slides):
+    inputs += ["-loop", "1", "-t", str(durations[i]), "-i", str(OUT / f"{name}.png")]
+
+filters = []
+for i in range(len(slides)):
+    filters.append(f"[{i}:v]fps={FPS},format=yuv420p,setsar=1[v{i}]")
+filters.append("[v0][v1]xfade=transition=fade:duration=1:offset=5[v01]")
+filters.append("[v01][v2]xfade=transition=fade:duration=1:offset=26[v012]")
+filters.append("[v012][v3]xfade=transition=fade:duration=1:offset=80[v]")
+silent = OUT / "hadith-001-silent.mp4"
+subprocess.run([
+    "ffmpeg","-y",*inputs,"-filter_complex",";".join(filters),
+    "-map","[v]","-t",str(DURATION),"-c:v","libx264","-pix_fmt","yuv420p",
+    "-r",str(FPS),"-movflags","+faststart",str(silent)
+], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+
 video = OUT / "hadith-001-review.mp4"
-subprocess.run(["ffmpeg","-y","-loop","1","-i",str(bg),"-t",str(DURATION),
-                "-r",str(FPS),"-c:v","libx264","-pix_fmt","yuv420p",
-                "-profile:v","high","-level","4.0","-movflags","+faststart",
-                str(video)], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-print(f"Created review container: {video}")
+subprocess.run([
+    "ffmpeg","-y","-i",str(silent),"-i",str(voice),
+    "-map","0:v:0","-map","1:a:0","-t",str(DURATION),
+    "-c:v","libx264","-pix_fmt","yuv420p","-r",str(FPS),
+    "-c:a","aac","-ar","44100","-ac","2","-b:a","128k",
+    "-af",f"apad=pad_dur={DURATION}","-movflags","+faststart",str(video)
+], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+
+probe = subprocess.run([
+    "ffprobe","-v","error","-show_entries",
+    "format=format_name,duration:stream=codec_type,codec_name,width,height,pix_fmt,r_frame_rate",
+    "-of","default=noprint_wrappers=1",str(video)
+], check=True, capture_output=True, text=True).stdout
+for required in ("codec_name=h264","codec_name=aac","width=1920","height=1080","pix_fmt=yuv420p"):
+    if required not in probe:
+        raise SystemExit(f"MP4 validation failed: {required}")
+print(probe)
+
+for p in OUT.glob("slide*.png"): p.unlink(missing_ok=True)
+for p in OUT.glob("slide*.html"): p.unlink(missing_ok=True)
+silent.unlink(missing_ok=True)
+print(f"Verified Hadith #001 long-form review: {video}")
