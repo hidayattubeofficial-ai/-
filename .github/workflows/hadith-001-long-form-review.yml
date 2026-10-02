@@ -1,0 +1,41 @@
+name: Build Hadith 001 Long-Form Review
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Build official-source Hadith 001 review video
+        run: python scripts/build_hadith_long_form.py
+
+      - name: Validate MP4
+        run: |
+          ffprobe -v error -show_entries format=format_name,duration             -show_entries stream=codec_type,codec_name,width,height,pix_fmt,r_frame_rate             -of default=noprint_wrappers=1 output/hadith-001-review.mp4
+
+      - name: Upload review artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hidayat-hadith-001-long-form-review
+          path: |
+            output/hadith-001-review.mp4
+            output/hadith-001-source.txt
+            output/hadith-001-source-card.html
+          retention-days: 90
+
+      - name: Publish guard
+        run: |
+          echo "YouTube publishing is intentionally OFF."
+          echo "Human approval is required before any upload."
