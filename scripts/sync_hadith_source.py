@@ -34,7 +34,7 @@ def fetch(url: str) -> bytes:
 def discover_pdf(page_url: str, html: bytes) -> str:
     text = html.decode("utf-8", errors="ignore")
     candidates = re.findall(
-        r'''(?:href|src)=["']([^"']+.pdf(?:?[^"']*)?)["']''',
+        r'''(?:href|src)=["']([^"']+\.pdf(?:\?[^"']*)?)["']''',
         text,
         flags=re.IGNORECASE,
     )
@@ -54,6 +54,11 @@ def main() -> int:
     page = fetch(args.url)
     pdf_url = discover_pdf(args.url, page)
     pdf = fetch(pdf_url)
+
+    if not pdf.startswith(b"%PDF-"):
+        raise RuntimeError("discovered source is not a valid PDF")
+    if not pdf:
+        raise RuntimeError("official PDF download is empty")
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
