@@ -131,7 +131,14 @@ export default {
         const item = await env.DB.prepare("SELECT p.*,c.name AS category_name,c.slug AS category_slug FROM posts p LEFT JOIN categories c ON c.id=p.category_id WHERE p.slug=? AND p.status='published' LIMIT 1").bind(slug).first();
         if (!item) return new Response(page("Post not found", '<div class="empty"><h1>Post not found</h1><a href="/">Back to Hidayat Technology</a></div>'), {status:404,headers:HTML_HEADERS});
         const content = esc(item.content).replaceAll("\n","<br>");
-        return new Response(page(item.title, '<article class="hero"><span class="pill">'+esc(item.category_name || "Technology")+'</span><h1>'+esc(item.title)+'</h1><p class="muted">'+esc(item.excerpt || "")+'</p><div class="card" style="margin-top:20px;line-height:1.8">'+content+'</div></article>'), {headers:HTML_HEADERS});
+        const catalogSlug = slug.startsWith("auto-") ? slug.slice(5) : "";
+        const catalog = catalogSlug
+          ? await env.DB.prepare("SELECT title,source_url,category,description FROM catalog_items WHERE slug=? LIMIT 1").bind(catalogSlug).first()
+          : null;
+        const source = catalog?.source_url
+          ? '<div class="card" style="margin-top:20px"><strong>Official source</strong><br><a class="btn2" href="'+esc(catalog.source_url)+'" target="_blank" rel="noopener">Open official source →</a></div>'
+          : '<div class="card" style="margin-top:20px"><strong>Source</strong><p class="muted">Hidayat Technology catalog</p><p class="muted">An official source link is added when this catalog resource has a verified source URL.</p></div>';
+        return new Response(page(item.title, '<article class="hero"><span class="pill">'+esc(item.category_name || "Technology")+'</span><h1>'+esc(item.title)+'</h1><p class="muted">'+esc(item.excerpt || "")+'</p><div class="card" style="margin-top:20px;line-height:1.8">'+content+'</div>'+source+'</article>'), {headers:HTML_HEADERS});
       }
 
       if (url.pathname === "/catalog") {
