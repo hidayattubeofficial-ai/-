@@ -46,7 +46,7 @@ h1{margin:0 0 8px;font-size:32px}h2{margin-top:30px}.muted{color:var(--muted)}
 .card{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 5px 20px #12372a10;border:1px solid #e1e9e5}
 .card h3{margin:0 0 8px}.card a{color:var(--green);font-weight:700;text-decoration:none}.btn2{display:inline-block;padding:8px 12px;border:1px solid #b8d8ca;border-radius:10px;background:#eef8f3;color:var(--green)!important}.pill{display:inline-block;background:#e5f3ed;color:var(--green);padding:5px 9px;border-radius:999px;font-size:12px}
 footer{max-width:1120px;margin:50px auto;padding:20px 18px;color:var(--muted)}
-.empty{padding:24px;border:1px dashed #b9c9c1;border-radius:14px;background:#fff}
+.empty{padding:24px;border:1px dashed #b9c9c1;border-radius:14px;background:#fff}.ticker{overflow:hidden;background:#12372a;color:#fff;border-radius:14px;padding:12px 16px;margin-bottom:18px}.ticker-track{display:inline-block;white-space:nowrap;animation:ticker 28s linear infinite}.ticker-track:hover{animation-play-state:paused}@keyframes ticker{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
 </style>
 </head>
 <body>
@@ -154,7 +154,7 @@ export default {
 
       const categories = await loadCategories(env.DB);
       const items = await loadCatalog(env.DB);
-      return new Response(page("Home", `<section class="hero"><h1>AI • Technology • Practical Knowledge</h1><p class="muted">Explore Hidayat Technology categories and published software/resources. Every category opens its own page.</p></section><h2>Categories</h2><div class="grid">${categoryCards(categories)}</div><h2>Latest Software & Tools</h2>${catalogCards(items.slice(0,12))}`), {headers:HTML_HEADERS});
+      return new Response(page("Home", `<div class="ticker" aria-label="Latest headlines"><div class="ticker-track"><strong>Latest:</strong> ${items.slice(0,8).map(i=>esc(i.title || i.name || "New resource")).join(" • ")}</div></div><section class="hero"><h1>AI • Technology • Practical Knowledge</h1><p class="muted">Explore Hidayat Technology categories and published software/resources. Every category opens its own page.</p></section><h2>Home Categories</h2><div class="grid">${categoryCards(categories)}</div><h2>Latest Software & Tools</h2>${catalogCards(items.slice(0,12))}`), {headers:HTML_HEADERS});
     } catch (error) {
       return json({ok:false,error:String(error?.message || error)},500);
     }
