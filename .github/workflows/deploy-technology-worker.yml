@@ -19,5 +19,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: technology-worker
-          wranglerVersion: "4.81.0"\n          command: deploy
+          wranglerVersion: "4.81.0"
+          command: deploy
 # Technology Worker deployment path.
