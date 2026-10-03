@@ -56,7 +56,7 @@ footer{max-width:1120px;margin:50px auto;padding:20px 18px;color:var(--muted)}
 </head>
 <body>
 <header><div class="wrap"><div class="brand">Hidayat Technology</div><div class="tag">AI • Technology • Practical Knowledge</div>
-<nav><a href="/">Latest</a><a href="/catalog">Software & Tools</a><a href="/transcript">YouTube Transcript</a><a href="/api/categories">API</a></nav></div></header>
+<nav><a href="/shop">Shop</a><a href="/">Latest</a><a href="/catalog">Software & Tools</a><a href="/transcript">YouTube Transcript</a><a href="/api/categories">API</a></nav></div></header>
 <main>${body}</main><footer>Hidayat Technology • Public site • Cloudflare + D1</footer>
 </body></html>`;
 }
@@ -153,6 +153,20 @@ export default {
           ? '<div class="card" style="margin-top:20px"><strong>Official source</strong><br><a class="btn2" href="'+esc(catalog.source_url)+'" target="_blank" rel="noopener">Open official source →</a></div>'
           : '<div class="card" style="margin-top:20px"><strong>Source</strong><p class="muted">Hidayat Technology catalog</p><p class="muted">An official source link is added when this catalog resource has a verified source URL.</p></div>';
         return new Response(page(item.title, '<article class="hero"><span class="pill">'+esc(item.category_name || "Technology")+'</span><h1>'+esc(item.title)+'</h1><p class="muted">'+esc(item.excerpt || "")+'</p><div class="card" style="margin-top:20px;line-height:1.8">'+content+'</div>'+source+'</article>'), {headers:HTML_HEADERS});
+      }
+
+      if (url.pathname === "/shop") {
+        const items = await loadCatalog(env.DB);
+        const shopItems = items.filter(i => i.download_url || i.source_url).slice(0,48);
+        const cards = shopItems.length ? '<div class="grid">' + shopItems.map(item => {
+          const postSlug = 'auto-' + (item.slug || slugify(item.title || item.name || ''));
+          const image = item.image_url || 'https://dummyimage.com/900x500/e9f2ee/0b6b4f&text=' + encodeURIComponent(item.title || item.name || 'Hidayat Technology');
+          const action = item.download_url
+            ? '<a class="btn3 download" href="' + esc(item.download_url) + '" target="_blank" rel="noopener" download>Download ↓</a>'
+            : '<a class="btn3" href="' + esc(item.source_url || ('/post/' + encodeURIComponent(postSlug))) + '" target="_blank" rel="noopener">Get resource →</a>';
+          return '<article class="card"><img class="card-img" src="' + esc(image) + '" alt="' + esc(item.title || item.name || 'Resource') + '"><span class="pill">' + esc(item.category || 'Technology') + '</span><h3>' + esc(item.title || item.name || 'Untitled') + '</h3><p class="muted">' + esc(item.description || 'Hidayat Technology digital resource.') + '</p><div class="card-actions"><a class="btn3 primary" href="/post/' + encodeURIComponent(postSlug) + '">Long detail →</a>' + action + '</div></article>';
+        }).join('') + '</div>' : '<div class="empty">Shop items are being prepared. Verified resources will appear here automatically.</div>';
+        return new Response(page("Shop", '<section class="hero"><h1>Hidayat Technology Shop</h1><p class="muted">Digital tools, resources, guides and downloadable content from the Hidayat Technology catalog.</p></section><h2>Featured Resources</h2>' + cards), {headers:HTML_HEADERS});
       }
 
       if (url.pathname === "/catalog") {
