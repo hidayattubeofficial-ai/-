@@ -66,8 +66,8 @@ async function loadCategories(db) {
 async function loadCatalog(db, category) {
   if (category) {
     const r = await db.prepare(
-      "SELECT * FROM catalog_items WHERE status='published' AND lower(category)=lower(?) ORDER BY id DESC"
-    ).bind(category).all();
+      "SELECT * FROM catalog_items WHERE status='published' AND (lower(category)=lower(?) OR (?='Software' AND category IN ('Technology','Developer Tools','Browsers','Security','Cloud & Web','System Tuning & Utilities','Web Design','WordPress','Video & Image','Ecommerce')) OR (?='AI & LLM' AND category='AI Tools') OR (?='Science & Quantum' AND category IN ('Quantum & Physics','Data Science')) OR (?='Marketing' AND category='SEO')) ORDER BY id DESC"
+    ).bind(category,category,category,category).all();
     return r.results;
   }
   const r = await db.prepare(
@@ -87,9 +87,9 @@ function catalogCards(items) {
   if (!items.length) return '<div class="empty">No published catalog items are available in this category yet.</div>';
   return '<div class="grid">' + items.map(item => `<article class="card">
 <span class="pill">${esc(item.category || "Technology")}</span>
-<h3>${esc(item.name || item.title || "Untitled")}</h3>
+<h3>${esc(item.title || item.name || "Untitled")}</h3>
 <p class="muted">${esc(item.description || item.summary || "")}</p>
-${item.url ? `<a href="${esc(item.url)}" target="_blank" rel="noopener">Open resource →</a>` : ""}
+${item.source_url ? `<a href="${esc(item.source_url)}" target="_blank" rel="noopener">Open resource →</a>` : ""}
 </article>`).join("") + "</div>";
 }
 
