@@ -45,6 +45,11 @@ h1{margin:0 0 8px;font-size:32px}h2{margin-top:30px}.muted{color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
 .card{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 5px 20px #12372a10;border:1px solid #e1e9e5}
 .card h3{margin:0 0 8px}.card a{color:var(--green);font-weight:700;text-decoration:none}.btn2{display:inline-block;padding:8px 12px;border:1px solid #b8d8ca;border-radius:10px;background:#eef8f3;color:var(--green)!important}.pill{display:inline-block;background:#e5f3ed;color:var(--green);padding:5px 9px;border-radius:999px;font-size:12px}
+.card-img{width:100%;height:150px;object-fit:cover;border-radius:12px;background:#e9f2ee;border:1px solid #d9e7e0;margin-bottom:14px}
+.card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.btn3{display:inline-block;padding:9px 11px;border-radius:10px;border:1px solid #b8d8ca;text-decoration:none;font-weight:700;background:#fff;color:var(--green)!important}
+.btn3.primary{background:var(--green);color:#fff!important;border-color:var(--green)}
+.btn3.download{background:#12372a;color:#fff!important;border-color:#12372a}
 footer{max-width:1120px;margin:50px auto;padding:20px 18px;color:var(--muted)}
 .empty{padding:24px;border:1px dashed #b9c9c1;border-radius:14px;background:#fff}.ticker{overflow:hidden;background:#12372a;color:#fff;border-radius:14px;padding:12px 16px;margin-bottom:18px}.ticker-track{display:inline-block;white-space:nowrap;animation:ticker 28s linear infinite}.ticker-track:hover{animation-play-state:paused}@keyframes ticker{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
 </style>
@@ -85,7 +90,16 @@ function categoryCards(categories) {
 
 function catalogCards(items) {
   if (!items.length) return '<div class="empty">No published catalog items are available in this category yet.</div>';
-  return '<div class="grid">' + items.map(item => { const postSlug = "auto-" + (item.slug || slugify(item.title || item.name || "")); return '<article class="card"><span class="pill">' + esc(item.category || "Technology") + '</span><h3>' + esc(item.title || item.name || "Untitled") + '</h3><p class="muted">' + esc(item.description || item.summary || "") + '</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><a class="btn2" href="/post/' + encodeURIComponent(postSlug) + '">Read details →</a>' + (item.source_url ? '<a class="btn2" href="' + esc(item.source_url) + '" target="_blank" rel="noopener">Official source →</a>' : '') + '</div></article>'; }).join("") + "</div>";
+  return '<div class="grid">' + items.map(item => {
+    const postSlug = 'auto-' + (item.slug || slugify(item.title || item.name || ''));
+    const source = item.source_url || '';
+    const image = item.image_url || 'https://dummyimage.com/900x500/e9f2ee/0b6b4f&text=' + encodeURIComponent(item.title || item.name || 'Hidayat Technology');
+    const short = item.description || item.summary || 'Practical technology resource from the Hidayat Technology catalog.';
+    const longUrl = '/post/' + encodeURIComponent(postSlug);
+    const more = source ? '<a class="btn3" href="' + esc(source) + '" target="_blank" rel="noopener">More link →</a>' : '';
+    const download = item.download_url ? '<a class="btn3 download" href="' + esc(item.download_url) + '" target="_blank" rel="noopener" download>Download ↓</a>' : '';
+    return '<article class="card"><img class="card-img" src="' + esc(image) + '" alt="' + esc(item.title || item.name || 'Resource') + '"><span class="pill">' + esc(item.category || 'Technology') + '</span><h3>' + esc(item.title || item.name || 'Untitled') + '</h3><p class="muted">' + esc(short) + '</p><div class="card-actions"><a class="btn3 primary" href="' + longUrl + '">Long detail →</a>' + more + download + '</div></article>';
+  }).join('') + '</div>';
 }
 
 export default {
