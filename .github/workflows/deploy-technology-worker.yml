@@ -20,3 +20,4 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: technology-worker
           command: deploy
+# Technology Worker deployment path.
