@@ -44,7 +44,7 @@ main{max-width:1120px;margin:28px auto;padding:0 18px}.hero{background:#fff;bord
 h1{margin:0 0 8px;font-size:32px}h2{margin-top:30px}.muted{color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
 .card{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 5px 20px #12372a10;border:1px solid #e1e9e5}
-.card h3{margin:0 0 8px}.card a{color:var(--green);font-weight:700;text-decoration:none}.pill{display:inline-block;background:#e5f3ed;color:var(--green);padding:5px 9px;border-radius:999px;font-size:12px}
+.card h3{margin:0 0 8px}.card a{color:var(--green);font-weight:700;text-decoration:none}.btn2{display:inline-block;padding:8px 12px;border:1px solid #b8d8ca;border-radius:10px;background:#eef8f3;color:var(--green)!important}.pill{display:inline-block;background:#e5f3ed;color:var(--green);padding:5px 9px;border-radius:999px;font-size:12px}
 footer{max-width:1120px;margin:50px auto;padding:20px 18px;color:var(--muted)}
 .empty{padding:24px;border:1px dashed #b9c9c1;border-radius:14px;background:#fff}
 </style>
@@ -67,7 +67,7 @@ async function loadCatalog(db, category) {
   if (category) {
     const r = await db.prepare(
       "SELECT * FROM catalog_items WHERE status='published' AND (lower(category)=lower(?) OR (?='Software' AND category IN ('Technology','Developer Tools','Browsers','Security','Cloud & Web','System Tuning & Utilities','Web Design','WordPress','Video & Image','Ecommerce')) OR (?='AI & LLM' AND category='AI Tools') OR (?='Science & Quantum' AND category IN ('Quantum & Physics','Data Science')) OR (?='Marketing' AND category='SEO')) ORDER BY id DESC"
-    ).bind(category,category,category,category).all();
+    ).bind(category,category,category,category,category).all();
     return r.results;
   }
   const r = await db.prepare(
@@ -85,12 +85,7 @@ function categoryCards(categories) {
 
 function catalogCards(items) {
   if (!items.length) return '<div class="empty">No published catalog items are available in this category yet.</div>';
-  return '<div class="grid">' + items.map(item => `<article class="card">
-<span class="pill">${esc(item.category || "Technology")}</span>
-<h3>${esc(item.title || item.name || "Untitled")}</h3>
-<p class="muted">${esc(item.description || item.summary || "")}</p>
-${item.source_url ? `<a href="${esc(item.source_url)}" target="_blank" rel="noopener">Open resource →</a>` : ""}
-</article>`).join("") + "</div>";
+  return '<div class="grid">' + items.map(item => { const postSlug = "auto-" + (item.slug || slugify(item.title || item.name || "")); return '<article class="card"><span class="pill">' + esc(item.category || "Technology") + '</span><h3>' + esc(item.title || item.name || "Untitled") + '</h3><p class="muted">' + esc(item.description || item.summary || "") + '</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><a class="btn2" href="/post/' + encodeURIComponent(postSlug) + '">Read details →</a>' + (item.source_url ? '<a class="btn2" href="' + esc(item.source_url) + '" target="_blank" rel="noopener">Official source →</a>' : '') + '</div></article>'; }).join("") + "</div>";
 }
 
 export default {
@@ -123,13 +118,29 @@ export default {
         return item ? json({ok:true,item}) : json({ok:false,error:"Not found"},404);
       }
 
+      if (url.pathname.startsWith("/api/transcript") && request.method === "POST") {
+        if (!env.TRANSCRIPT_API_KEY) return json({ok:false,error:"Transcript provider key is not configured."},503);
+        const b = await request.json();
+        const r = await fetch("https://www.youtubetranscript.dev/api/v2/transcribe",{method:"POST",headers:{"Authorization":"Bearer "+env.TRANSCRIPT_API_KEY,"Content-Type":"application/json"},body:JSON.stringify({video:String(b?.video||""),format:{timestamp:true,paragraphs:true}})});
+        const t = await r.text(); let d; try { d=JSON.parse(t); } catch { d={error:t}; }
+        return json(r.ok?{ok:true,data:d}:{ok:false,error:d?.message||d?.error||"Provider error",provider_status:r.status},r.status);
+      }
+
+      if (url.pathname.startsWith("/post/")) {
+        const slug = decodeURIComponent(url.pathname.slice("/post/".length));
+        const item = await env.DB.prepare("SELECT p.*,c.name AS category_name,c.slug AS category_slug FROM posts p LEFT JOIN categories c ON c.id=p.category_id WHERE p.slug=? AND p.status='published' LIMIT 1").bind(slug).first();
+        if (!item) return new Response(page("Post not found", '<div class="empty"><h1>Post not found</h1><a href="/">Back to Hidayat Technology</a></div>'), {status:404,headers:HTML_HEADERS});
+        const content = esc(item.content).replaceAll("\n","<br>");
+        return new Response(page(item.title, '<article class="hero"><span class="pill">'+esc(item.category_name || "Technology")+'</span><h1>'+esc(item.title)+'</h1><p class="muted">'+esc(item.excerpt || "")+'</p><div class="card" style="margin-top:20px;line-height:1.8">'+content+'</div></article>'), {headers:HTML_HEADERS});
+      }
+
       if (url.pathname === "/catalog") {
         const items = await loadCatalog(env.DB);
         return new Response(page("Software & Tools", `<section class="hero"><h1>Software & Tools</h1><p class="muted">Published technology resources connected directly to Hidayat Technology D1.</p></section><h2>Catalog</h2>${catalogCards(items)}`), {headers:HTML_HEADERS});
       }
 
       if (url.pathname === "/transcript") {
-        return new Response(page("YouTube Transcript", `<section class="hero"><h1>YouTube Transcript</h1><p class="muted">Transcript functionality is reserved for a real transcript provider/API. No fake transcript data is shown.</p><div class="empty">Backend route is ready for integration; published posts and catalog data remain sourced from D1.</div></section>`), {headers:HTML_HEADERS});
+        return new Response(page("YouTube Transcript", '<section class="hero"><h1>YouTube Transcript</h1><p class="muted">Paste a public YouTube URL to fetch a real transcript. No fake transcript data is generated.</p><form id="tf" class="card" style="margin-top:16px"><input id="video" placeholder="https://www.youtube.com/watch?v=..." required style="width:100%;padding:12px;margin-bottom:10px"><button class="btn2" type="submit">Fetch Transcript →</button></form><div id="status" class="empty" style="margin-top:16px">Ready.</div><pre id="out" class="card" style="white-space:pre-wrap;display:none;margin-top:16px"></pre></section><script>tf.onsubmit=async e=>{e.preventDefault();status.textContent="Fetching…";try{const r=await fetch("/api/transcript",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({video:video.value})});const x=await r.json();if(!x.ok)throw Error(x.error||"Transcript failed");const d=x.data?.data||x.data||{},t=d.transcript||{};out.textContent=(d.video_title?d.video_title+"\\n\\n":"")+(t.text||"");out.style.display="block";status.textContent="Transcript fetched successfully."}catch(e){status.textContent="Error: "+e.message}}</script>'), {headers:HTML_HEADERS});
       }
 
       if (url.pathname.startsWith("/category/")) {
