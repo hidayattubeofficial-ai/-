@@ -295,3 +295,15 @@ Add every important future change here.
 - `PROMPT_CODE_MASTER.md` has been added to the repository.
 - The dictionary is now the canonical project reference for FM AI prompt shorthand.
 - Do not create another duplicate master dictionary unless explicitly requested; update this canonical file instead.
+
+
+## 13. Local Verification Engine — PROJECT STANDARD
+
+- **Architecture:** Local AI/Code Verification → Local Security Scan → Local Tests → Local Policy Check → Local Build → GREEN → GitHub PR → GitHub final CI → Human Approval → production actions.
+- Local verification is the first failure boundary; GitHub CI is intentionally lightweight/final verification where practical.
+- Local verification must be portable and must not depend on a hard-coded developer OS/repository path.
+- Local verification must fail closed for security/policy violations and must never publish to YouTube or deploy to Cloudflare.
+- YouTube publishing remains OFF until human approval.
+- GitHub workflow/deployment files remain protected by the existing explicit-approval change-control rule.
+- Canonical specification: `LOCAL_VERIFICATION_ENGINE.md`.
+- **Current status:** Architecture integrated; local machine execution is not claimed from GitHub. The local runner should be executed from the user's checked-out repository.
