@@ -1,7 +1,0 @@
-{
-  "category_slug": "ai",
-  "title": "AI & LLM: What Large Language Models Actually Do",
-  "slug": "ai-llm-large-language-models",
-  "excerpt": "A practical introduction to large language models, how they process prompts, and where they are useful.",
-  "content": "# AI & LLM: What Large Language Models Actually Do\n\nLarge Language Models are AI systems trained on large collections of text. They generate responses by combining learned language patterns with the context supplied in a prompt.\n\n## How they work\n\nA prompt is converted into tokens. Transformer-based attention mechanisms use the surrounding context to estimate useful next tokens and construct a response.\n\n## Better prompts\n\nClear prompts usually specify the goal, audience, context, constraints, and desired output format.\n\n## Practical uses\n\nCommon uses include drafting, summarization, translation, coding assistance, research organization, customer support, and content preparation.\n\n## Verify important output\n\nAI output should be checked when accuracy, current information, or source attribution matters.\n\n## Key takeaway\n\nUseful AI results depend on the model, context, instructions, verification, and the workflow around them."
-}
