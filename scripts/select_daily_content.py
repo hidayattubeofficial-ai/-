@@ -1,4 +1,4 @@
-"""Select the next unused Hidayat Tube content item.
+""""Select the next unused Hidayat Tube content item.
 
 The selector only manages the locked channel theme. It does not create fiqh/fatwa
 rulings and it does not publish to YouTube.
@@ -6,6 +6,7 @@ rulings and it does not publish to YouTube.
 from pathlib import Path
 import json
 import os
+import shlex
 
 ROOT = Path(".")
 CATALOG = ROOT / "youtube/content/catalog.json"
@@ -40,10 +41,11 @@ if not available:
 item = available[0]
 env = OUT / "selection.env"
 env.write_text(
-    f"SELECTED_CATEGORY={item['category']}\n"
-    f"SELECTED_CONTENT_ID={item['content_id']}\n"
-    f"SELECTED_TOPIC_UR={item['topic_ur']}\n"
-    f"SELECTED_TOPIC_EN={item['topic_en']}\n",
+    f"SELECTED_CATEGORY={shlex.quote(str(item['category']))}\n"
+    f"SELECTED_CONTENT_ID={shlex.quote(str(item['content_id']))}\n"
+    f"SELECTED_TOPIC_UR={shlex.quote(str(item['topic_ur']))}\n"
+    f"SELECTED_TOPIC_EN={shlex.quote(str(item['topic_en']))}\n",
     encoding="utf-8",
 )
 print(json.dumps(item, ensure_ascii=False, indent=2))
+"
