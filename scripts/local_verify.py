@@ -24,7 +24,7 @@ IGNORED_BINARY_SUFFIXES = {
 }
 SECRET_PATTERNS = [
     re.compile(
-        r"""(?i)(api[_-]?key|secret|token|password)\\s*[:=]s*['"][^'"]{12,}['"]"""
+        r"""(?i)(api[_-]?key|secret|token|password)\s*[:=]\s*['"][^'"]{12,}['"]"""
     ),
     re.compile(r"(?i)-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
 ]
