@@ -24,7 +24,7 @@ IGNORED_BINARY_SUFFIXES = {
 }
 SECRET_PATTERNS = [
     re.compile(
-        r"""(?i)(api[_-]?key|secret|token|password)s*[:=]s*['"][^'"]{12,}['"]"""
+        r"""(?i)(api[_-]?key|secret|token|password)\\s*[:=]s*['"][^'"]{12,}['"]"""
     ),
     re.compile(r"(?i)-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
 ]
@@ -74,8 +74,8 @@ def verification_files(root):
     return sorted({p for p in tracked | untracked if p.is_file()}, key=lambda p: str(p))
 
 
-def changed_files(root):
-    changed = git_paths(root, ["git", "diff", "--name-only", "HEAD"])
+def changed_files(root, base_ref):
+    changed = git_paths(root, ["git", "diff", "--name-only", f"{base_ref}...HEAD"])
     untracked = git_paths(root, ["git", "ls-files", "--others", "--exclude-standard"])
     return sorted({p for p in changed | untracked if p.is_file()}, key=lambda p: str(p))
 
@@ -165,6 +165,7 @@ def main():
         action="store_true",
         help="explicit alias for the default pre-PR change-scope scan",
     )
+    ap.add_argument("--base", default="main", help="base branch/ref used for the committed change scope")
     ap.add_argument("--security-only", action="store_true")
     ap.add_argument("--build", action="store_true")
     args = ap.parse_args()
@@ -174,7 +175,7 @@ def main():
 
     try:
         root = find_root(Path.cwd().resolve())
-        files = verification_files(root) if args.full else changed_files(root)
+        files = verification_files(root) if args.full else changed_files(root, args.base)
     except Exception as e:
         print("RED  repository discovery:", e)
         return 2
@@ -183,7 +184,7 @@ def main():
         print("RED  verification scope is empty; refusing to report GREEN.")
         return 2
 
-    scope = "full repository" if args.full else "current change scope"
+    scope = "full repository" if args.full else f"change scope vs {args.base}"
     results = [
         ("Python syntax", *python_check(root, files)),
         ("Secret scan", *secret_check(root, files)),
